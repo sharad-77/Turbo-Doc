@@ -2,13 +2,15 @@
   "name": "Turbo-Doc",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "types": "turbo run check-types",
+    "build": "turbo run build",
+    "check": "pnpm lint && pnpm types"
   },
   "devDependencies": {
+    "@eslint/js": "9",
+    "@types/node": "^22.15.3",
+    "eslint": "^9.39.1",
     "prettier": "^3.6.2",
     "turbo": "^2.6.1",
     "typescript": "5.9.2"
