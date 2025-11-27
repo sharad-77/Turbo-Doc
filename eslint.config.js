@@ -5,6 +5,11 @@ import turbo from 'eslint-plugin-turbo';
 export default [
   { ignores: ['**/.next/**', '**/node_modules/**', '**/.turbo/**'] },
   js.configs.recommended,
-  ...turbo.configs.recommended,
+  {
+    plugins: { turbo },
+    rules: {
+      'turbo/no-undeclared-env-vars': 'warn',
+    },
+  },
   nextPlugin,
 ];

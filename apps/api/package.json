@@ -9,14 +9,19 @@
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "lint": "pnpm exec eslint . --max-warnings 0",
-    "check-types": "pnpm exec tsc --noEmit"
+    "check-types": "pnpm exec tsc --noEmit",
+    "test:db": "tsx src/index.ts"
   },
   "dependencies": {
+    "@repo/database": "workspace:*",
+    "@repo/schemas": "workspace:*",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
@@ -24,7 +29,6 @@
     "eslint": "^9.39.1",
     "rimraf": "^6.0.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.9.3",
-    "@repo/typescript-config": "workspace:*"
+    "typescript": "^5.9.3"
   }
 }
