@@ -28,8 +28,12 @@ export default function RegisterPage() {
 
       // Show success message
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Registration failed');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Registration failed');
+      } else {
+        setError('Registration failed');
+      }
     } finally {
       setLoading(false);
     }
@@ -43,8 +47,12 @@ export default function RegisterPage() {
         provider: 'google',
         callbackURL: '/dashboard', // Redirect after successful auth
       });
-    } catch (err: any) {
-      setError(err.message || 'Google sign up failed');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Google sign up failed');
+      } else {
+        setError('Google sign up failed');
+      }
       setLoading(false);
     }
   };
@@ -57,8 +65,12 @@ export default function RegisterPage() {
         provider: 'github',
         callbackURL: '/dashboard',
       });
-    } catch (err: any) {
-      setError(err.message || 'GitHub sign up failed');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'GitHub sign up failed');
+      } else {
+        setError('GitHub sign up failed');
+      }
       setLoading(false);
     }
   };

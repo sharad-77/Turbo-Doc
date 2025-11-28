@@ -39,9 +39,15 @@ importers:
 
   apps/api:
     dependencies:
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@repo/database':
         specifier: workspace:*
         version: link:../../packages/database
+      better-auth:
+        specifier: ^1.4.3
+        version: 1.4.3(next@16.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       cors:
         specifier: ^2.8.5
         version: 2.8.5

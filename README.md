@@ -1,135 +1,65 @@
-# Turborepo starter
+I have a Turborepo monorepo with the following structure:
+- apps/web: Next.js frontend
+- packages/auth: Better Auth configuration
+- packages/database: Prisma + PostgreSQL setup
 
-This Turborepo starter is maintained by the Turborepo core team.
+CURRENT PROBLEM:
+1. GitHub and Google OAuth login works perfectly
+2. Email/password signup does NOT store user data in database
+3. Email/password signin does NOT validate credentials - any random email/password grants dashboard access
+4. Sessions are being created without proper authentication verification
 
-## Using this example
+TECHNICAL DETAILS:
+- Better Auth is configured in packages/auth
+- Database schema is in packages/database with Prisma ORM
+- Next.js app imports both packages for authentication
+- Auth routes are likely in app/api/auth/[...all]/route.ts
 
-Run the following command:
+REQUIRED FIXES:
 
-```sh
-npx create-turbo@latest
-```
+1. Email/Password Signup Flow:
+   - Verify the Better Auth email provider is properly configured with database adapter
+   - Ensure the auth instance uses the correct Prisma client from packages/database
+   - Check if password hashing is enabled
+   - Verify the user table schema includes password field
+   - Ensure database write operations are awaited and error-handled
 
-## What's inside?
+2. Email/Password Signin Validation:
+   - Implement proper credential verification before session creation
+   - Add password comparison logic using Better Auth's built-in methods
+   - Return authentication errors for invalid credentials
+   - Prevent session creation for failed login attempts
 
-This Turborepo includes the following packages/apps:
+3. Session Management:
+   - Ensure sessions are only created after successful authentication
+   - Implement proper middleware in Next.js to verify sessions before dashboard access
+   - Add session validation that checks database for valid user
+   - Configure session storage correctly (cookies with secure flags)
 
-### Apps and Packages
+4. Database Integration:
+   - Verify Prisma schema has all required Better Auth tables (user, session, account, verification)
+   - Ensure migrations are applied: npx prisma migrate dev
+   - Check that the auth package properly imports and uses the database client
+   - Verify connection string is correct in .env
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+5. Code Structure:
+   - Share the auth instance properly between packages
+   - Ensure packages/auth exports the configured Better Auth instance
+   - Verify apps/web correctly imports and initializes auth
+   - Check that API routes properly use the auth instance
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+EXPECTED BEHAVIOR AFTER FIX:
+- Email/password signup creates user record in database with hashed password
+- Email/password signin validates credentials against database
+- Invalid credentials return error and deny access
+- Valid credentials create session and grant dashboard access
+- Sessions persist correctly across page reloads
+- Middleware protects dashboard route from unauthenticated access
 
-### Utilities
+Please analyze my codebase and:
+1. Identify the exact files causing the issues
+2. Show me the corrected code for each file
+3. Explain what was wrong and why the fixes work
+4. Provide step-by-step testing instructions
 
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+Focus on packages/auth/src/index.ts, apps/web/app/api/auth/[...all]/route.ts, and any middleware files.

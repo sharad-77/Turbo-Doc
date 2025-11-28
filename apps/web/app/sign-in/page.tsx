@@ -24,8 +24,12 @@ export default function SignInPage() {
         callbackURL: '/dashboard',
       });
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Sign in failed');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Sign in failed');
+      } else {
+        setError('Sign in failed');
+      }
     } finally {
       setLoading(false);
     }
@@ -38,8 +42,12 @@ export default function SignInPage() {
         provider,
         callbackURL: '/dashboard',
       });
-    } catch (err: any) {
-      setError(err.message || `${provider} sign in failed`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || `${provider} sign in failed`);
+      } else {
+        setError(`${provider} sign in failed`);
+      }
       setLoading(false);
     }
   };
@@ -110,7 +118,7 @@ export default function SignInPage() {
       </form>
 
       <p className="text-center mt-4 text-sm text-gray-600">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link href="/register" className="text-blue-600 hover:underline">
           Sign up
         </Link>

@@ -6,30 +6,32 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma,{
     provider:"postgresql"
   }),
-  emailAndPassword:{
-    enabled:true,
-    requireEmailVerification:false
-    //email verification logic here
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: true,
+    requireEmailVerification: false,
   },
-  socialProviders:{
-    google:{
+  socialProviders: {
+    google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
-    github:{
+    github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
-  session:{
+  session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
-    cookieCache:{
+    cookieCache: {
       enabled: true,
       maxAge: 5 * 60,
     },
   },
   trustedOrigins: [
+    "http://localhost:3000",
+    "http://localhost:4000",
     process.env.NEXT_PUBLIC_APP_URL!,
     process.env.API_URL!,
   ],
