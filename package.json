@@ -2,10 +2,15 @@
   "name": "Turbo-Doc",
   "private": true,
   "scripts": {
+    "dev": "turbo run dev",
     "lint": "turbo run lint",
     "types": "turbo run check-types",
     "build": "turbo run build",
-    "check": "pnpm lint && pnpm types"
+    "check": "pnpm lint && pnpm types",
+    "postinstall": "turbo run db:generate"
+  },
+   "dependencies": {
+    "@prisma/client": "^7.0.1"
   },
   "devDependencies": {
     "@eslint/js": "9",
