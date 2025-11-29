@@ -6,10 +6,9 @@
     "lint": "turbo run lint",
     "types": "turbo run check-types",
     "build": "turbo run build",
-    "check": "pnpm lint && pnpm types",
-    "postinstall": "turbo run db:generate"
+    "check": "pnpm lint && pnpm types"
   },
-   "dependencies": {
+  "dependencies": {
     "@prisma/client": "^7.0.1"
   },
   "devDependencies": {
