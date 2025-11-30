@@ -13,16 +13,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-            <Link href="/" className="flex-shrink-0 flex items-center font-bold text-xl text-gray-900">
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center font-bold text-xl text-gray-900"
+            >
               Turbo-Doc
             </Link>
           </div>
           <div className="flex items-center gap-4">
             {session ? (
               <>
-                <span className="text-sm text-gray-700">
-                  {session.user.name}
-                </span>
+                <span className="text-sm text-gray-700">{session.user.name}</span>
                 <button
                   onClick={async () => {
                     await signOut();

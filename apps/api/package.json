@@ -9,6 +9,7 @@
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "lint": "pnpm exec eslint . --max-warnings 0",
+    "format": "prettier --write .",
     "check-types": "pnpm exec tsc --noEmit",
     "test:db": "tsx src/index.ts"
   },
@@ -20,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "pdf-lib": "^1.17.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

@@ -122,7 +122,7 @@ export default function RegisterPage() {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             required
             className="w-full border rounded-lg px-3 py-2"
           />
@@ -133,7 +133,7 @@ export default function RegisterPage() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             required
             className="w-full border rounded-lg px-3 py-2"
           />
@@ -144,7 +144,7 @@ export default function RegisterPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
             minLength={8}
             className="w-full border rounded-lg px-3 py-2"
@@ -158,9 +158,6 @@ export default function RegisterPage() {
         >
           {loading ? 'Creating account...' : 'Sign up'}
         </button>
-
-
-
       </form>
 
       <p className="text-center mt-4 text-sm text-gray-600">

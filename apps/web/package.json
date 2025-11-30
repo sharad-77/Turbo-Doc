@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "pnpm exec eslint . --max-warnings 0",
+    "format": "prettier --write .",
     "check-types": "pnpm exec tsc --noEmit"
   },
   "dependencies": {

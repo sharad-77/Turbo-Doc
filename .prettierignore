@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+.next
+out
+.turbo
+
+# Logs
+*.log
+
+# Environment files
+.env*
+
+# Others
+coverage
+.DS_Store
