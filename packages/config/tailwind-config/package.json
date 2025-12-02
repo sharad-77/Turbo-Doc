@@ -1,0 +1,17 @@
+{
+  "name": "@repo/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./tailwind.config.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": "./tailwind.config.js",
+    "./postcss": "./postcss.config.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "@types/node": "^20.11.24"
+  }
+}

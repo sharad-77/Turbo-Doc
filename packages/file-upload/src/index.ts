@@ -7,6 +7,7 @@ import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import fs from 'fs';
 import { Readable } from 'stream';
+import mime from 'mime-types';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../.env' });
@@ -52,7 +53,7 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 
 // Download file from S3 as buffer
 
-export async function downloadFronS3(key: string) {
+export async function downloadFromS3(key: string) {
   if (!awsBucketName) throw new Error('AWS bucket name missing');
   const command = new GetObjectCommand({
     Bucket: awsBucketName,
@@ -81,11 +82,13 @@ export const uploadToS3 = async ({
 
   const fileBuffer = fs.readFileSync(localPath);
 
+  const contentType = mime.lookup(localPath) || 'application/octet-stream';
+
   const command = new PutObjectCommand({
     Bucket: bucket,
     Key: key,
     Body: fileBuffer,
-    ContentType: 'application/pdf',
+    ContentType: contentType,
   });
 
   await s3Client.send(command);
@@ -93,5 +96,6 @@ export const uploadToS3 = async ({
   return {
     message: 'Upload to s3',
     key,
+    ContentType: contentType,
   };
 };

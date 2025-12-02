@@ -5,39 +5,41 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  
 }
 
 model user {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  email         String   @unique
+  emailVerified Boolean  @default(false)
   image         String?
   password      String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  accounts      account[]
-  sessions      session[]
+  accounts     account[]
+  sessions     session[]
+  subscription subscription?
 }
 
 model account {
-  id                String  @id @default(cuid())
-  userId            String
-  accountId         String
-  providerId        String
-  accessToken       String?
-  refreshToken      String?
-  idToken           String?
-  expiresAt         DateTime?
-  accessTokenExpiresAt DateTime?
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  expiresAt             DateTime?
+  accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  password          String?
-  scope             String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  password              String?
+  scope                 String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
-  user              user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -52,7 +54,7 @@ model session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -66,4 +68,78 @@ model verification {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier])
+}
+
+model subscriptionPlan {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  price Decimal @db.Decimal(10, 2)
+
+  // Document Features
+  dailyDocumentLimit Int
+  maxFileSizeMB      Int
+  allowedFormats     String[]
+
+  // Document Feature flages
+  canMergeDocuments Boolean @default(false)
+  mergeFileLimit    Int     @default(0)
+  canSplitDocuments Boolean @default(false)
+  canDocConversions Boolean @default(false)
+
+  // IMAGE FEATURES
+  dailyImageLimit     Int
+  maxImageSizeMB      Int
+  allowedImageFormats String[]
+
+  canCompressImage Boolean @default(false)
+  compressionLevel String  @default("NONE") // NONE | STANDARD | ADVANCED
+
+  canChangeResolution   Boolean @default(false)
+  maxResolutionIncrease Int     @default(0)
+
+  aiUpscaleEnabled Boolean @default(false)
+
+  // STORAGE FEATURES
+  storageLimitGB       Float @default(1)
+  storageRetentionDays Int   @default(7)
+
+  // SYSTEM FEATURES
+  priorityProcessing Boolean @default(false)
+  apiAccess          Boolean @default(false) // Only Ultimate
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions subscription[]
+}
+
+model subscription {
+  id     String             @id @default(cuid())
+  userId String             @unique
+  planId String
+  status SubscriptionStatus @default(ACTIVE)
+
+  startDate  DateTime  @default(now())
+  endDate    DateTime?
+  canceledAt DateTime?
+
+  // Payment details
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user user             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan subscriptionPlan @relation(fields: [planId], references: [id])
+
+  @@index([userId])
+  @@index([planId])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  EXPIRED
+  PAYMENT_FAILED
 }

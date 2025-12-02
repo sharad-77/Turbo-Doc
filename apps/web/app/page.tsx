@@ -20,9 +20,10 @@ export default function Home() {
       return;
     }
 
-    const mime = file.type.split('/')[1];
+    const mime = file.type; // FULL MIME TYPE
+    console.log('File type:', mime);
 
-    const response = await fetch('http://localhost:4000/api/get-presigned-url', {
+    const response = await fetch('http://localhost:4000/api/v1/get-presigned-url', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -30,6 +31,7 @@ export default function Home() {
       body: JSON.stringify({
         mime,
         folder,
+        fileName: file.name,
       }),
     });
 

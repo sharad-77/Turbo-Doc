@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
-import pdfRoutes from './routes/pdf.route.js';
+import pdfRoutes from './routes/document.route.js';
 import uploadRoutes from './routes/upload.route.js';
 
 dotenv.config();
@@ -36,6 +36,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.all('/api/auth/*path', toNodeHandler(auth));
 
