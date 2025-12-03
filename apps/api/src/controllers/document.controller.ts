@@ -3,7 +3,7 @@ import {
   convertFilesService,
   mergePdfService,
   splitPdfService,
-} from '../services/conversion/document-to-pdf.service.js';
+} from '../services/documents/document-services.js';
 
 export const mergePdfController = async (req: Request, res: Response) => {
   try {

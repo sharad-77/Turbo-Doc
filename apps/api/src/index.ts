@@ -4,8 +4,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
-import pdfRoutes from './routes/document.route.js';
-import uploadRoutes from './routes/upload.route.js';
+import documentsRoutes from './routes/document.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
+import imageRoutes from './routes/images.routes.js';
 
 dotenv.config();
 
@@ -41,9 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.all('/api/auth/*path', toNodeHandler(auth));
 
 app.use('/api/v1', uploadRoutes);
-app.use('/api/v1/pdf', pdfRoutes);
-// app.use("/api/v1/document");
-// app.use("/api/v1/images");
+app.use('/api/v1/documents', documentsRoutes);
+app.use('/api/v1/images', imageRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

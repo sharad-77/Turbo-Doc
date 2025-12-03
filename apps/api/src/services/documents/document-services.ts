@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { PDFDocument } from 'pdf-lib';
 import { promisify } from 'util';
+import { v4 as uuidv4 } from 'uuid';
 import { Paths } from '../../utils/path.js';
 
 const execFileAsync = promisify(execFile);
@@ -38,7 +39,7 @@ export const mergePdfService = async (keys: string[]) => {
   const finalPdfBytes = await mergedPdf.save();
 
   // 3. Save merged result to temp/processed
-  const outputName = `merged-${Date.now()}.pdf`;
+  const outputName = `${uuidv4()}.pdf`;
   const processedPath = Paths.processed(outputName);
 
   fs.writeFileSync(processedPath, finalPdfBytes);
@@ -94,7 +95,7 @@ export const splitPdfService = async (key: string, startPage: number, endPage: n
   const splitBytes = await splitDoc.save();
 
   // 4. Save output
-  const outputName = `split-${safeStart}-to-${safeEnd}-${Date.now()}.pdf`;
+  const outputName = `${uuidv4()}.pdf`;
   const processedPath = Paths.processed(outputName);
   fs.writeFileSync(processedPath, splitBytes);
 
@@ -154,7 +155,8 @@ export const convertFilesService = async (
 
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
 
-  const fileName = s3Key.split('/').pop() || `file-${Date.now()}`;
+  const ext = path.extname(s3Key);
+  const fileName = `${uuidv4()}${ext}`;
   const rawPath = Paths.raw(fileName);
 
   fs.writeFileSync(rawPath, buffer);
