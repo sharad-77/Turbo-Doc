@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": " tsx watch src/index.ts",
     "build": "rimraf dist && tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "lint": "pnpm exec eslint . --max-warnings 0",
@@ -17,12 +17,14 @@
     "@repo/auth": "workspace:*",
     "@repo/database": "workspace:*",
     "@repo/file-upload": "workspace:*",
+    "@repo/zod-schemas": "workspace:*",
     "better-auth": "^1.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
+    "dotenv": "^16.4.5",
     "express": "^5.1.0",
     "mime-types": "^3.0.2",
     "pdf-lib": "^1.17.1",
+    "piscina": "^5.1.4",
     "sharp": "^0.34.5",
     "uuid": "^13.0.0"
   },
@@ -35,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3"
   }

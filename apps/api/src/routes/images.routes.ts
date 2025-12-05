@@ -7,7 +7,7 @@ import {
 
 const router: Router = Router();
 
-router.post('/Image-convert', convertImageController);
+router.post('/convert', convertImageController);
 router.post('/compress', compressImageController);
 router.post('/resize', resizeImageController);
 

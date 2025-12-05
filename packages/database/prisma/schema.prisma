@@ -5,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  
 }
 
 model user {
@@ -21,6 +20,9 @@ model user {
   accounts     account[]
   sessions     session[]
   subscription subscription?
+  documents    document[]
+  images       image[]
+  usageLogs    usageLog[]
 }
 
 model account {
@@ -72,40 +74,17 @@ model verification {
 
 model subscriptionPlan {
   id    String  @id @default(cuid())
-  name  String  @unique
+  name  String  @unique // "FREE", "PRO"
   price Decimal @db.Decimal(10, 2)
 
-  // Document Features
-  dailyDocumentLimit Int
-  maxFileSizeMB      Int
-  allowedFormats     String[]
+  // Limits
+  dailyDocumentLimit Int // FREE=5, PRO=20
+  dailyImageLimit    Int // FREE=5, PRO=20
 
-  // Document Feature flages
-  canMergeDocuments Boolean @default(false)
-  mergeFileLimit    Int     @default(0)
-  canSplitDocuments Boolean @default(false)
-  canDocConversions Boolean @default(false)
+  mergeFileLimit Int // FREE=2, PRO=-1 (unlimited)
 
-  // IMAGE FEATURES
-  dailyImageLimit     Int
-  maxImageSizeMB      Int
-  allowedImageFormats String[]
-
-  canCompressImage Boolean @default(false)
-  compressionLevel String  @default("NONE") // NONE | STANDARD | ADVANCED
-
-  canChangeResolution   Boolean @default(false)
-  maxResolutionIncrease Int     @default(0)
-
-  aiUpscaleEnabled Boolean @default(false)
-
-  // STORAGE FEATURES
-  storageLimitGB       Float @default(1)
-  storageRetentionDays Int   @default(7)
-
-  // SYSTEM FEATURES
-  priorityProcessing Boolean @default(false)
-  apiAccess          Boolean @default(false) // Only Ultimate
+  storageLimitMB Int // FREE=200, PRO=500
+  retentionDays  Int // FREE=7, PRO=30
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -123,7 +102,7 @@ model subscription {
   endDate    DateTime?
   canceledAt DateTime?
 
-  // Payment details
+  // Payments
   stripeCustomerId     String?
   stripeSubscriptionId String?
 
@@ -142,4 +121,173 @@ enum SubscriptionStatus {
   CANCELED
   EXPIRED
   PAYMENT_FAILED
+}
+
+model guestUsage {
+  id          String  @id @default(cuid())
+  ipAddress   String
+  fingerprint String?
+  userAgent   String?
+
+  documentCount Int @default(0) // 1/day
+  imageCount    Int @default(0) // 1/day
+  mergeCount    Int @default(0) // NEW → 1 PDF merge/day
+
+  lastResetAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  documents document[]
+  images    image[]
+
+  @@unique([ipAddress, fingerprint])
+  @@index([ipAddress])
+  @@index([lastResetAt])
+}
+
+model document {
+  id           String  @id @default(cuid())
+  userId       String?
+  guestUsageId String?
+
+  originalFileName String
+  originalFormat   String
+  targetFormat     String?
+  fileSize         Int
+  s3Key            String  @unique
+  s3Bucket         String
+
+  status         ProcessingStatus @default(PENDING)
+  conversionType ConversionType
+
+  processedS3Key    String?
+  processedFileSize Int?
+  processingError   String? @db.Text
+
+  processingStartedAt   DateTime?
+  processingCompletedAt DateTime?
+  expiresAt             DateTime
+
+  planSnapshot   String // "GUEST", "FREE", "PRO"
+  batchId        String?
+  additionalInfo Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       user?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestUsage guestUsage? @relation(fields: [guestUsageId], references: [id], onDelete: Cascade)
+
+  mergedAsParent documentMerge[] @relation("MergedMainDocument")
+  mergedAsChild  documentMerge[] @relation("MergedChildDocument")
+
+  @@index([userId])
+  @@index([guestUsageId])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
+model image {
+  id           String  @id @default(cuid())
+  userId       String?
+  guestUsageId String?
+
+  originalFileName String
+  originalFormat   String
+  fileSize         Int
+  width            Int
+  height           Int
+  s3Key            String @unique
+  s3Bucket         String
+
+  operation ImageOperation
+  status    ProcessingStatus @default(PENDING)
+
+  targetFormat       String?
+  targetWidth        Int?
+  targetHeight       Int?
+  compressionQuality Int?
+
+  processedS3Key    String?
+  processedFileSize Int?
+  processedWidth    Int?
+  processedHeight   Int?
+  processingError   String? @db.Text
+
+  processingStartedAt   DateTime?
+  processingCompletedAt DateTime?
+  expiresAt             DateTime
+
+  planSnapshot   String // "GUEST", "FREE", "PRO"
+  batchId        String?
+  additionalInfo Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       user?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestUsage guestUsage? @relation(fields: [guestUsageId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([guestUsageId])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
+model documentMerge {
+  id         String @id @default(cuid())
+  documentId String
+  mergedId   String
+
+  document document @relation("MergedMainDocument", fields: [documentId], references: [id])
+  merged   document @relation("MergedChildDocument", fields: [mergedId], references: [id])
+
+  @@index([documentId])
+  @@index([mergedId])
+}
+
+model usageLog {
+  id           String  @id @default(cuid())
+  userId       String?
+  guestUsageId String?
+
+  resourceType ResourceType
+  resourceId   String
+  operation    String // e.g. "PDF_CONVERT", "MERGE"
+
+  timestamp   DateTime @default(now())
+  resetPeriod String // "DAILY"
+
+  user user? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, timestamp])
+  @@index([guestUsageId, timestamp])
+  @@index([timestamp])
+}
+
+enum ResourceType {
+  DOCUMENT
+  IMAGE
+}
+
+enum ProcessingStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ConversionType {
+  FORMAT_CONVERSION
+  MERGE
+  SPLIT
+}
+
+enum ImageOperation {
+  FORMAT_CONVERSION
+  COMPRESS
+  RESIZE
 }

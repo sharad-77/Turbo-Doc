@@ -5,8 +5,10 @@ import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import documentsRoutes from './routes/document.routes.js';
-import uploadRoutes from './routes/upload.routes.js';
 import imageRoutes from './routes/images.routes.js';
+import jobsRoutes from './routes/jobs.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
+import { authMiddleware } from './middleware/auth.middleware.js';
 
 dotenv.config();
 
@@ -40,10 +42,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.all('/api/auth/*path', toNodeHandler(auth));
+app.use("/test", authMiddleware);
 
 app.use('/api/v1', uploadRoutes);
 app.use('/api/v1/documents', documentsRoutes);
 app.use('/api/v1/images', imageRoutes);
+app.use('/api/jobs', jobsRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

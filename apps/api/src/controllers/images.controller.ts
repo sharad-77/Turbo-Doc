@@ -1,3 +1,4 @@
+import { imageCompressionSchema, imageConvertScheama, imageResizeSchema } from '@repo/zod-schemas';
 import { Request, Response } from 'express';
 import {
   compressImageService,
@@ -6,31 +7,32 @@ import {
 } from '../services/image/image.conversion.services.js';
 
 export const convertImageController = async (req: Request, res: Response) => {
-  const { key, format } = req.body;
+  const parse = imageConvertScheama.safeParse(req.body);
 
-  const uploadedKey = await convertImageFormatService(key, format);
+  if (!parse.success) {
+    return res.status(400).json({ error: parse.error.message });
+  }
 
-  res.json({
-    message: 'Image converted successfully',
-    outputKey: uploadedKey,
-  });
+  const { key, format } = parse.data;
+
+  const job = await convertImageFormatService(key, format);
+
+  res.json(job);
 };
 
 export const compressImageController = async (req: Request, res: Response) => {
   try {
-    const { key, quality } = req.body;
+    const parse = imageCompressionSchema.safeParse(req.body);
 
-    if (!key) return res.status(400).json({ error: 'key is required' });
-    if (!quality || quality < 1 || quality > 100) {
-      return res.status(400).json({ error: 'quality must be between 1–100' });
+    if (!parse.success) {
+      return res.status(400).json({ error: parse.error.message });
     }
 
-    const uploadedKey = await compressImageService(key, quality);
+    const { key, quality } = parse.data;
 
-    res.json({
-      message: 'Image compressed successfully',
-      outputKey: uploadedKey,
-    });
+    const job = await compressImageService(key, quality);
+
+    res.json(job);
   } catch (err) {
     console.error('Compression Error:', err);
     res.status(500).json({ error: err || 'Compression failed' });
@@ -39,20 +41,17 @@ export const compressImageController = async (req: Request, res: Response) => {
 
 export const resizeImageController = async (req: Request, res: Response) => {
   try {
-    const { key, scalePercent } = req.body;
+    const parse = imageResizeSchema.safeParse(req.body);
 
-    if (!key) return res.status(400).json({ error: 'key is required' });
-
-    if (!scalePercent || scalePercent < 25 || scalePercent > 200) {
-      return res.status(400).json({ error: 'scalePercent must be between 25–200' });
+    if (!parse.success) {
+      return res.status(400).json({ error: parse.error.message });
     }
 
-    const uploadedKey = await resizeImageService(key, scalePercent);
+    const { key, scalePercent } = parse.data;
 
-    res.json({
-      message: 'Image resized successfully',
-      outputKey: uploadedKey,
-    });
+    const job = await resizeImageService(key, scalePercent);
+
+    res.json(job);
   } catch (error) {
     console.error('Resize Error:', error);
     res.status(500).json({ error: error || 'Resize failed' });

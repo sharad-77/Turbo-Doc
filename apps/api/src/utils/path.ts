@@ -15,7 +15,7 @@ export const Paths = {
     ];
 
     for (const f of folders) {
-      if (!fs.existsSync(f)) fs.mkdirSync(f);
+      fs.mkdirSync(f, { recursive: true });
     }
   },
 };
