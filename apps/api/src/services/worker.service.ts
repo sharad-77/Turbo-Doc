@@ -7,11 +7,12 @@ import { imagePool } from '../workers/pools/image.pool.js';
 export const workerService = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   runDocumentJob: async (data: any) => {
-    const jobId = uuidv4();
+    const jobId = data.jobId || uuidv4();
+
     const job: Job = {
       jobId,
       type: 'doc',
-      task: data.type, // 'convert', 'merge', 'split'
+      task: data.type,
       data: data,
       status: 'queued',
       createdAt: new Date(),
@@ -19,22 +20,17 @@ export const workerService = {
 
     jobStore.set(jobId, job);
 
-    // Run in background (Fire and Forget)
     (async () => {
       try {
-        // Update status to processing
         job.status = 'processing';
         jobStore.set(jobId, job);
 
-        // Execute job in pool
         const result = await documentPool.run(job);
 
-        // Update status to completed
         job.status = 'completed';
         job.result = result;
         jobStore.set(jobId, job);
       } catch (err) {
-        // Update status to failed
         job.status = 'failed';
         job.error = (err as Error).message;
         jobStore.set(jobId, job);
@@ -46,11 +42,12 @@ export const workerService = {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   runImageJob: async (data: any) => {
-    const jobId = uuidv4();
+    const jobId = data.jobId || uuidv4();
+
     const job: Job = {
       jobId,
-      type: 'image',
-      task: data.type, // 'convert', 'resize', 'compress'
+      type: 'doc',
+      task: data.type,
       data: data,
       status: 'queued',
       createdAt: new Date(),
@@ -58,22 +55,17 @@ export const workerService = {
 
     jobStore.set(jobId, job);
 
-    // Run in background (Fire and Forget)
     (async () => {
       try {
-        // Update status to processing
         job.status = 'processing';
         jobStore.set(jobId, job);
 
-        // Execute job in pool
         const result = await imagePool.run(job);
 
-        // Update status to completed
         job.status = 'completed';
         job.result = result;
         jobStore.set(jobId, job);
       } catch (err) {
-        // Update status to failed
         job.status = 'failed';
         job.error = (err as Error).message;
         jobStore.set(jobId, job);

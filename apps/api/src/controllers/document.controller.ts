@@ -1,3 +1,5 @@
+import { convertDocumentSchema, mergePdfSchema, splitPdfSchema } from '@repo/zod-schemas';
+import { error } from 'console';
 import { Request, Response } from 'express';
 import {
   convertFilesService,
@@ -5,24 +7,37 @@ import {
   splitPdfService,
 } from '../services/documents/document-services.js';
 
-import { convertDocumentSchema, mergePdfSchema, splitPdfSchema } from '@repo/zod-schemas';
+interface AuthenticatedRequest extends Request {
+  userId?: string;
+  guestId?: string;
+}
 
-export const mergePdfController = async (req: Request, res: Response) => {
+export const mergePdfController = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parse = mergePdfSchema.safeParse(req.body);
 
     if (!parse.success) {
-      return res.status(400).json({ error: parse.error.flatten() });
+      return res.status(400).json({ error: parse.error.message });
     }
 
-    const { keys } = parse.data;
+    const { keys, originalFileName, originalFormat, fileSize } = parse.data;
 
-    const job = await mergePdfService(keys);
+    const userId = req.userId;
+    const guestUsageId = req.guestId;
+
+    const job = await mergePdfService(
+      keys,
+      originalFileName,
+      originalFormat,
+      fileSize,
+      userId,
+      guestUsageId
+    );
 
     return res.json(job);
   } catch (err) {
     console.error('Merge PDF error:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error', message:err });
   }
 };
 
@@ -45,7 +60,7 @@ export const splitPdfController = async (req: Request, res: Response) => {
   }
 };
 
-export const convertController = async (req: Request, res: Response) => {
+export const convertController = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parse = convertDocumentSchema.safeParse(req.body);
 
@@ -53,9 +68,20 @@ export const convertController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: parse.error.flatten() });
     }
 
-    const { key, targetFormat } = parse.data;
+    const { key, targetFormat, originalFileName, originalFormat, fileSize } = parse.data;
 
-    const job = await convertFilesService(key, targetFormat);
+    const userId = req.userId;
+    const guestUsageId = req.guestId;
+
+    const job = await convertFilesService(
+      key,
+      targetFormat,
+      originalFileName,
+      originalFormat,
+      fileSize,
+      userId,
+      guestUsageId
+    );
 
     return res.json(job);
   } catch (error) {

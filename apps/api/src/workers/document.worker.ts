@@ -1,3 +1,4 @@
+import { prisma } from '@repo/database';
 import { downloadFromS3, uploadToS3 } from '@repo/file-upload';
 import { execFile } from 'child_process';
 import fs from 'fs';
@@ -45,6 +46,8 @@ const mergePdfService = async (keys: string[]) => {
 
   fs.writeFileSync(processedPath, finalPdfBytes);
 
+  const fileSize = finalPdfBytes.length;
+
   // 4. Upload result to S3
   const s3Key = `processed/${outputName}`;
 
@@ -58,7 +61,7 @@ const mergePdfService = async (keys: string[]) => {
   rawFiles.forEach(f => fs.existsSync(f) && fs.unlinkSync(f));
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
-  return s3Key;
+  return { key: s3Key, size: fileSize };
 };
 
 // SplitPDF Service Logic
@@ -100,6 +103,8 @@ const splitPdfService = async (key: string, startPage: number, endPage: number) 
   const processedPath = Paths.processed(outputName);
   fs.writeFileSync(processedPath, splitBytes);
 
+  const fileSize = splitBytes.length;
+
   // 5. Upload to S3
   const s3Key = `processed/${outputName}`;
   await uploadToS3({
@@ -112,7 +117,7 @@ const splitPdfService = async (key: string, startPage: number, endPage: number) 
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
-  return s3Key;
+  return { key: s3Key, size: fileSize };
 };
 
 // Generic LibraOffice Conversion
@@ -124,23 +129,17 @@ const convertWithLibreOffice = async (
   const ext = path.extname(inputPath).toLowerCase();
   const profileDir = path.join(path.dirname(outputDir), 'profiles', uuidv4());
 
-  // Ensure profile directory exists (soffice might create it, but good to be safe/clean)
-  // Actually, for UserInstallation, we just need a unique path.
-  // We should ensure the parent 'profiles' dir exists.
   const profilesParent = path.dirname(profileDir);
   if (!fs.existsSync(profilesParent)) {
     fs.mkdirSync(profilesParent, { recursive: true });
   }
 
-  // Format path for UserInstallation URL
-  // Windows paths need to be converted to URL format (file:///C:/...)
   const profileUrl = `file:///${profileDir.replace(/\\/g, '/')}`;
 
   const command = 'soffice';
 
   const args = [`-env:UserInstallation=${profileUrl}`, '--headless', '--convert-to', targetFormat];
 
-  // Use PDF-specific filter ONLY when input is PDF
   if (ext === '.pdf') {
     args.push(`--infilter=writer_pdf_import`);
   }
@@ -173,7 +172,12 @@ const convertWithLibreOffice = async (
 };
 
 // Main Dynamic conversion service
-const convertFilesService = async (s3Key: string, targetFormat: 'pdf' | 'docx' | 'txt' | 'doc') => {
+const convertFilesService = async (
+  s3Key: string,
+  targetFormat: 'pdf' | 'docx' | 'txt' | 'doc'
+  // documentId?: string,
+  // jobId?: string
+) => {
   Paths.ensureFolders();
 
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
@@ -184,50 +188,109 @@ const convertFilesService = async (s3Key: string, targetFormat: 'pdf' | 'docx' |
 
   fs.writeFileSync(rawPath, buffer);
 
-  // 2. Convert Format
   const outputPath = await convertWithLibreOffice(rawPath, Paths.processed(''), targetFormat);
+
+  const outputFileSize = fs.statSync(outputPath).size;
 
   const outputName = path.basename(outputPath);
 
-  // 3. Upload to S3
   const uploadedKey = `processed/${outputName}`;
+
   await uploadToS3({
     localPath: outputPath,
     key: uploadedKey,
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 4. CleanUp The Temp/ Folder After Conversion and File upload
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
 
-  return uploadedKey;
+  return { key: uploadedKey, size: outputFileSize };
 };
 
-// --- Worker Entry Point ---
-
 export default async function (job: Job) {
+  const { documentId, jobId } = job.data;
+
+  // 1. Start Processing (Update DB)
+  if (jobId && documentId) {
+    await prisma.job.update({ where: { id: jobId }, data: { status: 'PROCESSING' } });
+    await prisma.document.update({
+      where: { id: documentId },
+      data: { status: 'PROCESSING', processingStartedAt: new Date() },
+    });
+  }
+
   try {
     let resultS3Key: string;
+    let outputFileSize = 0; // Initialize size
+
+    let result: { key: string; size: number };
 
     switch (job.task) {
       case 'merge':
-        resultS3Key = await mergePdfService(job.data.keys);
+        result = await mergePdfService(job.data.keys);
+        // You might need to fetch size for merge/split separately if needed
         break;
       case 'split':
-        resultS3Key = await splitPdfService(job.data.key, job.data.startPage, job.data.endPage);
+        result = await splitPdfService(job.data.key, job.data.startPage, job.data.endPage);
         break;
       case 'convert':
-        resultS3Key = await convertFilesService(job.data.key, job.data.targetFormat);
+        result = await convertFilesService(job.data.key, job.data.targetFormat);
         break;
       default:
         throw new Error(`Unknown task: ${job.task}`);
     }
 
+    // eslint-disable-next-line
+    resultS3Key = result.key;
+    outputFileSize = result.size;
+
+    // 2. Success (Update DB)
+    if (jobId && documentId) {
+      await prisma.$transaction([
+        prisma.document.update({
+          where: { id: documentId },
+          data: {
+            status: 'COMPLETED',
+            processedS3Key: resultS3Key,
+            processedFileSize: outputFileSize || 0,
+            processingCompletedAt: new Date(),
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'COMPLETED',
+            result: { success: true, outputKey: resultS3Key },
+          },
+        }),
+      ]);
+    }
+
     return { s3Key: resultS3Key };
   } catch (err) {
     const error = err as Error;
-    // Re-throw to let Piscina handle the error state
+
+    // 3. Failure (Update DB)
+    if (jobId && documentId) {
+      await prisma.$transaction([
+        prisma.document.update({
+          where: { id: documentId },
+          data: {
+            status: 'FAILED',
+            processingError: error.message,
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'FAILED',
+            error: error.message,
+          },
+        }),
+      ]);
+    }
+
     throw new Error(error.message || 'Unknown error');
   }
 }

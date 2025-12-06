@@ -23,6 +23,7 @@ model user {
   documents    document[]
   images       image[]
   usageLogs    usageLog[]
+  jobs         Job[]
 }
 
 model account {
@@ -140,6 +141,7 @@ model guestUsage {
 
   documents document[]
   images    image[]
+  jobs      Job[]
 
   @@unique([ipAddress, fingerprint])
   @@index([ipAddress])
@@ -155,7 +157,7 @@ model document {
   originalFormat   String
   targetFormat     String?
   fileSize         Int
-  s3Key            String  @unique
+  s3Key            String
   s3Bucket         String
 
   status         ProcessingStatus @default(PENDING)
@@ -241,13 +243,16 @@ model documentMerge {
   id         String @id @default(cuid())
   documentId String
   mergedId   String
+  mergeOrder Int
 
   document document @relation("MergedMainDocument", fields: [documentId], references: [id])
   merged   document @relation("MergedChildDocument", fields: [mergedId], references: [id])
 
   @@index([documentId])
   @@index([mergedId])
+  @@unique([documentId, mergeOrder])
 }
+
 
 model usageLog {
   id           String  @id @default(cuid())
@@ -290,4 +295,39 @@ enum ImageOperation {
   FORMAT_CONVERSION
   COMPRESS
   RESIZE
+}
+
+model Job {
+  id     String    @id @default(cuid())
+  type   JobType
+  task   String
+  status JobStatus @default(QUEUED)
+  data   Json
+  result Json?
+  error  String?   @db.Text
+
+  userId       String?
+  guestUsageId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       user?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestUsage guestUsage? @relation(fields: [guestUsageId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([guestUsageId])
+  @@index([status])
+}
+
+enum JobType {
+  DOCUMENT
+  IMAGE
+}
+
+enum JobStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
 }

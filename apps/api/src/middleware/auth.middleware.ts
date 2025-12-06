@@ -18,43 +18,44 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const session = await auth.api.getSession({
-    headers: fromNodeHeaders(req.headers),
-  });
-
-  if (session?.user?.id) {
-    req.userId = session.user.id;
-    req.user = session.user;
-    req.session = session.session;
-    console.log("Account All Ready Created");
-    return next();
-  }
-
-  const ip: IpAddress = (req.ip as IpAddress);
-  const fingerprint:Fingerprint = req.headers['x-fingerprint'] as
-  Fingerprint;
-
-  let guest = await prisma.guestUsage.findUnique({
-    where: {
-      ipAddress_fingerprint: {
-        ipAddress : ip,
-        fingerprint
-      }
-    }
-  });
-
-  if (!guest) {
-    guest = await prisma.guestUsage.create({
-      data: {
-        ipAddress : ip,
-        fingerprint
-      }
+  try {
+    const session = await auth.api.getSession({
+      headers: fromNodeHeaders(req.headers),
     });
-    console.log("Guest Created");
-  }else{
-    console.log("Guest All Ready Created");
-  }
 
-  req.guestId = guest.id;
-  next();
+    if (session?.user?.id) {
+      req.userId = session.user.id;
+      req.user = session.user;
+      req.session = session.session;
+      return next();
+    }
+
+    const ip: IpAddress = req.ip as IpAddress;
+    const fingerprintHeader = req.headers['x-fingerprint'];
+    const fingerprint: Fingerprint | null =
+      typeof fingerprintHeader === 'string' ? fingerprintHeader : null;
+
+    let guest = await prisma.guestUsage.findFirst({
+      where: {
+        ipAddress: ip,
+        fingerprint: fingerprint,
+      },
+    });
+
+    if (!guest) {
+      guest = await prisma.guestUsage.create({
+        data: {
+          ipAddress: ip,
+          fingerprint,
+        },
+      });
+    }
+
+    req.guestId = guest.id;
+    next();
+  } catch (error) {
+    console.error('Auth Middleware Error:', error);
+    res.status(500).json({ error: 'Authentication Error', details: (error as Error).message });
+    // next(error); // Optionally pass to global handler, but responding here is safer for now to ensure visibility
+  }
 };
