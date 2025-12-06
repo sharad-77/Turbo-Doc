@@ -11,6 +11,8 @@ export const splitPdfSchema = z.object({
   key: z.string().endsWith('.pdf').min(1),
   startPage: z.number().min(0),
   endPage: z.number().min(1),
+  originalFileName: z.string(),
+  fileSize: z.number().min(1),
 });
 
 export const convertDocumentSchema = z.object({

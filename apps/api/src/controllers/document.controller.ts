@@ -1,10 +1,9 @@
 import { convertDocumentSchema, mergePdfSchema, splitPdfSchema } from '@repo/zod-schemas';
-import { error } from 'console';
 import { Request, Response } from 'express';
 import {
-  convertFilesService,
-  mergePdfService,
-  splitPdfService,
+    convertFilesService,
+    mergePdfService,
+    splitPdfService,
 } from '../services/documents/document-services.js';
 
 interface AuthenticatedRequest extends Request {
@@ -41,7 +40,7 @@ export const mergePdfController = async (req: AuthenticatedRequest, res: Respons
   }
 };
 
-export const splitPdfController = async (req: Request, res: Response) => {
+export const splitPdfController = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parse = splitPdfSchema.safeParse(req.body);
 
@@ -49,9 +48,17 @@ export const splitPdfController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: parse.error.flatten() });
     }
 
-    const { key, startPage, endPage } = parse.data;
+    const { key, startPage, endPage, originalFileName, fileSize } = parse.data;
 
-    const job = await splitPdfService(key, startPage, endPage);
+    const job = await splitPdfService(
+      key,
+      startPage,
+      endPage,
+      req.userId,
+      req.guestId,
+      originalFileName,
+      fileSize
+    );
 
     return res.json(job);
   } catch (error) {

@@ -6,21 +6,36 @@ import {
   resizeImageService,
 } from '../services/image/image.conversion.services.js';
 
-export const convertImageController = async (req: Request, res: Response) => {
+interface AuthenticatedRequest extends Request {
+  userId?: string;
+  guestId?: string;
+}
+
+export const convertImageController = async (req: AuthenticatedRequest, res: Response) => {
   const parse = imageConvertScheama.safeParse(req.body);
 
   if (!parse.success) {
     return res.status(400).json({ error: parse.error.message });
   }
 
-  const { key, format } = parse.data;
+  const { key, format, originalFileName, originalFormat, fileSize, width, height } = parse.data;
 
-  const job = await convertImageFormatService(key, format);
+  const job = await convertImageFormatService(
+    key,
+    format,
+    req.userId,
+    req.guestId,
+    originalFileName,
+    originalFormat,
+    fileSize,
+    width,
+    height
+  );
 
   res.json(job);
 };
 
-export const compressImageController = async (req: Request, res: Response) => {
+export const compressImageController = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parse = imageCompressionSchema.safeParse(req.body);
 
@@ -28,9 +43,19 @@ export const compressImageController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: parse.error.message });
     }
 
-    const { key, quality } = parse.data;
+    const { key, quality, originalFileName, originalFormat, fileSize, width, height } = parse.data;
 
-    const job = await compressImageService(key, quality);
+    const job = await compressImageService(
+      key,
+      quality,
+      req.userId,
+      req.guestId,
+      originalFileName,
+      originalFormat,
+      fileSize,
+      width,
+      height
+    );
 
     res.json(job);
   } catch (err) {
@@ -39,7 +64,7 @@ export const compressImageController = async (req: Request, res: Response) => {
   }
 };
 
-export const resizeImageController = async (req: Request, res: Response) => {
+export const resizeImageController = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parse = imageResizeSchema.safeParse(req.body);
 
@@ -47,9 +72,19 @@ export const resizeImageController = async (req: Request, res: Response) => {
       return res.status(400).json({ error: parse.error.message });
     }
 
-    const { key, scalePercent } = parse.data;
+    const { key, scalePercent, originalFileName, originalFormat, fileSize, width, height } = parse.data;
 
-    const job = await resizeImageService(key, scalePercent);
+    const job = await resizeImageService(
+      key,
+      scalePercent,
+      req.userId,
+      req.guestId,
+      originalFileName,
+      originalFormat,
+      fileSize,
+      width,
+      height
+    );
 
     res.json(job);
   } catch (error) {

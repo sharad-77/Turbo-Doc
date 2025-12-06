@@ -1,9 +1,13 @@
+import { prisma } from '@repo/database';
 import { downloadFromS3, uploadToS3 } from '@repo/file-upload';
 import fs from 'fs';
 import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
 import type { Job } from '../types/worker.types.js';
 import { Paths } from '../utils/path.js';
+
+// Disable Sharp cache to prevent file locking on Windows
+sharp.cache(false);
 
 // --- Service Logic (Moved from image.conversion.services.ts) ---
 
@@ -20,7 +24,7 @@ const convertImageFormatService = async (
   const outputPath = Paths.processed(outputFileName);
 
   // 2. Convert directly from buffer (no raw file)
-  await sharp(buffer).toFormat(targetFormat).toFile(outputPath);
+  const outputInfo = await sharp(buffer).toFormat(targetFormat).toFile(outputPath);
 
   // 3. Upload to S3
   const uploadedKey = `processed/${outputFileName}`;
@@ -31,11 +35,20 @@ const convertImageFormatService = async (
   });
 
   // 4. Cleanup
-  if (fs.existsSync(outputPath)) {
-    await fs.promises.unlink(outputPath);
+  try {
+    if (fs.existsSync(outputPath)) {
+      await fs.promises.unlink(outputPath);
+    }
+  } catch (cleanupErr) {
+    console.warn(`Failed to cleanup ${outputPath}:`, cleanupErr);
   }
 
-  return uploadedKey;
+  return {
+    key: uploadedKey,
+    width: outputInfo.width || 0,
+    height: outputInfo.height || 0,
+    size: outputInfo.size,
+  };
 };
 
 const compressImageService = async (
@@ -71,7 +84,7 @@ const compressImageService = async (
     pipeline = pipeline.jpeg({ quality });
   }
 
-  await pipeline.toFile(outputPath);
+  const outputInfo = await pipeline.toFile(outputPath);
 
   // 5. Upload to S3
   const uploadedKey = `processed/${outputFileName}`;
@@ -82,11 +95,20 @@ const compressImageService = async (
   });
 
   // 6. Cleanup
-  if (fs.existsSync(outputPath)) {
-    await fs.promises.unlink(outputPath);
+  try {
+    if (fs.existsSync(outputPath)) {
+      await fs.promises.unlink(outputPath);
+    }
+  } catch (cleanupErr) {
+    console.warn(`Failed to cleanup ${outputPath}:`, cleanupErr);
   }
 
-  return uploadedKey;
+  return {
+    key: uploadedKey,
+    width: outputInfo.width || 0,
+    height: outputInfo.height || 0,
+    size: outputInfo.size,
+  };
 };
 
 const resizeImageService = async (
@@ -120,7 +142,7 @@ const resizeImageService = async (
   const outputPath = Paths.processed(outputFileName);
 
   // 4. Resize image
-  await sharp(buffer).resize(newWidth, newHeight).toFile(outputPath);
+  const outputInfo = await sharp(buffer).resize(newWidth, newHeight).toFile(outputPath);
 
   // 5. Upload to S3
   const uploadedKey = `processed/${outputFileName}`;
@@ -131,36 +153,100 @@ const resizeImageService = async (
   });
 
   // 6. Cleanup
-  if (fs.existsSync(outputPath)) {
-    await fs.promises.unlink(outputPath);
+  try {
+    if (fs.existsSync(outputPath)) {
+      await fs.promises.unlink(outputPath);
+    }
+  } catch (cleanupErr) {
+    console.warn(`Failed to cleanup ${outputPath}:`, cleanupErr);
   }
 
-  return uploadedKey;
+  return {
+    key: uploadedKey,
+    width: outputInfo.width || 0,
+    height: outputInfo.height || 0,
+    size: outputInfo.size,
+  };
 };
 
 // --- Worker Entry Point ---
 
 export default async function (job: Job) {
+  const { imageId, jobId } = job.data;
+
+  // 1. Start Processing (Update DB)
+  if (jobId && imageId) {
+    await prisma.job.update({ where: { id: jobId }, data: { status: 'PROCESSING' } });
+    await prisma.image.update({
+      where: { id: imageId },
+      data: { status: 'PROCESSING', processingStartedAt: new Date() },
+    });
+  }
+
   try {
-    let resultS3Key: string;
+    let result: { key: string; width: number; height: number; size: number };
 
     switch (job.task) {
       case 'convert':
-        resultS3Key = await convertImageFormatService(job.data.key, job.data.targetFormat);
+        result = await convertImageFormatService(job.data.key, job.data.targetFormat);
         break;
       case 'compress':
-        resultS3Key = await compressImageService(job.data.key, job.data.quality);
+        result = await compressImageService(job.data.key, job.data.quality);
         break;
       case 'resize':
-        resultS3Key = await resizeImageService(job.data.key, job.data.scalePercent);
+        result = await resizeImageService(job.data.key, job.data.scalePercent);
         break;
       default:
         throw new Error(`Unknown task: ${job.task}`);
     }
 
-    return { s3Key: resultS3Key };
+    // 2. Success (Update DB)
+    if (jobId && imageId) {
+      await prisma.$transaction([
+        prisma.image.update({
+          where: { id: imageId },
+          data: {
+            status: 'COMPLETED',
+            processedS3Key: result.key,
+            processedFileSize: result.size,
+            processedWidth: result.width,
+            processedHeight: result.height,
+            processingCompletedAt: new Date(),
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'COMPLETED',
+            result: { success: true, outputKey: result.key, ...result },
+          },
+        }),
+      ]);
+    }
+
+    return { s3Key: result.key, ...result };
   } catch (err) {
     const error = err as Error;
+
+    // 3. Failure (Update DB)
+    if (jobId && imageId) {
+      await prisma.$transaction([
+        prisma.image.update({
+          where: { id: imageId },
+          data: {
+            status: 'FAILED',
+            processingError: error.message,
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'FAILED',
+            error: error.message,
+          },
+        }),
+      ]);
+    }
     // Re-throw to let Piscina handle the error state
     throw new Error(error.message || 'Unknown error');
   }

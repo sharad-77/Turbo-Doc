@@ -46,7 +46,7 @@ export const workerService = {
 
     const job: Job = {
       jobId,
-      type: 'doc',
+      type: 'image',
       task: data.type,
       data: data,
       status: 'queued',

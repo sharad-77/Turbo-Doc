@@ -55,12 +55,57 @@ export const mergePdfService = async (
 };
 
 // SplitPDF Service Logic
-export const splitPdfService = async (key: string, startPage: number, endPage: number) => {
+export const splitPdfService = async (
+  key: string,
+  startPage: number,
+  endPage: number,
+  userId: string | undefined,
+  guestUsageId: string | undefined,
+  originalFileName: string,
+  fileSize: number
+) => {
+  const newDoc = await prisma.document.create({
+    data: {
+      originalFileName: originalFileName,
+      originalFormat: 'pdf',
+      fileSize: fileSize,
+
+      targetFormat: 'pdf',
+      s3Key: key,
+      s3Bucket: process.env.AWS_BUCKET_NAME || 'default-bucket',
+
+      status: 'PENDING',
+      conversionType: 'SPLIT',
+      userId: userId,
+      guestUsageId: guestUsageId,
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      planSnapshot: 'FREE',
+    },
+  });
+
+  const newJob = await prisma.job.create({
+    data: {
+      type: 'DOCUMENT',
+      task: 'split',
+      status: 'QUEUED',
+      data: {
+        documentId: newDoc.id,
+        s3Key: newDoc.s3Key,
+        startPage,
+        endPage,
+      },
+      userId: userId,
+      guestUsageId: guestUsageId,
+    },
+  });
+
   return await workerService.runDocumentJob({
     type: 'split',
     key,
     startPage,
     endPage,
+    documentId: newDoc.id,
+    jobId: newJob.id,
   });
 };
 
