@@ -1,4 +1,4 @@
-import { imageCompressionSchema, imageConvertScheama, imageResizeSchema } from '@repo/zod-schemas';
+import { imageCompressionSchema, imageConvertSchema, imageResizeSchema } from '@repo/zod-schemas';
 import { Request, Response } from 'express';
 import {
   compressImageService,
@@ -12,7 +12,7 @@ interface AuthenticatedRequest extends Request {
 }
 
 export const convertImageController = async (req: AuthenticatedRequest, res: Response) => {
-  const parse = imageConvertScheama.safeParse(req.body);
+  const parse = imageConvertSchema.safeParse(req.body);
 
   if (!parse.success) {
     return res.status(400).json({ error: parse.error.message });
@@ -72,7 +72,8 @@ export const resizeImageController = async (req: AuthenticatedRequest, res: Resp
       return res.status(400).json({ error: parse.error.message });
     }
 
-    const { key, scalePercent, originalFileName, originalFormat, fileSize, width, height } = parse.data;
+    const { key, scalePercent, originalFileName, originalFormat, fileSize, width, height } =
+      parse.data;
 
     const job = await resizeImageService(
       key,

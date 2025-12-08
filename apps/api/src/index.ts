@@ -9,6 +9,8 @@ import documentsRoutes from './routes/document.routes.js';
 import imageRoutes from './routes/images.routes.js';
 import jobsRoutes from './routes/jobs.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
+import paymentRoutes from './routes/payments.routes.js';
+import { handleWebhook } from './controllers/payment.controller.js';
 
 dotenv.config();
 
@@ -38,8 +40,12 @@ app.use(
   })
 );
 
+app.post('/api/v1/payments/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/v1/payments', paymentRoutes);
 
 app.all('/api/auth/*path', toNodeHandler(auth));
 app.use('/test', authMiddleware);
@@ -49,17 +55,6 @@ app.use('/api/v1/documents', authMiddleware, documentsRoutes);
 app.use('/api/v1/images', authMiddleware, imageRoutes);
 app.use('/api/jobs', jobsRoutes);
 
-// Global Error Handler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error('Global Error Handler Reached:', err);
-  res.status(500).json({
-    error: 'Internal Server Error',
-    message: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
-  });
-});
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

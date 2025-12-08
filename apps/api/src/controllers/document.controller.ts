@@ -1,9 +1,9 @@
 import { convertDocumentSchema, mergePdfSchema, splitPdfSchema } from '@repo/zod-schemas';
 import { Request, Response } from 'express';
 import {
-    convertFilesService,
-    mergePdfService,
-    splitPdfService,
+  convertFilesService,
+  mergePdfService,
+  splitPdfService,
 } from '../services/documents/document-services.js';
 
 interface AuthenticatedRequest extends Request {
@@ -36,7 +36,7 @@ export const mergePdfController = async (req: AuthenticatedRequest, res: Respons
     return res.json(job);
   } catch (err) {
     console.error('Merge PDF error:', err);
-    res.status(500).json({ error: 'Internal Server Error', message:err });
+    res.status(500).json({ error: 'Internal Server Error', message: err });
   }
 };
 

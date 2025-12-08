@@ -31,6 +31,20 @@ export const convertImageFormatService = async (
     },
   });
 
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
+
   const newJob = await prisma.job.create({
     data: {
       type: 'IMAGE',
@@ -85,6 +99,20 @@ export const compressImageService = async (
     },
   });
 
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
+
   const newJob = await prisma.job.create({
     data: {
       type: 'IMAGE',
@@ -138,6 +166,20 @@ export const resizeImageService = async (
       planSnapshot: 'FREE',
     },
   });
+
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { imageCount: { increment: 1 } },
+    });
+  }
 
   const newJob = await prisma.job.create({
     data: {

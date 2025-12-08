@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const Formats = z.enum(['pdf', 'docx', 'txt', 'doc']);
+
 export const mergePdfSchema = z.object({
   keys: z.array(z.string().endsWith('.pdf')).min(2),
   originalFileName: z.string(),
@@ -17,9 +19,9 @@ export const splitPdfSchema = z.object({
 
 export const convertDocumentSchema = z.object({
   key: z.string().min(1),
-  targetFormat: z.enum(['pdf', 'docx', 'txt', 'doc']),
+  targetFormat: Formats,
   originalFileName: z.string().min(1),
-  originalFormat: z.enum(['pdf', 'docx', 'txt', 'doc']),
+  originalFormat: Formats,
   fileSize: z.number().min(1),
 });
 

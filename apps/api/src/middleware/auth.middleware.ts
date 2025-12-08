@@ -10,15 +10,9 @@ interface AuthRequest extends Request {
   guestId?: string;
 }
 
-type IpAddress = string;
-type Fingerprint = string;
-
-export const authMiddleware = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
+    // check if user is logged in
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers),
     });
@@ -27,35 +21,53 @@ export const authMiddleware = async (
       req.userId = session.user.id;
       req.user = session.user;
       req.session = session.session;
+
+      // Ensure UserUsage exists
+      await prisma.userUsage.upsert({
+        where: { userId: session.user.id },
+        update: {},
+        create: { userId: session.user.id },
+      });
+
       return next();
     }
 
-    const ip: IpAddress = req.ip as IpAddress;
-    const fingerprintHeader = req.headers['x-fingerprint'];
-    const fingerprint: Fingerprint | null =
-      typeof fingerprintHeader === 'string' ? fingerprintHeader : null;
+    // handle guest user
+    const ip = req.ip || '127.0.0.1';
+    const fingerprint = req.headers['x-fingerprint'];
+    const userAgent = req.headers['user-agent'] || 'unknown';
 
-    let guest = await prisma.guestUsage.findFirst({
-      where: {
-        ipAddress: ip,
-        fingerprint: fingerprint,
-      },
-    });
-
-    if (!guest) {
-      guest = await prisma.guestUsage.create({
-        data: {
-          ipAddress: ip,
-          fingerprint,
-        },
+    // make sure fingerprint exists
+    if (!fingerprint || typeof fingerprint !== 'string') {
+      return res.status(400).json({
+        error: 'Missing Fingerprint',
+        message: 'x-fingerprint header is required',
       });
     }
 
-    req.guestId = guest.id;
+    // find or create the guest
+    const guestUser = await prisma.guestUsage.upsert({
+      where: {
+        ipAddress_fingerprint: {
+          ipAddress: ip,
+          fingerprint: fingerprint,
+        },
+      },
+      update: {
+        userAgent: userAgent,
+        updatedAt: new Date(),
+      },
+      create: {
+        ipAddress: ip,
+        fingerprint: fingerprint,
+        userAgent: userAgent,
+      },
+    });
+
+    req.guestId = guestUser.id;
     next();
   } catch (error) {
-    console.error('Auth Middleware Error:', error);
-    res.status(500).json({ error: 'Authentication Error', details: (error as Error).message });
-    // next(error); // Optionally pass to global handler, but responding here is safer for now to ensure visibility
+    console.log('Middleware error:', error);
+    res.status(500).json({ error: 'Something went wrong' });
   }
 };

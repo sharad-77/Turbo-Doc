@@ -31,6 +31,20 @@ export const mergePdfService = async (
     },
   });
 
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { mergeCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { mergeCount: { increment: 1 } },
+    });
+  }
+
   const newJob = await prisma.job.create({
     data: {
       type: 'DOCUMENT',
@@ -82,6 +96,20 @@ export const splitPdfService = async (
       planSnapshot: 'FREE',
     },
   });
+
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { documentCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { documentCount: { increment: 1 } },
+    });
+  }
 
   const newJob = await prisma.job.create({
     data: {
@@ -137,6 +165,20 @@ export const convertFilesService = async (
       planSnapshot: 'FREE',
     },
   });
+
+  if (guestUsageId) {
+    await prisma.guestUsage.update({
+      where: { id: guestUsageId },
+      data: { documentCount: { increment: 1 } },
+    });
+  }
+
+  if (userId) {
+    await prisma.userUsage.update({
+      where: { userId },
+      data: { documentCount: { increment: 1 } },
+    });
+  }
 
   const newJob = await prisma.job.create({
     data: {

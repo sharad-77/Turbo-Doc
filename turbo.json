@@ -18,7 +18,10 @@
     "AWS_SECRET_ACCESS_KEY",
     "AWS_S3_REGION",
     "AWS_BUCKET_NAME",
-    "AWS_CLOUDFRONT_URL"
+    "AWS_CLOUDFRONT_URL",
+    "TEST_API_KEY",
+    "TEST_API_SECRET",
+    "TEST_API_WEBHOOK_SECRET"
   ],
   "tasks": {
     "db:generate": {

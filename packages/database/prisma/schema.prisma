@@ -24,6 +24,10 @@ model user {
   images       image[]
   usageLogs    usageLog[]
   jobs         Job[]
+  userUsage    UserUsage?
+  plan         PlanType  @default(FREE)
+  payments     Payment[]
+
 }
 
 model account {
@@ -94,24 +98,25 @@ model subscriptionPlan {
 }
 
 model subscription {
-  id     String             @id @default(cuid())
-  userId String             @unique
-  planId String
-  status SubscriptionStatus @default(ACTIVE)
+  id         String             @id @default(cuid())
+  userId     String             @unique
+  planId     String
+  status     SubscriptionStatus @default(ACTIVE)
 
   startDate  DateTime  @default(now())
   endDate    DateTime?
   canceledAt DateTime?
 
   // Payments
-  stripeCustomerId     String?
-  stripeSubscriptionId String?
+  provider               PaymentProvider @default(RAZORPAY)
+  providerSubscriptionId String?
+  providerCustomerId     String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
-  user user             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plan subscriptionPlan @relation(fields: [planId], references: [id])
+  user user              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan subscriptionPlan  @relation(fields: [planId], references: [id])
 
   @@index([userId])
   @@index([planId])
@@ -146,6 +151,23 @@ model guestUsage {
   @@unique([ipAddress, fingerprint])
   @@index([ipAddress])
   @@index([lastResetAt])
+}
+
+model UserUsage {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  documentCount Int @default(0)
+  imageCount    Int @default(0)
+  mergeCount    Int @default(0)
+
+  lastResetAt   DateTime @default(now())
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model document {
@@ -201,7 +223,7 @@ model image {
   fileSize         Int
   width            Int
   height           Int
-  s3Key            String 
+  s3Key            String
   s3Bucket         String
 
   operation ImageOperation
@@ -252,7 +274,6 @@ model documentMerge {
   @@index([mergedId])
   @@unique([documentId, mergeOrder])
 }
-
 
 model usageLog {
   id           String  @id @default(cuid())
@@ -330,4 +351,57 @@ enum JobStatus {
   PROCESSING
   COMPLETED
   FAILED
+}
+
+enum PlanType {
+  FREE
+  PRO
+}
+
+enum PaymentProvider {
+  STRIPE
+  RAZORPAY
+  PAYPAL
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  userId            String
+  amount            Decimal       @db.Decimal(10, 2)
+  currency          String        @default("INR")
+  provider          PaymentProvider
+  providerPaymentId String?       @unique
+  providerOrderId   String?
+  status            PaymentStatus @default(PENDING)
+  metadata          Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([providerPaymentId])
+  @@index([providerOrderId])
+}
+
+model WebhookEvent {
+  id        String   @id @default(cuid())
+  provider  PaymentProvider
+  eventType String
+  eventId   String? @unique
+  payload   Json
+  processed Boolean  @default(false)
+  error     String?  @db.Text
+
+  createdAt DateTime @default(now())
+
+  @@index([provider, eventType])
 }
