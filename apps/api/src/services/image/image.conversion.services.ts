@@ -41,9 +41,23 @@ export const convertImageFormatService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { imageCount: { increment: 1 } },
+      data: {
+        imageCount: { increment: 1 },
+        lifetimeImageCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'IMAGE',
+      resourceId: newImage.id,
+      operation: 'IMAGE_CONVERT',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {
@@ -109,9 +123,23 @@ export const compressImageService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { imageCount: { increment: 1 } },
+      data: {
+        imageCount: { increment: 1 },
+        lifetimeImageCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'IMAGE',
+      resourceId: newImage.id,
+      operation: 'COMPRESS',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {
@@ -177,9 +205,23 @@ export const resizeImageService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { imageCount: { increment: 1 } },
+      data: {
+        imageCount: { increment: 1 },
+        lifetimeImageCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'IMAGE',
+      resourceId: newImage.id,
+      operation: 'RESIZE',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {

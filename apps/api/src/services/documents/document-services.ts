@@ -41,9 +41,23 @@ export const mergePdfService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { mergeCount: { increment: 1 } },
+      data: {
+        mergeCount: { increment: 1 },
+        lifetimeDocumentCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'DOCUMENT',
+      resourceId: newDoc.id,
+      operation: 'MERGE',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {
@@ -107,9 +121,23 @@ export const splitPdfService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { documentCount: { increment: 1 } },
+      data: {
+        documentCount: { increment: 1 },
+        lifetimeDocumentCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'DOCUMENT',
+      resourceId: newDoc.id,
+      operation: 'SPLIT',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {
@@ -176,9 +204,23 @@ export const convertFilesService = async (
   if (userId) {
     await prisma.userUsage.update({
       where: { userId },
-      data: { documentCount: { increment: 1 } },
+      data: {
+        documentCount: { increment: 1 },
+        lifetimeDocumentCount: { increment: 1 },
+      },
     });
   }
+
+  await prisma.usageLog.create({
+    data: {
+      userId,
+      guestUsageId,
+      resourceType: 'DOCUMENT',
+      resourceId: newDoc.id,
+      operation: 'PDF_CONVERT',
+      resetPeriod: 'DAILY',
+    },
+  });
 
   const newJob = await prisma.job.create({
     data: {

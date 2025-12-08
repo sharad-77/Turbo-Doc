@@ -162,6 +162,10 @@ model UserUsage {
   imageCount    Int @default(0)
   mergeCount    Int @default(0)
 
+  // Lifetime Stats (Never reset)
+  lifetimeDocumentCount Int @default(0)
+  lifetimeImageCount    Int @default(0)
+
   lastResetAt   DateTime @default(now())
 
   createdAt     DateTime @default(now())

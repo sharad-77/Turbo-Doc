@@ -4,13 +4,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
+import { handleWebhook } from './controllers/payment.controller.js';
 import { authMiddleware } from './middleware/auth.middleware.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
 import documentsRoutes from './routes/document.routes.js';
 import imageRoutes from './routes/images.routes.js';
 import jobsRoutes from './routes/jobs.routes.js';
-import uploadRoutes from './routes/upload.routes.js';
 import paymentRoutes from './routes/payments.routes.js';
-import { handleWebhook } from './controllers/payment.controller.js';
+import uploadRoutes from './routes/upload.routes.js';
 
 dotenv.config();
 
@@ -53,6 +54,7 @@ app.use('/test', authMiddleware);
 app.use('/api/v1', uploadRoutes);
 app.use('/api/v1/documents', authMiddleware, documentsRoutes);
 app.use('/api/v1/images', authMiddleware, imageRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/jobs', jobsRoutes);
 
 server.listen(port, () => {
