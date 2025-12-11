@@ -11,5 +11,14 @@ export default [
       'turbo/no-undeclared-env-vars': 'warn',
     },
   },
-  nextPlugin,
+  {
+    files: ['apps/web/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+    },
+  },
 ];

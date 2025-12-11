@@ -1,0 +1,1227 @@
+[
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\eslint.config.mjs",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\next.config.ts",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\postcss.config.mjs",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\cancellation-policy\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\convert\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\dashboard\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\image-resolution\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\layout.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\not-found.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\payments\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\pricing\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\privacy-policy\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\profile\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\refund-policy\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\settings\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\signin\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\signup\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\app\\storage\\page.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\AppSidebar.tsx",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 1,
+        "message": "'isCollapsed' is assigned a value but never used.",
+        "line": 169,
+        "column": 9,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 169,
+        "endColumn": 20
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { ThemeToggle } from '@/components/ThemeToggle';\nimport { Button } from '@repo/ui/components/ui/button';\nimport { Sheet, SheetContent, SheetTrigger } from '@repo/ui/components/ui/sheet';\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarFooter,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  useSidebar,\n} from '@repo/ui/components/ui/sidebar';\nimport { motion } from 'framer-motion';\nimport {\n  CreditCard,\n  FileText,\n  HardDrive,\n  Image,\n  LayoutDashboard,\n  LogOut,\n  Menu,\n  Settings,\n  User,\n  X,\n} from 'lucide-react';\nimport { useState } from 'react';\nimport { Link, useLocation } from 'react-router-dom';\n\nconst menuItems = [\n  {\n    title: 'Dashboard',\n    icon: LayoutDashboard,\n    url: '/dashboard',\n  },\n  {\n    title: 'Document Tools',\n    icon: FileText,\n    url: '/convert',\n  },\n  {\n    title: 'Image Resolution',\n    icon: Image,\n    url: '/image-resolution',\n  },\n  {\n    title: 'Storage',\n    icon: HardDrive,\n    url: '/storage',\n  },\n  {\n    title: 'Payments',\n    icon: CreditCard,\n    url: '/payments',\n  },\n  {\n    title: 'Settings',\n    icon: Settings,\n    url: '/settings',\n  },\n  {\n    title: 'Profile',\n    icon: User,\n    url: '/profile',\n  },\n];\n\n// Mobile Sidebar Content Component\nconst MobileSidebarContent = ({ onClose }: { onClose: () => void }) => {\n  const location = useLocation();\n\n  return (\n    <div className=\"flex flex-col h-full\">\n      {/* Header */}\n      <div className=\"border-b border-border p-4\">\n        <div className=\"flex items-center justify-between\">\n          <div className=\"flex items-center gap-2\">\n            <div className=\"w-8 h-8 bg-primary rounded-lg flex items-center justify-center\">\n              <FileText className=\"w-4 h-4 text-primary-foreground\" />\n            </div>\n            <span className=\"text-base font-space-grotesk font-semibold\">TurboDoc</span>\n          </div>\n          <Button variant=\"ghost\" size=\"icon\" onClick={onClose} className=\"h-8 w-8\">\n            <X className=\"w-4 h-4\" />\n          </Button>\n        </div>\n      </div>\n\n      {/* Navigation */}\n      <nav className=\"flex-1 overflow-y-auto p-3\">\n        <div className=\"space-y-1\">\n          {menuItems.map((item, index) => (\n            <motion.div\n              key={item.title}\n              initial={{ opacity: 0, x: -20 }}\n              animate={{ opacity: 1, x: 0 }}\n              transition={{ delay: index * 0.05, duration: 0.3 }}\n            >\n              <Link\n                to={item.url}\n                onClick={onClose}\n                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${\n                  location.pathname === item.url\n                    ? 'bg-primary/10 text-primary'\n                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'\n                }`}\n              >\n                <item.icon className=\"w-4 h-4 flex-shrink-0\" />\n                <span>{item.title}</span>\n              </Link>\n            </motion.div>\n          ))}\n        </div>\n      </nav>\n\n      {/* Footer */}\n      <div className=\"border-t border-border p-3 space-y-2\">\n        <div className=\"flex items-center justify-between\">\n          <ThemeToggle />\n          <Button\n            variant=\"ghost\"\n            size=\"sm\"\n            className=\"gap-2 text-muted-foreground hover:text-foreground\"\n          >\n            <LogOut className=\"w-4 h-4\" />\n            Logout\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n};\n\n// Mobile Header with Hamburger\nexport function MobileHeader() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <div className=\"md:hidden fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border\">\n      <div className=\"flex items-center justify-between px-4 h-14\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"w-7 h-7 bg-primary rounded-lg flex items-center justify-center\">\n            <FileText className=\"w-4 h-4 text-primary-foreground\" />\n          </div>\n          <span className=\"text-sm font-space-grotesk font-semibold\">TurboDoc</span>\n        </div>\n\n        <Sheet open={isOpen} onOpenChange={setIsOpen}>\n          <SheetTrigger asChild>\n            <Button variant=\"ghost\" size=\"icon\" className=\"h-9 w-9\">\n              <Menu className=\"w-5 h-5\" />\n            </Button>\n          </SheetTrigger>\n          <SheetContent side=\"left\" className=\"p-0 w-72\">\n            <MobileSidebarContent onClose={() => setIsOpen(false)} />\n          </SheetContent>\n        </Sheet>\n      </div>\n    </div>\n  );\n}\n\nexport function AppSidebar() {\n  const location = useLocation();\n  const { state } = useSidebar();\n  const isCollapsed = state === 'collapsed';\n\n  return (\n    <>\n      {/* Desktop/Tablet Sidebar */}\n      <Sidebar\n        collapsible=\"icon\"\n        className=\"border-r border-border hidden md:flex transition-all duration-300\"\n      >\n        <SidebarHeader className=\"border-b border-border p-3 lg:p-4\">\n          <div className=\"flex items-center gap-2\">\n            <div className=\"w-7 h-7 lg:w-8 lg:h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0\">\n              <FileText className=\"w-4 h-4 lg:w-5 lg:h-5 text-primary-foreground\" />\n            </div>\n            <span className=\"text-sm lg:text-base font-space-grotesk font-semibold group-data-[collapsible=icon]:hidden truncate\">\n              TurboDoc\n            </span>\n          </div>\n        </SidebarHeader>\n\n        <SidebarContent className=\"p-2 lg:p-3\">\n          <SidebarGroup>\n            <SidebarGroupLabel className=\"text-xs uppercase tracking-wider text-muted-foreground px-2 py-1.5\">\n              Navigation\n            </SidebarGroupLabel>\n            <SidebarGroupContent>\n              <SidebarMenu className=\"space-y-0.5\">\n                {menuItems.map(item => (\n                  <SidebarMenuItem key={item.title}>\n                    <SidebarMenuButton\n                      asChild\n                      isActive={location.pathname === item.url}\n                      tooltip={item.title}\n                      className=\"px-2.5 py-2 lg:px-3 lg:py-2.5 rounded-lg transition-all duration-200\"\n                    >\n                      <Link to={item.url} className=\"flex items-center gap-2.5\">\n                        <item.icon className=\"w-4 h-4 flex-shrink-0\" />\n                        <span className=\"text-sm truncate\">{item.title}</span>\n                      </Link>\n                    </SidebarMenuButton>\n                  </SidebarMenuItem>\n                ))}\n              </SidebarMenu>\n            </SidebarGroupContent>\n          </SidebarGroup>\n        </SidebarContent>\n\n        <SidebarFooter className=\"border-t border-border p-2 lg:p-3\">\n          <div className=\"flex items-center justify-between gap-2 group-data-[collapsible=icon]:justify-center\">\n            <ThemeToggle />\n            <Button\n              variant=\"ghost\"\n              size=\"sm\"\n              className=\"gap-2 group-data-[collapsible=icon]:hidden text-xs lg:text-sm\"\n            >\n              <LogOut className=\"w-4 h-4\" />\n              <span className=\"hidden lg:inline\">Logout</span>\n            </Button>\n          </div>\n        </SidebarFooter>\n      </Sidebar>\n    </>\n  );\n}\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\CTASection.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\ConversionButtons.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\DeviceShowcase.tsx",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 1,
+        "message": "'i' is defined but never used.",
+        "line": 79,
+        "column": 32,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 79,
+        "endColumn": 33
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Button } from '@repo/ui/components/ui/button';\nimport { motion } from 'framer-motion';\nimport { ArrowRight, CheckCircle2, FileText, Upload, Zap } from 'lucide-react';\nimport { Link } from 'react-router-dom';\n\nexport const DeviceShowcase = () => {\n  return (\n    <section className=\"py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden\">\n      {/* Background elements */}\n      <div className=\"absolute inset-0 showcase-gradient pointer-events-none\" />\n\n      <div className=\"max-w-7xl mx-auto relative\">\n        {/* Section Header */}\n        <motion.div\n          initial={{ opacity: 0, y: 30 }}\n          whileInView={{ opacity: 1, y: 0 }}\n          viewport={{ once: true }}\n          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}\n          className=\"text-center mb-16\"\n        >\n          <h2 className=\"text-3xl sm:text-4xl lg:text-5xl font-space-grotesk font-bold mb-6\">\n            Works Everywhere\n            <span className=\"block mt-1 shimmer-text\">You Do</span>\n          </h2>\n          <p className=\"text-lg text-muted-foreground max-w-2xl mx-auto\">\n            Access TurboDoc from any device. Seamless experience across desktop, tablet, and mobile.\n          </p>\n        </motion.div>\n\n        {/* Device Mockup */}\n        <motion.div\n          initial={{ opacity: 0, y: 40, scale: 0.95 }}\n          whileInView={{ opacity: 1, y: 0, scale: 1 }}\n          viewport={{ once: true }}\n          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}\n          className=\"relative mx-auto max-w-4xl\"\n        >\n          {/* Glow behind mockup */}\n          <div className=\"absolute inset-0 showcase-mockup-glow scale-110\" />\n\n          {/* MacBook Frame */}\n          <motion.div\n            className=\"relative hero-macbook-frame rounded-2xl p-2 shadow-2xl\"\n            whileHover={{\n              scale: 1.02,\n              transition: { duration: 0.4, ease: 'easeOut' },\n            }}\n          >\n            {/* Screen */}\n            <div className=\"hero-macbook-screen rounded-xl overflow-hidden\">\n              {/* Browser Chrome */}\n              <div className=\"hero-browser-chrome px-4 py-3 flex items-center gap-3\">\n                <div className=\"flex items-center gap-1.5\">\n                  <div className=\"w-3 h-3 rounded-full bg-[#FF5F57]\" />\n                  <div className=\"w-3 h-3 rounded-full bg-[#FFBD2E]\" />\n                  <div className=\"w-3 h-3 rounded-full bg-[#28CA41]\" />\n                </div>\n                <div className=\"flex-1 flex justify-center\">\n                  <div className=\"hero-url-bar rounded-lg px-4 py-1.5 text-xs flex items-center gap-2 max-w-xs w-full justify-center\">\n                    <svg className=\"w-3 h-3 text-chart-3\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n                      <path d=\"M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z\" />\n                    </svg>\n                    <span className=\"text-muted-foreground font-inter\">turbodoc.app</span>\n                  </div>\n                </div>\n                <div className=\"w-14\" />\n              </div>\n\n              {/* App Interface */}\n              <div className=\"bg-background p-6 sm:p-8 min-h-[300px]\">\n                <div className=\"grid grid-cols-3 gap-4 mb-6\">\n                  {[\n                    { label: 'PDF', color: 'bg-chart-4' },\n                    { label: 'Word', color: 'bg-chart-2' },\n                    { label: 'Excel', color: 'bg-chart-3' },\n                    { label: 'PPT', color: 'bg-chart-1' },\n                    { label: 'Images', color: 'bg-chart-5' },\n                    { label: 'Merge', color: 'bg-primary' },\n                  ].map((item, i) => (\n                    <motion.div\n                      key={item.label}\n                      className=\"showcase-tool-card p-4 rounded-xl text-center group cursor-pointer\"\n                      whileHover={{ scale: 1.05, y: -2 }}\n                      transition={{ duration: 0.2 }}\n                    >\n                      <div\n                        className={`w-10 h-10 ${item.color} rounded-lg mx-auto mb-2 flex items-center justify-center`}\n                      >\n                        <FileText className=\"w-5 h-5 text-primary-foreground\" />\n                      </div>\n                      <p className=\"text-xs font-medium text-foreground\">{item.label}</p>\n                    </motion.div>\n                  ))}\n                </div>\n\n                {/* Upload Zone */}\n                <div className=\"hero-upload-zone rounded-xl p-6 text-center\">\n                  <motion.div\n                    className=\"w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/10 flex items-center justify-center\"\n                    animate={{ y: [-2, 2, -2] }}\n                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}\n                  >\n                    <Upload className=\"w-5 h-5 text-primary\" />\n                  </motion.div>\n                  <p className=\"text-sm font-medium text-foreground mb-1\">Drop files here</p>\n                  <p className=\"text-xs text-muted-foreground\">or click to browse</p>\n                </div>\n\n                {/* Progress */}\n                <div className=\"mt-4 flex items-center justify-between text-xs\">\n                  <div className=\"flex items-center gap-2\">\n                    <FileText className=\"w-3.5 h-3.5 text-primary\" />\n                    <span className=\"text-foreground\">document.pdf</span>\n                  </div>\n                  <div className=\"flex items-center gap-1.5 text-chart-3\">\n                    <CheckCircle2 className=\"w-3.5 h-3.5\" />\n                    <span>Complete</span>\n                  </div>\n                </div>\n              </div>\n            </div>\n\n            {/* MacBook Bottom */}\n            <div className=\"hero-macbook-notch h-4 rounded-b-xl flex items-center justify-center\">\n              <div className=\"w-16 h-1 bg-border/30 rounded-full\" />\n            </div>\n          </motion.div>\n        </motion.div>\n\n        {/* Bottom CTA */}\n        <motion.div\n          initial={{ opacity: 0, y: 20 }}\n          whileInView={{ opacity: 1, y: 0 }}\n          viewport={{ once: true }}\n          transition={{ duration: 0.6, delay: 0.3 }}\n          className=\"text-center mt-16\"\n        >\n          <div className=\"inline-flex flex-col sm:flex-row gap-4\">\n            <Button variant=\"default\" size=\"lg\" className=\"group\" asChild>\n              <Link to=\"/convert\">\n                <Zap className=\"w-5 h-5 mr-2\" />\n                Try It Now\n                <ArrowRight className=\"w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform\" />\n              </Link>\n            </Button>\n            <Button variant=\"outline\" size=\"lg\" asChild>\n              <Link to=\"/signup\">Create Account</Link>\n            </Button>\n          </div>\n          <p className=\"text-sm text-muted-foreground mt-4\">\n            Available on all devices • No app download required\n          </p>\n        </motion.div>\n      </div>\n    </section>\n  );\n};\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\FeaturesSection.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\Footer.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\HeroSection.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\ModeToggle.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\Navigation.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\PricingSection.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\StatsSection.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\TestimonialsSection.tsx",
+    "messages": [
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+        "line": 104,
+        "column": 17,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&quot;" },
+            "fix": { "range": [3191, 3209], "text": "\n                &quot;" },
+            "desc": "Replace with `&quot;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&ldquo;" },
+            "fix": { "range": [3191, 3209], "text": "\n                &ldquo;" },
+            "desc": "Replace with `&ldquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#34;" },
+            "fix": { "range": [3191, 3209], "text": "\n                &#34;" },
+            "desc": "Replace with `&#34;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rdquo;" },
+            "fix": { "range": [3191, 3209], "text": "\n                &rdquo;" },
+            "desc": "Replace with `&rdquo;`."
+          }
+        ]
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+        "line": 104,
+        "column": 39,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&quot;" },
+            "fix": { "range": [3230, 3246], "text": "&quot;\n              " },
+            "desc": "Replace with `&quot;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&ldquo;" },
+            "fix": { "range": [3230, 3246], "text": "&ldquo;\n              " },
+            "desc": "Replace with `&ldquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#34;" },
+            "fix": { "range": [3230, 3246], "text": "&#34;\n              " },
+            "desc": "Replace with `&#34;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rdquo;" },
+            "fix": { "range": [3230, 3246], "text": "&rdquo;\n              " },
+            "desc": "Replace with `&rdquo;`."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 2,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Star, Quote } from 'lucide-react';\nimport { motion } from 'framer-motion';\n\nconst testimonials = [\n  {\n    name: 'Sarah Johnson',\n    role: 'Marketing Director',\n    company: 'TechCorp Inc.',\n    content:\n      'TurboDoc has revolutionized our workflow. We process hundreds of documents daily, and this tool makes it seamless.',\n    rating: 5,\n    avatar: 'SJ',\n  },\n  {\n    name: 'Michael Chen',\n    role: 'Legal Consultant',\n    company: 'Chen & Associates',\n    content:\n      'The security and reliability are outstanding. Perfect for handling sensitive legal documents with confidence.',\n    rating: 5,\n    avatar: 'MC',\n  },\n  {\n    name: 'Emily Rodriguez',\n    role: 'Project Manager',\n    company: 'Global Solutions',\n    content:\n      'Batch processing saves us hours every week. The interface is intuitive and the results are always perfect.',\n    rating: 5,\n    avatar: 'ER',\n  },\n];\n\nimport { type Variants } from 'framer-motion';\n\nconst containerVariants: Variants = {\n  hidden: { opacity: 0 },\n  visible: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.1,\n      delayChildren: 0.1,\n    },\n  },\n};\n\nconst itemVariants: Variants = {\n  hidden: { opacity: 0, y: 30 },\n  visible: {\n    opacity: 1,\n    y: 0,\n    transition: {\n      duration: 0.6,\n      ease: 'easeOut',\n    },\n  },\n};\n\nexport const TestimonialsSection = () => {\n  return (\n    <section className=\"py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden\">\n      {/* Background */}\n      <div className=\"absolute inset-0 testimonials-gradient pointer-events-none\" />\n\n      <div className=\"max-w-7xl mx-auto relative\">\n        <motion.div\n          initial={{ opacity: 0, y: 30 }}\n          whileInView={{ opacity: 1, y: 0 }}\n          viewport={{ once: true }}\n          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}\n          className=\"text-center mb-16\"\n        >\n          <h2 className=\"text-3xl sm:text-4xl lg:text-5xl font-space-grotesk font-bold mb-6\">\n            Loved by thousands of\n            <span className=\"block mt-1 shimmer-text\">professionals worldwide</span>\n          </h2>\n          <p className=\"text-lg text-muted-foreground max-w-2xl mx-auto\">\n            Join the community of satisfied users who trust TurboDoc for their daily workflows.\n          </p>\n        </motion.div>\n\n        <motion.div\n          variants={containerVariants}\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-50px' }}\n          className=\"grid grid-cols-1 md:grid-cols-3 gap-6\"\n        >\n          {testimonials.map((testimonial, index) => (\n            <motion.div\n              key={index}\n              variants={itemVariants}\n              className=\"testimonial-card-modern group\"\n            >\n              <Quote className=\"w-10 h-10 text-primary/20 mb-4 group-hover:text-primary/30 transition-colors\" />\n\n              <div className=\"flex gap-1 mb-4\">\n                {[...Array(testimonial.rating)].map((_, i) => (\n                  <Star key={i} className=\"w-4 h-4 fill-chart-1 text-chart-1\" />\n                ))}\n              </div>\n\n              <p className=\"text-muted-foreground mb-6 leading-relaxed text-sm\">\n                \"{testimonial.content}\"\n              </p>\n\n              <div className=\"flex items-center gap-3 mt-auto pt-4 border-t border-border/50\">\n                <div className=\"testimonial-avatar w-11 h-11 rounded-full flex items-center justify-center text-primary-foreground font-semibold text-sm\">\n                  {testimonial.avatar}\n                </div>\n                <div>\n                  <p className=\"font-semibold text-sm text-foreground\">{testimonial.name}</p>\n                  <p className=\"text-xs text-muted-foreground\">\n                    {testimonial.role}, {testimonial.company}\n                  </p>\n                </div>\n              </div>\n            </motion.div>\n          ))}\n        </motion.div>\n      </div>\n    </section>\n  );\n};\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\ThemeToggle.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\UploadPreview.tsx",
+    "messages": [
+      {
+        "ruleId": "jsx-a11y/alt-text",
+        "severity": 1,
+        "message": "Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images.",
+        "line": 82,
+        "column": 21,
+        "nodeType": "JSXOpeningElement",
+        "endLine": 82,
+        "endColumn": 63
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Button } from '@repo/ui/components/ui/button';\nimport { ArrowRight, CheckCircle, Download, FileText, Image, Settings, Upload } from 'lucide-react';\nimport { useState } from 'react';\n\nexport const UploadPreview = () => {\n  const [dragActive, setDragActive] = useState(false);\n\n  const handleDrag = (e: React.DragEvent) => {\n    e.preventDefault();\n    e.stopPropagation();\n    if (e.type === 'dragenter' || e.type === 'dragover') {\n      setDragActive(true);\n    } else if (e.type === 'dragleave') {\n      setDragActive(false);\n    }\n  };\n\n  const handleDrop = (e: React.DragEvent) => {\n    e.preventDefault();\n    e.stopPropagation();\n    setDragActive(false);\n    // Handle file drop logic here\n  };\n\n  return (\n    <section className=\"py-24 px-4 sm:px-6 lg:px-8\">\n      <div className=\"max-w-7xl mx-auto\">\n        {/* Section Header */}\n        <div className=\"text-center mb-16\">\n          <h2 className=\"text-3xl sm:text-4xl lg:text-5xl font-space-grotesk font-bold mb-6\">\n            Try it right now\n          </h2>\n          <p className=\"text-xl text-muted-foreground max-w-2xl mx-auto\">\n            Experience the power of Document Toolkit with our live demo. Upload a file and see the\n            magic happen.\n          </p>\n        </div>\n\n        <div className=\"grid grid-cols-1 lg:grid-cols-2 gap-12 items-center\">\n          {/* Upload Area */}\n          <div className=\"space-y-6\">\n            <div\n              className={`border-2 border-dashed rounded-3xl p-12 text-center transition-all duration-300 ${\n                dragActive\n                  ? 'border-primary bg-primary/5 scale-105'\n                  : 'border-card-border hover:border-primary/50 hover:bg-primary/5'\n              }`}\n              onDragEnter={handleDrag}\n              onDragLeave={handleDrag}\n              onDragOver={handleDrag}\n              onDrop={handleDrop}\n            >\n              <div className=\"w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                <Upload className=\"w-8 h-8 text-primary\" />\n              </div>\n              <h3 className=\"text-xl font-semibold mb-4\">Drop your files here</h3>\n              <p className=\"text-muted-foreground mb-6\">Or click to browse from your device</p>\n              <Button variant=\"outline\" size=\"lg\">\n                Choose Files\n              </Button>\n              <div className=\"mt-6 text-sm text-muted-foreground\">\n                Supports: PDF, Word, PowerPoint, Excel, Images (JPG, PNG)\n                <br />\n                Max file size: 10MB for free users\n              </div>\n            </div>\n\n            {/* Conversion Options */}\n            <div className=\"grid grid-cols-2 gap-4\">\n              <div className=\"feature-card !p-6\">\n                <div className=\"flex items-center gap-3 mb-3\">\n                  <div className=\"w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center\">\n                    <FileText className=\"w-4 h-4 text-primary\" />\n                  </div>\n                  <span className=\"font-semibold\">Convert to PDF</span>\n                </div>\n                <p className=\"text-sm text-muted-foreground\">Perfect formatting preservation</p>\n              </div>\n              <div className=\"feature-card !p-6\">\n                <div className=\"flex items-center gap-3 mb-3\">\n                  <div className=\"w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center\">\n                    <Image className=\"w-4 h-4 text-success\" />\n                  </div>\n                  <span className=\"font-semibold\">To Images</span>\n                </div>\n                <p className=\"text-sm text-muted-foreground\">High-quality JPG/PNG output</p>\n              </div>\n            </div>\n          </div>\n\n          {/* Preview Area */}\n          <div className=\"space-y-6\">\n            {/* Mock Conversion Process */}\n            <div className=\"feature-card\">\n              <div className=\"flex items-center justify-between mb-6\">\n                <h3 className=\"text-lg font-semibold\">Conversion Preview</h3>\n                <Settings className=\"w-5 h-5 text-muted-foreground\" />\n              </div>\n\n              {/* File Preview */}\n              <div className=\"space-y-4 mb-6\">\n                <div className=\"flex items-center gap-4 p-4 bg-background-subtle rounded-2xl\">\n                  <div className=\"w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center\">\n                    <FileText className=\"w-6 h-6 text-primary\" />\n                  </div>\n                  <div className=\"flex-1\">\n                    <p className=\"font-medium\">sample-document.docx</p>\n                    <p className=\"text-sm text-muted-foreground\">2.4 MB • 12 pages</p>\n                  </div>\n                  <CheckCircle className=\"w-5 h-5 text-success\" />\n                </div>\n\n                <div className=\"flex items-center justify-center py-4\">\n                  <ArrowRight className=\"w-6 h-6 text-muted-foreground\" />\n                </div>\n\n                <div className=\"flex items-center gap-4 p-4 bg-background-subtle rounded-2xl border-2 border-dashed border-primary/30\">\n                  <div className=\"w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center\">\n                    <FileText className=\"w-6 h-6 text-success\" />\n                  </div>\n                  <div className=\"flex-1\">\n                    <p className=\"font-medium\">sample-document.pdf</p>\n                    <p className=\"text-sm text-muted-foreground\">1.8 MB • Ready to download</p>\n                  </div>\n                  <Download className=\"w-5 h-5 text-success\" />\n                </div>\n              </div>\n\n              {/* Progress Bar */}\n              <div className=\"space-y-2 mb-6\">\n                <div className=\"flex justify-between text-sm\">\n                  <span>Converting...</span>\n                  <span>95%</span>\n                </div>\n                <div className=\"w-full bg-background-subtle rounded-full h-2\">\n                  <div\n                    className=\"bg-primary h-2 rounded-full transition-all duration-1000\"\n                    style={{ width: '95%' }}\n                  ></div>\n                </div>\n              </div>\n\n              {/* Action Buttons */}\n              <div className=\"flex gap-3\">\n                <Button variant=\"cta\" className=\"flex-1\">\n                  <Download className=\"w-4 h-4\" />\n                  Download PDF\n                </Button>\n                <Button variant=\"outline\">\n                  <Settings className=\"w-4 h-4\" />\n                </Button>\n              </div>\n            </div>\n\n            {/* Features Note */}\n            <div className=\"bg-primary/5 rounded-2xl p-6\">\n              <h4 className=\"font-semibold mb-3\">What happens next?</h4>\n              <div className=\"space-y-2 text-sm text-muted-foreground\">\n                <p>✓ Files are processed on secure servers</p>\n                <p>✓ Original formatting is preserved</p>\n                <p>✓ Files are automatically deleted after 24 hours</p>\n                <p>✓ Download links are sent to your email</p>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </section>\n  );\n};\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\UsageLimitBanner.tsx",
+    "messages": [
+      {
+        "ruleId": "jsx-a11y/alt-text",
+        "severity": 1,
+        "message": "Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images.",
+        "line": 32,
+        "column": 15,
+        "nodeType": "JSXOpeningElement",
+        "endLine": 32,
+        "endColumn": 57
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Button } from '@repo/ui/components/ui/button';\nimport { motion } from 'framer-motion';\nimport { Crown, FileText, Image, Sparkles } from 'lucide-react';\nimport { Link } from 'react-router-dom';\n\nexport const UsageLimitBanner = () => {\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 20 }}\n      animate={{ opacity: 1, y: 0 }}\n      transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}\n      className=\"usage-banner-glass rounded-2xl p-6 relative overflow-hidden\"\n    >\n      {/* Subtle glow effect */}\n      <div className=\"absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none\" />\n\n      <div className=\"flex flex-col sm:flex-row items-start sm:items-center gap-4 relative\">\n        <div className=\"w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 usage-banner-icon\">\n          <Crown className=\"w-6 h-6 text-primary\" />\n        </div>\n\n        <div className=\"flex-1\">\n          <h3 className=\"font-space-grotesk font-semibold text-base mb-2 text-foreground\">\n            Free Plan Limits\n          </h3>\n          <div className=\"flex flex-wrap gap-4 mb-3\">\n            <div className=\"flex items-center gap-2 text-sm text-muted-foreground\">\n              <FileText className=\"w-4 h-4 text-chart-2\" />\n              <span>5 conversions/day</span>\n            </div>\n            <div className=\"flex items-center gap-2 text-sm text-muted-foreground\">\n              <Image className=\"w-4 h-4 text-chart-3\" />\n              <span>5 image edits/day</span>\n            </div>\n          </div>\n        </div>\n\n        <Button variant=\"default\" size=\"sm\" className=\"usage-upgrade-button group\" asChild>\n          <Link to=\"/pricing\">\n            <Sparkles className=\"w-4 h-4 mr-1.5 group-hover:rotate-12 transition-transform\" />\n            Upgrade\n          </Link>\n        </Button>\n      </div>\n    </motion.div>\n  );\n};\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\components\\layout\\AppLayout.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\contexts\\PreviewModeContext.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\lib\\react-router-shim.tsx",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 30,
+        "column": 50,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 30,
+        "endColumn": 53,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [797, 800], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [797, 800], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      },
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 38,
+        "column": 64,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 38,
+        "endColumn": 67,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [966, 969], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [966, 969], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      },
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 50,
+        "column": 45,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 50,
+        "endColumn": 48,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [1375, 1378], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [1375, 1378], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      },
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 51,
+        "column": 38,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 51,
+        "endColumn": 41,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [1437, 1440], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [1437, 1440], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      },
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 53,
+        "column": 38,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 53,
+        "endColumn": 41,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [1532, 1535], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [1532, 1535], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 5,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "'use client';\n\nimport NextLink from 'next/link';\nimport { usePathname, useRouter, useSearchParams } from 'next/navigation';\n\nexport function useNavigate() {\n  const router = useRouter();\n  // Shim for navigate function\n  return (path: string | number) => {\n    if (typeof path === 'number') {\n      if (path === -1) router.back();\n      // forward not easily supported but rare\n    } else {\n      router.push(path);\n    }\n  };\n}\n\nexport function useLocation() {\n  const pathname = usePathname();\n  const searchParams = useSearchParams();\n  return {\n    pathname,\n    search: searchParams.toString() ? `?${searchParams.toString()}` : '',\n    hash: typeof window !== 'undefined' ? window.location.hash : '',\n  };\n}\n\n// Shim Link to support 'to' prop\nexport const Link = ({ to, children, ...props }: any) => {\n  return (\n    <NextLink href={to || '#'} {...props}>\n      {children}\n    </NextLink>\n  );\n};\n\nexport const NavLink = ({ to, children, className, ...props }: any) => {\n  const pathname = usePathname();\n  const isActive = pathname === to;\n  // This is a basic shim, might need more complex isActive logic\n  const finalClassName = typeof className === 'function' ? className({ isActive }) : className;\n  return (\n    <NextLink href={to || '#'} className={finalClassName} {...props}>\n      {children}\n    </NextLink>\n  );\n};\n\nexport const BrowserRouter = ({ children }: any) => <>{children}</>;\nexport const Routes = ({ children }: any) => <>{children}</>;\nexport const Route = () => null;\nexport const Outlet = ({ children }: any) => <>{children}</>; // Usually Outlet implies nested layout, which we handle via Next.js\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\providers\\Providers.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\CancellationPolicy.tsx",
+    "messages": [
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+        "line": 71,
+        "column": 27,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&quot;" },
+            "fix": { "range": [3065, 3092], "text": "Click &quot;Cancel Subscription\"" },
+            "desc": "Replace with `&quot;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&ldquo;" },
+            "fix": { "range": [3065, 3092], "text": "Click &ldquo;Cancel Subscription\"" },
+            "desc": "Replace with `&ldquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#34;" },
+            "fix": { "range": [3065, 3092], "text": "Click &#34;Cancel Subscription\"" },
+            "desc": "Replace with `&#34;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rdquo;" },
+            "fix": { "range": [3065, 3092], "text": "Click &rdquo;Cancel Subscription\"" },
+            "desc": "Replace with `&rdquo;`."
+          }
+        ]
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+        "line": 71,
+        "column": 47,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&quot;" },
+            "fix": { "range": [3065, 3092], "text": "Click \"Cancel Subscription&quot;" },
+            "desc": "Replace with `&quot;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&ldquo;" },
+            "fix": { "range": [3065, 3092], "text": "Click \"Cancel Subscription&ldquo;" },
+            "desc": "Replace with `&ldquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#34;" },
+            "fix": { "range": [3065, 3092], "text": "Click \"Cancel Subscription&#34;" },
+            "desc": "Replace with `&#34;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rdquo;" },
+            "fix": { "range": [3065, 3092], "text": "Click \"Cancel Subscription&rdquo;" },
+            "desc": "Replace with `&rdquo;`."
+          }
+        ]
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 73,
+        "column": 24,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": { "range": [3169, 3204], "text": "You&apos;ll receive a confirmation email" },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": { "range": [3169, 3204], "text": "You&lsquo;ll receive a confirmation email" },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": { "range": [3169, 3204], "text": "You&#39;ll receive a confirmation email" },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": { "range": [3169, 3204], "text": "You&rsquo;ll receive a confirmation email" },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 3,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { motion } from 'framer-motion';\nimport { XCircle, ChevronRight, Home } from 'lucide-react';\nimport { Link } from 'react-router-dom';\n\nconst CancellationPolicy = () => {\n  return (\n    <div className=\"min-h-screen bg-background\">\n      {/* Header */}\n      <div className=\"bg-card border-b border-border\">\n        <div className=\"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6\">\n          {/* Breadcrumb */}\n          <nav className=\"flex items-center gap-2 text-sm text-muted-foreground mb-4\">\n            <Link\n              to=\"/\"\n              className=\"hover:text-foreground transition-colors flex items-center gap-1\"\n            >\n              <Home className=\"w-4 h-4\" />\n              Home\n            </Link>\n            <ChevronRight className=\"w-4 h-4\" />\n            <span className=\"text-foreground\">Cancellation Policy</span>\n          </nav>\n\n          <motion.div\n            initial={{ opacity: 0, y: 20 }}\n            animate={{ opacity: 1, y: 0 }}\n            transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}\n            className=\"flex items-center gap-3\"\n          >\n            <div className=\"w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center\">\n              <XCircle className=\"w-6 h-6 text-primary\" />\n            </div>\n            <div>\n              <h1 className=\"text-2xl sm:text-3xl font-space-grotesk font-bold\">\n                Cancellation Policy\n              </h1>\n              <p className=\"text-sm text-muted-foreground mt-1\">Last updated: December 2024</p>\n            </div>\n          </motion.div>\n        </div>\n      </div>\n\n      {/* Content */}\n      <div className=\"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10\">\n        <motion.div\n          initial={{ opacity: 0, y: 20 }}\n          animate={{ opacity: 1, y: 0 }}\n          transition={{ duration: 0.6, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}\n          className=\"space-y-8\"\n        >\n          {/* Overview */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">Overview</h2>\n            <p className=\"text-muted-foreground leading-relaxed\">\n              [PLACEHOLDER: Provide an overview of your cancellation policy. Explain that customers\n              can cancel their subscription at any time and what happens to their account after\n              cancellation.]\n            </p>\n          </section>\n\n          {/* How to Cancel */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              How to Cancel Your Subscription\n            </h2>\n            <div className=\"space-y-4 text-muted-foreground leading-relaxed\">\n              <p>[PLACEHOLDER: Provide step-by-step cancellation instructions]</p>\n              <ol className=\"list-decimal list-inside space-y-2 ml-2\">\n                <li>Log in to your TurboDoc account</li>\n                <li>Navigate to Settings → Billing</li>\n                <li>Click \"Cancel Subscription\"</li>\n                <li>Confirm your cancellation</li>\n                <li>You'll receive a confirmation email</li>\n              </ol>\n            </div>\n          </section>\n\n          {/* What Happens After Cancellation */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              What Happens After Cancellation\n            </h2>\n            <div className=\"space-y-4 text-muted-foreground leading-relaxed\">\n              <p>[PLACEHOLDER: Explain post-cancellation access and data handling]</p>\n              <ul className=\"list-disc list-inside space-y-2 ml-2\">\n                <li>Access continues until end of billing period</li>\n                <li>Your data remains available for [X] days</li>\n                <li>You can download your files before deletion</li>\n                <li>After [X] days, all data is permanently deleted</li>\n              </ul>\n            </div>\n          </section>\n\n          {/* Billing After Cancellation */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              Billing After Cancellation\n            </h2>\n            <div className=\"space-y-4 text-muted-foreground leading-relaxed\">\n              <p>[PLACEHOLDER: Explain billing after cancellation]</p>\n              <ul className=\"list-disc list-inside space-y-2 ml-2\">\n                <li>No further charges after cancellation confirmation</li>\n                <li>Current billing period access maintained</li>\n                <li>No prorated refunds for partial months (unless specified)</li>\n              </ul>\n            </div>\n          </section>\n\n          {/* Reactivation */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              Reactivating Your Account\n            </h2>\n            <p className=\"text-muted-foreground leading-relaxed\">\n              [PLACEHOLDER: Explain how users can reactivate their subscription. Include information\n              about whether their previous data will be available if they reactivate within the data\n              retention period.]\n            </p>\n          </section>\n\n          {/* Free Trial Cancellation */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              Free Trial Cancellation\n            </h2>\n            <p className=\"text-muted-foreground leading-relaxed\">\n              [PLACEHOLDER: Explain free trial cancellation terms. State that users can cancel\n              during the trial period without being charged and how to cancel before the trial\n              ends.]\n            </p>\n          </section>\n\n          {/* Service Termination by TurboDoc */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">\n              Service Termination by TurboDoc\n            </h2>\n            <p className=\"text-muted-foreground leading-relaxed\">\n              [PLACEHOLDER: Explain circumstances under which TurboDoc may terminate service, such\n              as violation of terms of service, fraudulent activity, or non-payment. Include any\n              notice period provided before termination.]\n            </p>\n          </section>\n\n          {/* Contact */}\n          <section className=\"bg-card rounded-2xl border border-border p-6 sm:p-8\">\n            <h2 className=\"text-xl font-space-grotesk font-semibold mb-4\">Contact Us</h2>\n            <p className=\"text-muted-foreground leading-relaxed\">\n              [PLACEHOLDER: Provide contact information for cancellation-related questions. Include\n              email address, support hours, and expected response time.]\n            </p>\n          </section>\n        </motion.div>\n      </div>\n    </div>\n  );\n};\n\nexport default CancellationPolicy;\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Convert.tsx",
+    "messages": [
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 318,
+        "column": 35,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": { "range": [11578, 11591], "text": "Today&apos;s Usage" },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": { "range": [11578, 11591], "text": "Today&lsquo;s Usage" },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": { "range": [11578, 11591], "text": "Today&#39;s Usage" },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": { "range": [11578, 11591], "text": "Today&rsquo;s Usage" },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 1,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { UsageLimitBanner } from '@/components/UsageLimitBanner';\nimport { usePreviewMode } from '@/contexts/PreviewModeContext';\nimport { Button } from '@repo/ui/components/ui/button';\nimport { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';\nimport { Progress } from '@repo/ui/components/ui/progress';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@repo/ui/components/ui/select';\nimport { Slider } from '@repo/ui/components/ui/slider';\nimport { Switch } from '@repo/ui/components/ui/switch';\nimport {\n  Clock,\n  FileText,\n  Layers,\n  Merge,\n  RotateCcw,\n  Scissors,\n  Settings,\n  Upload,\n  X,\n  Zap,\n} from 'lucide-react';\nimport { useRef, useState } from 'react';\n\nconst Convert = () => {\n  const { isAuthenticated } = usePreviewMode();\n  const [dragActive, setDragActive] = useState(false);\n  const [files, setFiles] = useState<File[]>([]);\n  const [converting, setConverting] = useState(false);\n  const [progress, setProgress] = useState(0);\n  const [outputFormat, setOutputFormat] = useState('pdf');\n  const fileInputRef = useRef<HTMLInputElement>(null);\n\n  const handleDrag = (e: React.DragEvent) => {\n    e.preventDefault();\n    e.stopPropagation();\n    if (e.type === 'dragenter' || e.type === 'dragover') {\n      setDragActive(true);\n    } else if (e.type === 'dragleave') {\n      setDragActive(false);\n    }\n  };\n\n  const handleDrop = (e: React.DragEvent) => {\n    e.preventDefault();\n    e.stopPropagation();\n    setDragActive(false);\n\n    const droppedFiles = Array.from(e.dataTransfer.files);\n    setFiles(prev => [...prev, ...droppedFiles]);\n  };\n\n  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {\n    if (e.target.files) {\n      const selectedFiles = Array.from(e.target.files);\n      setFiles(prev => [...prev, ...selectedFiles]);\n    }\n  };\n\n  const removeFile = (index: number) => {\n    setFiles(prev => prev.filter((_, i) => i !== index));\n  };\n\n  const startConversion = () => {\n    setConverting(true);\n    setProgress(0);\n\n    // Simulate conversion progress\n    const interval = setInterval(() => {\n      setProgress(prev => {\n        if (prev >= 100) {\n          clearInterval(interval);\n          setConverting(false);\n          return 100;\n        }\n        return prev + 10;\n      });\n    }, 500);\n  };\n\n  const formatFileSize = (bytes: number) => {\n    if (bytes === 0) return '0 Bytes';\n    const k = 1024;\n    const sizes = ['Bytes', 'KB', 'MB', 'GB'];\n    const i = Math.floor(Math.log(bytes) / Math.log(k));\n    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];\n  };\n\n  const conversionTools = [\n    {\n      id: 'merge',\n      name: 'Merge PDFs',\n      icon: Merge,\n      description: 'Combine multiple PDFs into one',\n    },\n    {\n      id: 'split',\n      name: 'Split PDF',\n      icon: Scissors,\n      description: 'Split PDF into separate pages',\n    },\n    {\n      id: 'rotate',\n      name: 'Rotate Pages',\n      icon: RotateCcw,\n      description: 'Rotate PDF pages',\n    },\n    {\n      id: 'compress',\n      name: 'Compress',\n      icon: Layers,\n      description: 'Reduce file size',\n    },\n  ];\n\n  return (\n    <div className=\"min-h-screen bg-background p-4 sm:p-8\">\n      <div className=\"max-w-7xl mx-auto space-y-8\">\n        {/* Header */}\n        <div>\n          <h1 className=\"text-3xl font-space-grotesk font-bold mb-2\">Document Conversion</h1>\n          <p className=\"text-muted-foreground\">Convert documents between formats with ease</p>\n        </div>\n\n        {!isAuthenticated && <UsageLimitBanner />}\n\n        <div className=\"grid grid-cols-1 lg:grid-cols-3 gap-8\">\n          {/* Main Upload Area */}\n          <div className=\"lg:col-span-2 space-y-6\">\n            {/* Upload Zone */}\n            <Card className=\"modern-card\">\n              <CardHeader>\n                <CardTitle>Upload Files</CardTitle>\n              </CardHeader>\n              <CardContent>\n                <div\n                  className={`border-2 border-dashed rounded-3xl p-12 text-center transition-all duration-300 ${\n                    dragActive\n                      ? 'border-primary bg-primary/5 scale-[1.02]'\n                      : 'border-card-border hover:border-primary/50 hover:bg-primary/5'\n                  }`}\n                  onDragEnter={handleDrag}\n                  onDragLeave={handleDrag}\n                  onDragOver={handleDrag}\n                  onDrop={handleDrop}\n                  onClick={() => fileInputRef.current?.click()}\n                >\n                  <div className=\"w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                    <Upload className=\"w-8 h-8 text-primary\" />\n                  </div>\n                  <h3 className=\"text-xl font-semibold mb-4\">Drop your files here</h3>\n                  <p className=\"text-muted-foreground mb-6\">Or click to browse from your device</p>\n                  <Button variant=\"outline\" size=\"lg\">\n                    Choose Files\n                  </Button>\n                  <input\n                    ref={fileInputRef}\n                    type=\"file\"\n                    multiple\n                    onChange={handleFileSelect}\n                    className=\"hidden\"\n                    accept=\".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png\"\n                  />\n                  <div className=\"mt-6 text-sm text-muted-foreground\">\n                    Supports: PDF, Word, PowerPoint, Excel, Images\n                    <br />\n                    Max file size: 10MB per file\n                  </div>\n                </div>\n              </CardContent>\n            </Card>\n\n            {/* File List */}\n            {files.length > 0 && (\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle className=\"flex items-center justify-between\">\n                    <span>Selected Files ({files.length})</span>\n                    <Button variant=\"outline\" size=\"sm\" onClick={() => setFiles([])}>\n                      Clear All\n                    </Button>\n                  </CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-3\">\n                    {files.map((file, index) => (\n                      <div\n                        key={index}\n                        className=\"flex items-center justify-between p-4 rounded-2xl bg-accent\"\n                      >\n                        <div className=\"flex items-center gap-4\">\n                          <div className=\"w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                            <FileText className=\"w-6 h-6 text-primary\" />\n                          </div>\n                          <div>\n                            <h4 className=\"font-medium\">{file.name}</h4>\n                            <p className=\"text-sm text-muted-foreground\">\n                              {formatFileSize(file.size)}\n                            </p>\n                          </div>\n                        </div>\n                        <div className=\"flex items-center gap-2\">\n                          <Button variant=\"ghost\" size=\"icon\" onClick={() => removeFile(index)}>\n                            <X className=\"w-4 h-4\" />\n                          </Button>\n                        </div>\n                      </div>\n                    ))}\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n\n            {/* Conversion Progress */}\n            {converting && (\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle className=\"flex items-center gap-2\">\n                    <Clock className=\"w-5 h-5 text-primary animate-spin\" />\n                    Converting Files...\n                  </CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    <Progress value={progress} className=\"h-3\" />\n                    <div className=\"flex justify-between text-sm\">\n                      <span>Processing {files.length} files</span>\n                      <span>{progress}%</span>\n                    </div>\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n\n            {files.length > 0 && !converting && (\n              <Button variant=\"hero\" size=\"lg\" className=\"w-full\" onClick={startConversion}>\n                <Zap className=\"w-4 h-4 mr-2\" />\n                Start Conversion\n              </Button>\n            )}\n          </div>\n\n          {/* Sidebar */}\n          <div className=\"space-y-6\">\n            {/* Conversion Settings */}\n            <Card className=\"modern-card\">\n              <CardHeader>\n                <CardTitle className=\"flex items-center gap-2\">\n                  <Settings className=\"w-5 h-5\" />\n                  Settings\n                </CardTitle>\n              </CardHeader>\n              <CardContent className=\"space-y-6\">\n                <div>\n                  <label className=\"text-sm font-medium mb-2 block\">Convert to</label>\n                  <Select value={outputFormat} onValueChange={setOutputFormat}>\n                    <SelectTrigger className=\"h-12\">\n                      <SelectValue />\n                    </SelectTrigger>\n                    <SelectContent>\n                      <SelectItem value=\"pdf\">PDF</SelectItem>\n                      <SelectItem value=\"docx\">Word Document</SelectItem>\n                      <SelectItem value=\"jpg\">JPEG Image</SelectItem>\n                      <SelectItem value=\"png\">PNG Image</SelectItem>\n                      <SelectItem value=\"pptx\">PowerPoint</SelectItem>\n                    </SelectContent>\n                  </Select>\n                </div>\n\n                <div>\n                  <label className=\"text-sm font-medium mb-3 block\">Quality: High</label>\n                  <Slider defaultValue={[80]} max={100} min={10} step={10} className=\"w-full\" />\n                </div>\n\n                <div className=\"flex items-center justify-between\">\n                  <label className=\"text-sm font-medium\">Preserve formatting</label>\n                  <Switch defaultChecked />\n                </div>\n\n                <div className=\"flex items-center justify-between\">\n                  <label className=\"text-sm font-medium\">OCR (Text recognition)</label>\n                  <Switch />\n                </div>\n              </CardContent>\n            </Card>\n\n            {/* Quick Tools */}\n            <Card className=\"modern-card\">\n              <CardHeader>\n                <CardTitle>Quick Tools</CardTitle>\n              </CardHeader>\n              <CardContent>\n                <div className=\"grid grid-cols-2 gap-3\">\n                  {conversionTools.map(tool => (\n                    <Button\n                      key={tool.id}\n                      variant=\"outline\"\n                      className=\"h-auto p-4 flex flex-col items-center gap-2\"\n                    >\n                      <tool.icon className=\"w-5 h-5\" />\n                      <div className=\"text-center\">\n                        <div className=\"font-medium text-xs\">{tool.name}</div>\n                      </div>\n                    </Button>\n                  ))}\n                </div>\n              </CardContent>\n            </Card>\n\n            {/* Usage Stats */}\n            {!isAuthenticated && (\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle>Today's Usage</CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    <div className=\"flex justify-between text-sm\">\n                      <span>Conversions</span>\n                      <span>2 / 5</span>\n                    </div>\n                    <Progress value={40} />\n                    <p className=\"text-xs text-muted-foreground\">3 conversions remaining today</p>\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default Convert;\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Dashboard.tsx",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 1,
+        "message": "'selectedPeriod' is assigned a value but never used.",
+        "line": 23,
+        "column": 10,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 23,
+        "endColumn": 24
+      },
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 1,
+        "message": "'setSelectedPeriod' is assigned a value but never used.",
+        "line": 23,
+        "column": 26,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 23,
+        "endColumn": 43
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 88,
+        "column": 17,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here&apos;s what's happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here&lsquo;s what's happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here&#39;s what's happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here&rsquo;s what's happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 88,
+        "column": 24,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here's what&apos;s happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here's what&lsquo;s happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here's what&#39;s happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": {
+              "range": [2136, 2210],
+              "text": "\n            Here's what&rsquo;s happening with your documents today.\n          "
+            },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      },
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 96,
+        "column": 63,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": { "range": [2535, 2554], "text": "Today&apos;s Conversions" },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": { "range": [2535, 2554], "text": "Today&lsquo;s Conversions" },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": { "range": [2535, 2554], "text": "Today&#39;s Conversions" },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": { "range": [2535, 2554], "text": "Today&rsquo;s Conversions" },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 3,
+    "fatalErrorCount": 0,
+    "warningCount": 2,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Badge } from '@repo/ui/components/ui/badge';\nimport { Button } from '@repo/ui/components/ui/button';\nimport { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';\nimport { Progress } from '@repo/ui/components/ui/progress';\nimport {\n  Calendar,\n  Clock,\n  Crown,\n  Download,\n  FileText,\n  Filter,\n  Plus,\n  RotateCcw,\n  Save,\n  Search,\n  TrendingUp,\n  Upload,\n} from 'lucide-react';\nimport { useState } from 'react';\nimport { Link } from 'react-router-dom';\n\nconst Dashboard = () => {\n  const [selectedPeriod, setSelectedPeriod] = useState('30d');\n\n  // Mock data\n  const stats = {\n    conversionsToday: 24,\n    conversionsMonth: 456,\n    totalFiles: 1234,\n    storageUsed: 2.4,\n    storageLimit: 10,\n  };\n\n  const recentConversions = [\n    {\n      id: 1,\n      filename: 'quarterly-report.docx',\n      type: 'Word → PDF',\n      status: 'completed',\n      time: '2 minutes ago',\n      size: '2.4 MB',\n    },\n    {\n      id: 2,\n      filename: 'presentation-slides.pptx',\n      type: 'PowerPoint → PDF',\n      status: 'completed',\n      time: '15 minutes ago',\n      size: '8.7 MB',\n    },\n    {\n      id: 3,\n      filename: 'invoice-template.pdf',\n      type: 'PDF → Images',\n      status: 'processing',\n      time: '1 hour ago',\n      size: '1.2 MB',\n    },\n    {\n      id: 4,\n      filename: 'contract-draft.docx',\n      type: 'Word → PDF',\n      status: 'completed',\n      time: '3 hours ago',\n      size: '892 KB',\n    },\n  ];\n\n  const usageData = [\n    { day: 'Mon', conversions: 12 },\n    { day: 'Tue', conversions: 18 },\n    { day: 'Wed', conversions: 24 },\n    { day: 'Thu', conversions: 15 },\n    { day: 'Fri', conversions: 32 },\n    { day: 'Sat', conversions: 8 },\n    { day: 'Sun', conversions: 14 },\n  ];\n\n  const maxConversions = Math.max(...usageData.map(d => d.conversions));\n\n  return (\n    <div className=\"min-h-screen bg-background p-8\">\n      <div className=\"max-w-7xl mx-auto\">\n        {/* Welcome Section */}\n        <div className=\"mb-8\">\n          <h1 className=\"text-3xl font-space-grotesk font-bold mb-2\">Welcome back, Sarah</h1>\n          <p className=\"text-muted-foreground\">\n            Here's what's happening with your documents today.\n          </p>\n        </div>\n\n        {/* Stats Grid */}\n        <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8\">\n          <Card className=\"modern-card\">\n            <CardHeader className=\"flex flex-row items-center justify-between space-y-0 pb-2\">\n              <CardTitle className=\"text-sm font-medium\">Today's Conversions</CardTitle>\n              <Upload className=\"h-4 w-4 text-muted-foreground\" />\n            </CardHeader>\n            <CardContent>\n              <div className=\"text-2xl font-bold\">{stats.conversionsToday}</div>\n              <p className=\"text-xs text-muted-foreground\">\n                <TrendingUp className=\"inline w-3 h-3 mr-1\" />\n                +12% from yesterday\n              </p>\n            </CardContent>\n          </Card>\n\n          <Card className=\"modern-card\">\n            <CardHeader className=\"flex flex-row items-center justify-between space-y-0 pb-2\">\n              <CardTitle className=\"text-sm font-medium\">This Month</CardTitle>\n              <Calendar className=\"h-4 w-4 text-muted-foreground\" />\n            </CardHeader>\n            <CardContent>\n              <div className=\"text-2xl font-bold\">{stats.conversionsMonth}</div>\n              <p className=\"text-xs text-muted-foreground\">\n                <TrendingUp className=\"inline w-3 h-3 mr-1\" />\n                +28% from last month\n              </p>\n            </CardContent>\n          </Card>\n\n          <Card className=\"modern-card\">\n            <CardHeader className=\"flex flex-row items-center justify-between space-y-0 pb-2\">\n              <CardTitle className=\"text-sm font-medium\">Total Files</CardTitle>\n              <FileText className=\"h-4 w-4 text-muted-foreground\" />\n            </CardHeader>\n            <CardContent>\n              <div className=\"text-2xl font-bold\">{stats.totalFiles.toLocaleString()}</div>\n              <p className=\"text-xs text-muted-foreground\">All time conversions</p>\n            </CardContent>\n          </Card>\n\n          <Card className=\"modern-card\">\n            <CardHeader className=\"flex flex-row items-center justify-between space-y-0 pb-2\">\n              <CardTitle className=\"text-sm font-medium\">Storage Used</CardTitle>\n              <Download className=\"h-4 w-4 text-muted-foreground\" />\n            </CardHeader>\n            <CardContent>\n              <div className=\"text-2xl font-bold\">{stats.storageUsed} GB</div>\n              <Progress value={(stats.storageUsed / stats.storageLimit) * 100} className=\"mt-2\" />\n              <p className=\"text-xs text-muted-foreground mt-1\">\n                {stats.storageLimit - stats.storageUsed} GB remaining\n              </p>\n            </CardContent>\n          </Card>\n        </div>\n\n        <div className=\"grid grid-cols-1 lg:grid-cols-3 gap-8\">\n          {/* Usage Chart */}\n          <Card className=\"lg:col-span-2 modern-card\">\n            <CardHeader>\n              <div className=\"flex items-center justify-between\">\n                <CardTitle>Weekly Usage</CardTitle>\n                <div className=\"flex items-center gap-2\">\n                  <Button variant=\"outline\" size=\"sm\">\n                    <Filter className=\"w-4 h-4 mr-2\" />\n                    Filter\n                  </Button>\n                </div>\n              </div>\n            </CardHeader>\n            <CardContent>\n              <div className=\"space-y-4\">\n                {usageData.map((data, index) => (\n                  <div key={index} className=\"flex items-center gap-4\">\n                    <div className=\"w-12 text-sm text-muted-foreground\">{data.day}</div>\n                    <div className=\"flex-1\">\n                      <div className=\"h-8 bg-primary/20 rounded-lg relative overflow-hidden\">\n                        <div\n                          className=\"h-full bg-primary rounded-lg transition-all duration-500\"\n                          style={{ width: `${(data.conversions / maxConversions) * 100}%` }}\n                        />\n                      </div>\n                    </div>\n                    <div className=\"w-12 text-sm font-medium text-right\">{data.conversions}</div>\n                  </div>\n                ))}\n              </div>\n            </CardContent>\n          </Card>\n\n          {/* Upgrade CTA */}\n          <Card className=\"modern-card\">\n            <CardHeader>\n              <CardTitle className=\"flex items-center gap-2\">\n                <Crown className=\"w-5 h-5 text-warning\" />\n                Upgrade to Pro\n              </CardTitle>\n            </CardHeader>\n            <CardContent className=\"space-y-4\">\n              <p className=\"text-sm text-muted-foreground\">\n                Unlock unlimited conversions and advanced features.\n              </p>\n\n              <div className=\"space-y-3\">\n                <div className=\"flex items-center gap-2 text-sm\">\n                  <div className=\"w-2 h-2 bg-success rounded-full\" />\n                  Unlimited file conversions\n                </div>\n                <div className=\"flex items-center gap-2 text-sm\">\n                  <div className=\"w-2 h-2 bg-success rounded-full\" />\n                  Priority processing\n                </div>\n                <div className=\"flex items-center gap-2 text-sm\">\n                  <div className=\"w-2 h-2 bg-success rounded-full\" />\n                  Advanced file formats\n                </div>\n                <div className=\"flex items-center gap-2 text-sm\">\n                  <div className=\"w-2 h-2 bg-success rounded-full\" />\n                  API access\n                </div>\n              </div>\n\n              <Button variant=\"cta\" className=\"w-full\" asChild>\n                <Link to=\"/pricing\">Upgrade Now</Link>\n              </Button>\n            </CardContent>\n          </Card>\n        </div>\n\n        {/* Recent Conversions */}\n        <Card className=\"mt-8 modern-card\">\n          <CardHeader>\n            <div className=\"flex items-center justify-between\">\n              <CardTitle>Recent Conversions</CardTitle>\n              <div className=\"flex items-center gap-2\">\n                <Button variant=\"outline\" size=\"sm\">\n                  <Search className=\"w-4 h-4 mr-2\" />\n                  Search\n                </Button>\n                <Button variant=\"outline\" size=\"sm\" asChild>\n                  <Link to=\"/convert\">\n                    <Plus className=\"w-4 h-4 mr-2\" />\n                    New\n                  </Link>\n                </Button>\n              </div>\n            </div>\n          </CardHeader>\n          <CardContent>\n            <div className=\"space-y-4\">\n              {recentConversions.map(conversion => (\n                <div\n                  key={conversion.id}\n                  className=\"flex items-center justify-between p-4 rounded-2xl bg-accent hover:bg-accent/80 transition-colors\"\n                >\n                  <div className=\"flex items-center gap-4\">\n                    <div className=\"w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                      <FileText className=\"w-6 h-6 text-primary\" />\n                    </div>\n                    <div>\n                      <h4 className=\"font-medium\">{conversion.filename}</h4>\n                      <div className=\"flex items-center gap-2 text-sm text-muted-foreground\">\n                        <span>{conversion.type}</span>\n                        <span>•</span>\n                        <span>{conversion.size}</span>\n                      </div>\n                    </div>\n                  </div>\n                  <div className=\"flex items-center gap-2\">\n                    <div className=\"text-right\">\n                      <Badge\n                        variant={conversion.status === 'completed' ? 'default' : 'secondary'}\n                        className=\"mb-1\"\n                      >\n                        {conversion.status}\n                      </Badge>\n                      <div className=\"text-xs text-muted-foreground flex items-center gap-1\">\n                        <Clock className=\"w-3 h-3\" />\n                        {conversion.time}\n                      </div>\n                    </div>\n                    <Button variant=\"ghost\" size=\"icon\" title=\"Download\">\n                      <Download className=\"w-4 h-4\" />\n                    </Button>\n                    <Button variant=\"ghost\" size=\"icon\" title=\"Convert Again\">\n                      <RotateCcw className=\"w-4 h-4\" />\n                    </Button>\n                    <Button variant=\"ghost\" size=\"icon\" title=\"Save\">\n                      <Save className=\"w-4 h-4\" />\n                    </Button>\n                  </div>\n                </div>\n              ))}\n            </div>\n          </CardContent>\n        </Card>\n      </div>\n    </div>\n  );\n};\n\nexport default Dashboard;\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\ImageResolution.tsx",
+    "messages": [
+      {
+        "ruleId": "react/no-unescaped-entities",
+        "severity": 2,
+        "message": "`'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.",
+        "line": 208,
+        "column": 35,
+        "nodeType": "JSXText",
+        "messageId": "unescapedEntityAlts",
+        "suggestions": [
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&apos;" },
+            "fix": { "range": [8675, 8688], "text": "Today&apos;s Usage" },
+            "desc": "Replace with `&apos;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&lsquo;" },
+            "fix": { "range": [8675, 8688], "text": "Today&lsquo;s Usage" },
+            "desc": "Replace with `&lsquo;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&#39;" },
+            "fix": { "range": [8675, 8688], "text": "Today&#39;s Usage" },
+            "desc": "Replace with `&#39;`."
+          },
+          {
+            "messageId": "replaceWithAlt",
+            "data": { "alt": "&rsquo;" },
+            "fix": { "range": [8675, 8688], "text": "Today&rsquo;s Usage" },
+            "desc": "Replace with `&rsquo;`."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 1,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { usePreviewMode } from '@/contexts/PreviewModeContext';\nimport { Badge } from '@repo/ui/components/ui/badge';\nimport { Button } from '@repo/ui/components/ui/button';\nimport { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';\nimport { Progress } from '@repo/ui/components/ui/progress';\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@repo/ui/components/ui/select';\nimport { Slider } from '@repo/ui/components/ui/slider';\nimport { AlertCircle, Image as ImageIcon, Upload, Zap } from 'lucide-react';\nimport { useRef, useState } from 'react';\n\nconst ImageResolution = () => {\n  const { isAuthenticated } = usePreviewMode();\n  const [selectedImage, setSelectedImage] = useState<File | null>(null);\n  const [resolution, setResolution] = useState([100]);\n  const [outputFormat, setOutputFormat] = useState('png');\n  const [usageCount, setUsageCount] = useState(2);\n  const fileInputRef = useRef<HTMLInputElement>(null);\n\n  const maxDaily = 5;\n\n  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {\n    if (e.target.files && e.target.files[0]) {\n      setSelectedImage(e.target.files[0]);\n    }\n  };\n\n  const handleProcess = () => {\n    if (!isAuthenticated && usageCount >= maxDaily) {\n      return;\n    }\n    // Process logic here\n    setUsageCount(prev => prev + 1);\n  };\n\n  return (\n    <div className=\"min-h-screen bg-background p-4 sm:p-8\">\n      <div className=\"max-w-5xl mx-auto space-y-8\">\n        {/* Header */}\n        <div>\n          <h1 className=\"text-3xl font-space-grotesk font-bold mb-2\">Image Resolution</h1>\n          <p className=\"text-muted-foreground\">Increase or decrease image resolution and quality</p>\n        </div>\n\n        {/* Usage Warning for Unauthenticated */}\n        {!isAuthenticated && (\n          <Card className=\"modern-card border-warning/20 bg-warning/5\">\n            <CardContent className=\"pt-6\">\n              <div className=\"flex items-start gap-4\">\n                <AlertCircle className=\"w-5 h-5 text-warning flex-shrink-0 mt-0.5\" />\n                <div className=\"flex-1\">\n                  <h3 className=\"font-semibold mb-2\">Free Plan Limit</h3>\n                  <p className=\"text-sm text-muted-foreground mb-3\">\n                    You have used {usageCount} of {maxDaily} daily image resolution changes.\n                  </p>\n                  <Progress value={(usageCount / maxDaily) * 100} className=\"mb-3\" />\n                  <Button variant=\"cta\" size=\"sm\">\n                    Upgrade for unlimited access\n                  </Button>\n                </div>\n              </div>\n            </CardContent>\n          </Card>\n        )}\n\n        <div className=\"grid grid-cols-1 lg:grid-cols-3 gap-8\">\n          {/* Upload Section */}\n          <div className=\"lg:col-span-2 space-y-6\">\n            <Card className=\"modern-card\">\n              <CardHeader>\n                <CardTitle>Upload Image</CardTitle>\n              </CardHeader>\n              <CardContent>\n                <div\n                  className=\"border-2 border-dashed rounded-3xl p-12 text-center transition-all duration-300 border-card-border hover:border-primary/50 hover:bg-primary/5 cursor-pointer\"\n                  onClick={() => fileInputRef.current?.click()}\n                >\n                  <div className=\"w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                    <Upload className=\"w-8 h-8 text-primary\" />\n                  </div>\n                  <h3 className=\"text-xl font-semibold mb-4\">Drop your image here</h3>\n                  <p className=\"text-muted-foreground mb-6\">Or click to browse from your device</p>\n                  <Button variant=\"outline\" size=\"lg\">\n                    Choose Image\n                  </Button>\n                  <input\n                    ref={fileInputRef}\n                    type=\"file\"\n                    onChange={handleImageSelect}\n                    className=\"hidden\"\n                    accept=\"image/*\"\n                  />\n                  <div className=\"mt-6 text-sm text-muted-foreground\">\n                    Supports: JPG, PNG, WEBP\n                    <br />\n                    Max file size: 10MB\n                  </div>\n                </div>\n              </CardContent>\n            </Card>\n\n            {/* Preview */}\n            {selectedImage && (\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle>Preview</CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"flex items-center justify-between p-4 rounded-2xl bg-accent\">\n                    <div className=\"flex items-center gap-4\">\n                      <div className=\"w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center\">\n                        <ImageIcon className=\"w-6 h-6 text-primary\" />\n                      </div>\n                      <div>\n                        <h4 className=\"font-medium\">{selectedImage.name}</h4>\n                        <p className=\"text-sm text-muted-foreground\">\n                          {(selectedImage.size / 1024 / 1024).toFixed(2)} MB\n                        </p>\n                      </div>\n                    </div>\n                    <Badge variant=\"secondary\">Ready</Badge>\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n          </div>\n\n          {/* Settings Sidebar */}\n          <div className=\"space-y-6\">\n            <Card className=\"modern-card\">\n              <CardHeader>\n                <CardTitle>Resolution Settings</CardTitle>\n              </CardHeader>\n              <CardContent className=\"space-y-6\">\n                <div>\n                  <label className=\"text-sm font-medium mb-2 block\">Convert to Format</label>\n                  <Select value={outputFormat} onValueChange={setOutputFormat}>\n                    <SelectTrigger className=\"h-12\">\n                      <SelectValue />\n                    </SelectTrigger>\n                    <SelectContent>\n                      <SelectItem value=\"png\">PNG</SelectItem>\n                      <SelectItem value=\"jpg\">JPEG</SelectItem>\n                      <SelectItem value=\"webp\">WebP</SelectItem>\n                      <SelectItem value=\"gif\">GIF</SelectItem>\n                      <SelectItem value=\"bmp\">BMP</SelectItem>\n                    </SelectContent>\n                  </Select>\n                </div>\n\n                <div>\n                  <label className=\"text-sm font-medium mb-3 block\">\n                    Resolution: {resolution[0]}%\n                  </label>\n                  <Slider\n                    value={resolution}\n                    onValueChange={setResolution}\n                    max={200}\n                    min={25}\n                    step={25}\n                    className=\"w-full\"\n                  />\n                  <div className=\"flex justify-between text-xs text-muted-foreground mt-2\">\n                    <span>25%</span>\n                    <span>200%</span>\n                  </div>\n                </div>\n\n                <div className=\"p-4 rounded-xl bg-accent space-y-2\">\n                  <div className=\"flex justify-between text-sm\">\n                    <span className=\"text-muted-foreground\">Original</span>\n                    <span className=\"font-medium\">1920x1080</span>\n                  </div>\n                  <div className=\"flex justify-between text-sm\">\n                    <span className=\"text-muted-foreground\">New Size</span>\n                    <span className=\"font-medium\">\n                      {Math.round(1920 * (resolution[0] / 100))}x\n                      {Math.round(1080 * (resolution[0] / 100))}\n                    </span>\n                  </div>\n                  <div className=\"flex justify-between text-sm\">\n                    <span className=\"text-muted-foreground\">Format</span>\n                    <span className=\"font-medium uppercase\">{outputFormat}</span>\n                  </div>\n                </div>\n\n                <Button\n                  variant=\"hero\"\n                  className=\"w-full\"\n                  onClick={handleProcess}\n                  disabled={!selectedImage || (!isAuthenticated && usageCount >= maxDaily)}\n                >\n                  <Zap className=\"w-4 h-4 mr-2\" />\n                  Process Image\n                </Button>\n              </CardContent>\n            </Card>\n\n            {/* Usage Stats */}\n            {!isAuthenticated && (\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle>Today's Usage</CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    <div className=\"flex justify-between text-sm\">\n                      <span>Changes</span>\n                      <span>\n                        {usageCount} / {maxDaily}\n                      </span>\n                    </div>\n                    <Progress value={(usageCount / maxDaily) * 100} />\n                    <p className=\"text-xs text-muted-foreground\">\n                      {maxDaily - usageCount} changes remaining today\n                    </p>\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default ImageResolution;\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Index.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\NotFound.tsx",
+    "messages": [
+      {
+        "ruleId": "@next/next/no-html-link-for-pages",
+        "severity": 2,
+        "message": "Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages",
+        "line": 16,
+        "column": 9,
+        "nodeType": "JSXOpeningElement",
+        "endLine": 16,
+        "endColumn": 77
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 1,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { useLocation } from 'react-router-dom';\nimport { useEffect } from 'react';\n\nconst NotFound = () => {\n  const location = useLocation();\n\n  useEffect(() => {\n    console.error('404 Error: User attempted to access non-existent route:', location.pathname);\n  }, [location.pathname]);\n\n  return (\n    <div className=\"min-h-screen flex items-center justify-center bg-gray-100\">\n      <div className=\"text-center\">\n        <h1 className=\"text-4xl font-bold mb-4\">404</h1>\n        <p className=\"text-xl text-gray-600 mb-4\">Oops! Page not found</p>\n        <a href=\"/\" className=\"text-blue-500 hover:text-blue-700 underline\">\n          Return to Home\n        </a>\n      </div>\n    </div>\n  );\n};\n\nexport default NotFound;\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Payments.tsx",
+    "messages": [
+      {
+        "ruleId": "@typescript-eslint/no-unused-vars",
+        "severity": 1,
+        "message": "'options' is assigned a value but never used.",
+        "line": 83,
+        "column": 13,
+        "nodeType": null,
+        "messageId": "unusedVar",
+        "endLine": 83,
+        "endColumn": 20
+      },
+      {
+        "ruleId": "react-hooks/purity",
+        "severity": 2,
+        "message": "Error: Cannot call impure function during render\n\n`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).\n\nD:\\Turbo-Doc\\apps\\web\\src\\views\\Payments.tsx:90:28\n  88 |         description: `Subscription to ${plan.name}`,\n  89 |         image: '/favicon.ico',\n> 90 |         order_id: `order_${Date.now()}`, // Generate from backend\n     |                            ^^^^^^^^^^ Cannot call impure function\n  91 |         handler: function (response: any) {\n  92 |           console.log('Payment successful:', response);\n  93 |           // Handle successful payment",
+        "line": 90,
+        "column": 28,
+        "nodeType": null,
+        "endLine": 90,
+        "endColumn": 38
+      },
+      {
+        "ruleId": "@typescript-eslint/no-explicit-any",
+        "severity": 2,
+        "message": "Unexpected any. Specify a different type.",
+        "line": 91,
+        "column": 38,
+        "nodeType": "TSAnyKeyword",
+        "messageId": "unexpectedAny",
+        "endLine": 91,
+        "endColumn": 41,
+        "suggestions": [
+          {
+            "messageId": "suggestUnknown",
+            "fix": { "range": [2134, 2137], "text": "unknown" },
+            "desc": "Use `unknown` instead, this will force you to explicitly, and safely assert the type is correct."
+          },
+          {
+            "messageId": "suggestNever",
+            "fix": { "range": [2134, 2137], "text": "never" },
+            "desc": "Use `never` instead, this is useful when instantiating generic type parameters that you don't need to know the type of."
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 2,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import { Navigation } from '@/components/Navigation';\nimport { Button } from '@repo/ui/components/ui/button';\nimport {\n  Card,\n  CardContent,\n  CardDescription,\n  CardHeader,\n  CardTitle,\n} from '@repo/ui/components/ui/card';\nimport {\n  AlertCircle,\n  Calendar,\n  CheckCircle,\n  Clock,\n  CreditCard,\n  DollarSign,\n  Download,\n  Shield,\n} from 'lucide-react';\nimport { useState } from 'react';\n\nconst plans = [\n  {\n    id: 'pro-monthly',\n    name: 'Pro Monthly',\n    price: 19,\n    period: 'month',\n    features: ['Unlimited conversions', 'Priority support', 'API access'],\n  },\n  {\n    id: 'pro-yearly',\n    name: 'Pro Yearly',\n    price: 190,\n    period: 'year',\n    savings: 'Save $38',\n    features: ['Unlimited conversions', 'Priority support', 'API access', '2 months free'],\n  },\n  {\n    id: 'enterprise',\n    name: 'Enterprise',\n    price: 99,\n    period: 'month',\n    features: ['Custom integrations', 'Dedicated support', 'White-label options'],\n  },\n];\n\nconst paymentHistory = [\n  {\n    id: '1',\n    date: '2024-01-15',\n    plan: 'Pro Monthly',\n    amount: 19,\n    status: 'paid',\n    invoice: 'INV-2024-001',\n  },\n  {\n    id: '2',\n    date: '2023-12-15',\n    plan: 'Pro Monthly',\n    amount: 19,\n    status: 'paid',\n    invoice: 'INV-2023-012',\n  },\n  {\n    id: '3',\n    date: '2023-11-15',\n    plan: 'Pro Monthly',\n    amount: 19,\n    status: 'paid',\n    invoice: 'INV-2023-011',\n  },\n];\n\nexport default function Payments() {\n  const [selectedPlan, setSelectedPlan] = useState<string>('');\n  const [isProcessing, setIsProcessing] = useState(false);\n\n  const handleRazorpayPayment = async (plan: (typeof plans)[0]) => {\n    setIsProcessing(true);\n\n    try {\n      // Initialize Razorpay (in real implementation, load from CDN)\n      const options = {\n        key: 'rzp_test_your_key_here', // Replace with your Razorpay key\n        amount: plan.price * 100, // Amount in paise\n        currency: 'INR',\n        name: 'Document Toolkit',\n        description: `Subscription to ${plan.name}`,\n        image: '/favicon.ico',\n        order_id: `order_${Date.now()}`, // Generate from backend\n        handler: function (response: any) {\n          console.log('Payment successful:', response);\n          // Handle successful payment\n          alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);\n        },\n        prefill: {\n          name: 'John Doe',\n          email: 'john@example.com',\n          contact: '9999999999',\n        },\n        notes: {\n          plan_id: plan.id,\n          user_id: 'user_123',\n        },\n        theme: {\n          color: 'hsl(220, 85%, 45%)',\n        },\n        modal: {\n          ondismiss: function () {\n            setIsProcessing(false);\n          },\n        },\n      };\n\n      // In real implementation, you would load Razorpay SDK\n      // const rzp = new window.Razorpay(options);\n      // rzp.open();\n\n      // For demo purposes, simulate payment\n      setTimeout(() => {\n        setIsProcessing(false);\n        alert(`Demo: Payment initiated for ${plan.name} - $${plan.price}`);\n      }, 2000);\n    } catch (error) {\n      console.error('Payment failed:', error);\n      setIsProcessing(false);\n    }\n  };\n\n  return (\n    <div className=\"min-h-screen bg-background\">\n      <Navigation />\n\n      <main className=\"pt-24 pb-16\">\n        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n          {/* Header */}\n          <div className=\"text-center mb-12\">\n            <h1 className=\"text-4xl sm:text-5xl font-space-grotesk font-bold mb-6 gradient-text\">\n              Billing & Payments\n            </h1>\n            <p className=\"text-xl text-muted-foreground max-w-2xl mx-auto\">\n              Manage your subscription, payment methods, and billing history.\n            </p>\n          </div>\n\n          <div className=\"grid grid-cols-1 lg:grid-cols-3 gap-8\">\n            {/* Current Plan & Upgrade */}\n            <div className=\"lg:col-span-2 space-y-8\">\n              {/* Current Subscription */}\n              <Card className=\"modern-card border-primary/20\">\n                <CardHeader>\n                  <CardTitle className=\"flex items-center gap-2\">\n                    <CreditCard className=\"w-5 h-5 text-primary\" />\n                    Current Subscription\n                  </CardTitle>\n                  <CardDescription>Your current plan and billing information</CardDescription>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"flex items-center justify-between p-6 bg-primary/10 rounded-2xl border border-primary/20\">\n                    <div>\n                      <h3 className=\"text-xl font-semibold mb-2 text-primary\">Pro Monthly</h3>\n                      <p className=\"text-muted-foreground mb-4\">$19 per month</p>\n                      <div className=\"flex items-center gap-2 text-sm\">\n                        <Clock className=\"w-4 h-4 text-success\" />\n                        <span>Next billing: February 15, 2024</span>\n                      </div>\n                    </div>\n                    <div className=\"text-right\">\n                      <div className=\"inline-flex items-center gap-2 bg-success/10 text-success px-3 py-1 rounded-full text-sm font-medium mb-4\">\n                        <CheckCircle className=\"w-4 h-4\" />\n                        Active\n                      </div>\n                      <div>\n                        <Button variant=\"cta\" size=\"sm\">\n                          Manage Plan\n                        </Button>\n                      </div>\n                    </div>\n                  </div>\n                </CardContent>\n              </Card>\n\n              {/* Available Plans */}\n              <Card className=\"modern-card\">\n                <CardHeader>\n                  <CardTitle className=\"text-primary\">Upgrade Your Plan</CardTitle>\n                  <CardDescription>Choose a plan that fits your needs</CardDescription>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6\">\n                    {plans.map(plan => (\n                      <div\n                        key={plan.id}\n                        className={`relative p-6 rounded-2xl border-2 transition-all cursor-pointer ${\n                          selectedPlan === plan.id\n                            ? 'border-primary bg-primary/5'\n                            : 'border-card-border hover:border-primary/30'\n                        }`}\n                        onClick={() => setSelectedPlan(plan.id)}\n                      >\n                        {plan.savings && (\n                          <div className=\"absolute -top-3 left-4 bg-success text-success-foreground px-3 py-1 rounded-full text-xs font-semibold\">\n                            {plan.savings}\n                          </div>\n                        )}\n\n                        <div className=\"text-center mb-4\">\n                          <h3 className=\"font-semibold mb-2\">{plan.name}</h3>\n                          <div className=\"mb-2\">\n                            <span className=\"text-2xl font-bold\">${plan.price}</span>\n                            <span className=\"text-muted-foreground\">/{plan.period}</span>\n                          </div>\n                        </div>\n\n                        <ul className=\"space-y-2 text-sm mb-6\">\n                          {plan.features.map((feature, index) => (\n                            <li key={index} className=\"flex items-center gap-2\">\n                              <CheckCircle className=\"w-4 h-4 text-success\" />\n                              {feature}\n                            </li>\n                          ))}\n                        </ul>\n\n                        <Button\n                          variant={selectedPlan === plan.id ? 'cta' : 'outline'}\n                          className=\"w-full\"\n                          onClick={e => {\n                            e.stopPropagation();\n                            handleRazorpayPayment(plan);\n                          }}\n                          disabled={isProcessing}\n                        >\n                          {isProcessing ? 'Processing...' : 'Subscribe'}\n                        </Button>\n                      </div>\n                    ))}\n                  </div>\n                </CardContent>\n              </Card>\n\n              {/* Payment History */}\n              <Card>\n                <CardHeader>\n                  <CardTitle className=\"flex items-center gap-2\">\n                    <Calendar className=\"w-5 h-5\" />\n                    Payment History\n                  </CardTitle>\n                  <CardDescription>Your recent transactions and invoices</CardDescription>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    {paymentHistory.map(payment => (\n                      <div\n                        key={payment.id}\n                        className=\"flex items-center justify-between p-4 border border-card-border rounded-xl\"\n                      >\n                        <div className=\"flex items-center gap-4\">\n                          <div className=\"w-10 h-10 bg-success/10 rounded-xl flex items-center justify-center\">\n                            <CheckCircle className=\"w-5 h-5 text-success\" />\n                          </div>\n                          <div>\n                            <p className=\"font-medium\">{payment.plan}</p>\n                            <p className=\"text-sm text-muted-foreground\">\n                              {new Date(payment.date).toLocaleDateString()}\n                            </p>\n                          </div>\n                        </div>\n                        <div className=\"text-right\">\n                          <p className=\"font-medium\">${payment.amount}</p>\n                          <div className=\"flex items-center gap-2\">\n                            <Button variant=\"ghost\" size=\"sm\">\n                              <Download className=\"w-4 h-4\" />\n                              Invoice\n                            </Button>\n                          </div>\n                        </div>\n                      </div>\n                    ))}\n                  </div>\n                </CardContent>\n              </Card>\n            </div>\n\n            {/* Payment Methods & Security */}\n            <div className=\"space-y-8\">\n              {/* Payment Methods */}\n              <Card>\n                <CardHeader>\n                  <CardTitle>Payment Methods</CardTitle>\n                  <CardDescription>Manage your payment methods</CardDescription>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    <div className=\"flex items-center justify-between p-4 border border-card-border rounded-xl\">\n                      <div className=\"flex items-center gap-3\">\n                        <div className=\"w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center\">\n                          <CreditCard className=\"w-5 h-5 text-white\" />\n                        </div>\n                        <div>\n                          <p className=\"font-medium\">**** **** **** 4242</p>\n                          <p className=\"text-sm text-muted-foreground\">Expires 12/25</p>\n                        </div>\n                      </div>\n                      <Button variant=\"ghost\" size=\"sm\">\n                        Edit\n                      </Button>\n                    </div>\n\n                    <Button variant=\"outline\" className=\"w-full\">\n                      <CreditCard className=\"w-4 h-4 mr-2\" />\n                      Add Payment Method\n                    </Button>\n                  </div>\n                </CardContent>\n              </Card>\n\n              {/* Security */}\n              <Card>\n                <CardHeader>\n                  <CardTitle className=\"flex items-center gap-2\">\n                    <Shield className=\"w-5 h-5\" />\n                    Security\n                  </CardTitle>\n                  <CardDescription>Your payments are secure</CardDescription>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-4\">\n                    <div className=\"flex items-center gap-3 p-4 bg-success/5 rounded-xl\">\n                      <CheckCircle className=\"w-5 h-5 text-success\" />\n                      <div>\n                        <p className=\"font-medium text-sm\">SSL Encrypted</p>\n                        <p className=\"text-xs text-muted-foreground\">All payments are encrypted</p>\n                      </div>\n                    </div>\n\n                    <div className=\"flex items-center gap-3 p-4 bg-success/5 rounded-xl\">\n                      <CheckCircle className=\"w-5 h-5 text-success\" />\n                      <div>\n                        <p className=\"font-medium text-sm\">PCI Compliant</p>\n                        <p className=\"text-xs text-muted-foreground\">Secure payment processing</p>\n                      </div>\n                    </div>\n\n                    <div className=\"flex items-center gap-3 p-4 bg-primary/5 rounded-xl\">\n                      <DollarSign className=\"w-5 h-5 text-primary\" />\n                      <div>\n                        <p className=\"font-medium text-sm\">Razorpay Powered</p>\n                        <p className=\"text-xs text-muted-foreground\">Trusted payment gateway</p>\n                      </div>\n                    </div>\n                  </div>\n                </CardContent>\n              </Card>\n\n              {/* Help */}\n              <Card>\n                <CardHeader>\n                  <CardTitle>Need Help?</CardTitle>\n                </CardHeader>\n                <CardContent>\n                  <div className=\"space-y-3\">\n                    <Button variant=\"ghost\" className=\"w-full justify-start\">\n                      <AlertCircle className=\"w-4 h-4 mr-2\" />\n                      Billing FAQ\n                    </Button>\n                    <Button variant=\"ghost\" className=\"w-full justify-start\">\n                      <Shield className=\"w-4 h-4 mr-2\" />\n                      Security Info\n                    </Button>\n                    <Button variant=\"ghost\" className=\"w-full justify-start\">\n                      <CreditCard className=\"w-4 h-4 mr-2\" />\n                      Contact Support\n                    </Button>\n                  </div>\n                </CardContent>\n              </Card>\n            </div>\n          </div>\n        </div>\n      </main>\n    </div>\n  );\n}\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Pricing.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\PrivacyPolicy.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Profile.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\RefundPolicy.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Settings.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\SignIn.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\SignUp.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\src\\views\\Storage.tsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Turbo-Doc\\apps\\web\\tailwind.config.ts",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  }
+]

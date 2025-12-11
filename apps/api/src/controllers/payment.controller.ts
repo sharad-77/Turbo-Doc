@@ -143,8 +143,12 @@ export const verifyPayment = async (req: Request, res: Response) => {
   }
 
   // Assuming metadata is stored as Json and has planId.
-  const planId = (paymentRecord.metadata as any)?.planId;
+  const planId = (paymentRecord.metadata as { planId?: string })?.planId;
   const userId = paymentRecord.userId;
+
+  if (!planId) {
+    return res.status(400).json({ error: 'Invalid payment metadata: planId missing' });
+  }
 
   try {
     await fulfillOrder(razorpay_order_id, razorpay_payment_id, userId, planId);
@@ -168,7 +172,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
     return res.status(400).json({ status: 'invalid_signature' });
   }
 
-  const event = JSON.parse((req as any).rawBody);
+  const event = JSON.parse((req as Request & { rawBody: string }).rawBody);
   const eventId = event.payload.payment?.entity?.id || event.payload.order?.entity?.id;
 
   try {

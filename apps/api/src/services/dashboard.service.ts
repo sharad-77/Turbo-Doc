@@ -55,7 +55,8 @@ export const getDashboardStats = async (userId: string) => {
     _sum: { fileSize: true },
   });
 
-  const totalStorageBytes = (documentStorage._sum.fileSize || 0) + (imageStorage._sum.fileSize || 0);
+  const totalStorageBytes =
+    (documentStorage._sum.fileSize || 0) + (imageStorage._sum.fileSize || 0);
 
   // 5. Weekly Usage Graph
   // Query usageLog for last 7 days
@@ -85,7 +86,7 @@ export const getDashboardStats = async (userId: string) => {
   }
 
   // Populate counts
-  weeklyLogs.forEach((log) => {
+  weeklyLogs.forEach(log => {
     const dayName = format(log.timestamp, 'EEE');
     if (weeklyDataMap.has(dayName)) {
       weeklyDataMap.set(dayName, (weeklyDataMap.get(dayName) || 0) + 1);
@@ -93,7 +94,7 @@ export const getDashboardStats = async (userId: string) => {
   });
 
   // Format for frontend
-  const weeklyGraph = days.map((d) => ({
+  const weeklyGraph = days.map(d => ({
     name: d.day,
     conversions: weeklyDataMap.get(d.day) || 0,
   }));
