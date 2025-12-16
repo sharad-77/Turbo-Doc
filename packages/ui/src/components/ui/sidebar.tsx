@@ -1,14 +1,14 @@
-﻿import { Slot } from '@radix-ui/react-slot';
+﻿'use client';
+
+import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
 import { PanelLeft } from 'lucide-react';
 import * as React from 'react';
-
 
 import { cn } from '../../lib/utils';
 import { Button } from './button';
 import { Input } from './input';
 import { Separator } from './separator';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from './sheet';
 import { Skeleton } from './skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 
@@ -201,28 +201,32 @@ const Sidebar = React.forwardRef<
     }
 
     if (isMobile) {
+      if (!openMobile && collapsible === 'offcanvas') {
+        return null;
+      }
+
       return (
-        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <SheetContent
-            data-sidebar="sidebar"
-            data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden z-[9999]"
-            style={
-              {
-                '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-              } as React.CSSProperties
-            }
-            side={side}
-          >
-            <SheetTitle className="sr-only">Sidebar</SheetTitle>
-            <SheetDescription className="sr-only">Sidebar Navigation</SheetDescription>
-            <div className="flex h-full w-full flex-col">{children}</div>
-          </SheetContent>
-        </Sheet>
+        <div
+          ref={ref}
+          data-sidebar="sidebar"
+          data-mobile="true"
+          className={cn(
+            'fixed top-14 bottom-0 left-0 z-40 flex w-[--sidebar-width] bg-sidebar text-sidebar-foreground shadow-lg md:hidden',
+            'transition-transform duration-200 ease-linear',
+            openMobile ? 'translate-x-0' : '-translate-x-full',
+            className
+          )}
+          style={
+            {
+              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+            } as React.CSSProperties
+          }
+          {...props}
+        >
+          <div className="flex h-full w-full flex-col">{children}</div>
+        </div>
       );
     }
-
-
 
     return (
       <div
@@ -236,7 +240,7 @@ const Sidebar = React.forwardRef<
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
-            'duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear',
+            'duration-200 relative h-screen w-[--sidebar-width] bg-transparent transition-[width] ease-linear',
             'group-data-[collapsible=offcanvas]:w-0',
             'group-data-[side=right]:rotate-180',
             variant === 'floating' || variant === 'inset'
@@ -246,7 +250,7 @@ const Sidebar = React.forwardRef<
         />
         <div
           className={cn(
-            'duration-200 fixed inset-y-0 z-10 flex h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear',
+            'duration-200 fixed inset-y-0 z-30 flex h-screen w-[--sidebar-width] bg-sidebar text-sidebar-foreground transition-[left,right,width] ease-linear',
             side === 'left'
               ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
               : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
@@ -566,6 +570,7 @@ const SidebarMenuButton = React.forwardRef<
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
         onClick={event => {
           if (isMobile) {
             setOpenMobile(false);
@@ -589,12 +594,7 @@ const SidebarMenuButton = React.forwardRef<
     return (
       <Tooltip>
         <TooltipTrigger asChild>{button}</TooltipTrigger>
-        <TooltipContent
-          side="right"
-          align="center"
-          hidden={state !== 'collapsed'}
-          {...tooltip}
-        />
+        <TooltipContent side="right" align="center" hidden={state !== 'collapsed'} {...tooltip} />
       </Tooltip>
     );
   }

@@ -1,49 +1,80 @@
 'use client';
 
+import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+
 import { AppSidebar, MobileHeader } from '@/components/AppSidebar';
 import { Footer } from '@/components/Footer';
 import { Navigation } from '@/components/Navigation';
+
 import { useAuthStore } from '@/store/useAuthStore';
-import { SidebarProvider } from '@repo/ui/components/ui/sidebar';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+
+import {
+  SidebarProvider,
+  SidebarInset,
+} from '@repo/ui/components/ui/sidebar';
+
+const PUBLIC_ROUTES = [
+  '/',
+  '/signin',
+  '/signup',
+  '/pricing',
+  '/image-resolution',
+  '/convert',
+];
+
+const GUEST_ONLY_ROUTES = ['/', '/signin', '/signup'];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
-  const router = useRouter();
   const pathname = usePathname();
-  const publicRoutes = ['/', '/signin', '/signup', '/pricing', '/image-resolution', '/convert'];
-  const guestRoutes = ['/', '/signin', '/signup'];
+  const router = useRouter();
+
+  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated && guestRoutes.includes(pathname)) {
-      router.push('/dashboard');
+    if (!isLoading && isAuthenticated && GUEST_ONLY_ROUTES.includes(pathname)) {
+      router.replace('/dashboard');
     }
-  }, [isLoading, isAuthenticated, pathname, router]);
+  }, [isAuthenticated, isLoading, pathname, router]);
 
-  if (!isAuthenticated && publicRoutes.includes(pathname)) {
+  if (isLoading) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex h-screen items-center justify-center">
+        <span className="text-sm text-muted-foreground">Loading...</span>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated && PUBLIC_ROUTES.includes(pathname)) {
+    return (
+      <div className="flex min-h-screen flex-col">
         <Navigation />
-        <div className="pt-24 flex-1">{children}</div>
+
+        <main className="flex-1 pt-24">
+          {children}
+        </main>
+
         <Footer />
       </div>
     );
   }
 
   return (
-    <SidebarProvider defaultOpen={true}>
-      <div className="flex h-screen w-full overflow-hidden">
+    <SidebarProvider defaultOpen>
+      <div className="flex h-screen overflow-hidden">
         <AppSidebar />
 
-        <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <SidebarInset className="flex h-full flex-col">
           <MobileHeader />
-          <main className="flex-1 p-4 md:p-6 lg:p-8 pt-16 md:pt-6">{children}</main>
-        </div>
+
+          <main className="flex-1 overflow-y-auto p-4 pt-16 md:p-6 md:pt-6 lg:p-8">
+            {children}
+          </main>
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );
