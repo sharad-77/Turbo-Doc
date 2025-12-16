@@ -1,3 +1,6 @@
+'use client';
+
+import { authClient } from '@/lib/auth-client';
 import { Button } from '@repo/ui/components/ui/button';
 import { Checkbox } from '@repo/ui/components/ui/checkbox';
 import { Input } from '@repo/ui/components/ui/input';
@@ -11,17 +14,22 @@ import {
   EyeOff,
   FileText,
   Github,
+  Loader2,
   Lock,
   Mail,
   Shield,
   User,
   Zap,
 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const SignUp = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,10 +37,42 @@ const SignUp = () => {
     agreeToTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign up:', formData);
+    setLoading(true);
+    try {
+      await authClient.signUp.email(
+        {
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          callbackURL: '/dashboard',
+        },
+        {
+          onRequest: () => {
+            setLoading(true);
+          },
+          onSuccess: () => {
+            toast.success('Account created successfully');
+            router.push('/dashboard');
+          },
+          onError: ctx => {
+            toast.error(ctx.error.message);
+            setLoading(false);
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  const handleSocialSignIn = async (provider: 'github' | 'google') => {
+    await authClient.signIn.social({
+      provider,
+      callbackURL: '/dashboard',
+    });
   };
 
   const features = [
@@ -51,7 +91,7 @@ const SignUp = () => {
   ];
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-svh flex">
       {/* Left Side - Visual */}
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary/10 via-background-muted to-primary/5 items-center justify-center p-8">
         <div className="max-w-md space-y-8">
@@ -91,30 +131,44 @@ const SignUp = () => {
       </div>
 
       {/* Right Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
+      <div className="flex-1 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-md space-y-6 md:space-y-8">
           {/* Logo */}
           <div className="text-center">
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-glow">
-                <FileText className="w-6 h-6 text-primary-foreground" />
+            <div className="flex items-center justify-center gap-3 mb-6 md:mb-8">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-2xl flex items-center justify-center shadow-glow">
+                <FileText className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
               </div>
-              <span className="text-2xl font-space-grotesk font-bold gradient-text">
+              <span className="text-xl md:text-2xl font-space-grotesk font-bold gradient-text">
                 Document Toolkit
               </span>
             </div>
-            <h1 className="text-3xl font-space-grotesk font-bold mb-2">Create your account</h1>
-            <p className="text-muted-foreground">Get started with your free account today</p>
+            <h1 className="text-2xl md:text-3xl font-space-grotesk font-bold mb-2">
+              Create your account
+            </h1>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Get started with your free account today
+            </p>
           </div>
 
           {/* Social Sign Up */}
-          <div className="space-y-4">
-            <Button variant="outline" className="w-full h-12" size="lg">
-              <Github className="w-5 h-5 mr-3" />
+          <div className="space-y-3 md:space-y-4">
+            <Button
+              variant="outline"
+              className="w-full h-10 md:h-12 rounded-xl"
+              size="lg"
+              onClick={() => handleSocialSignIn('github')}
+            >
+              <Github className="w-4 h-4 md:w-5 md:h-5 mr-3" />
               Continue with GitHub
             </Button>
-            <Button variant="outline" className="w-full h-12" size="lg">
-              <Chrome className="w-5 h-5 mr-3" />
+            <Button
+              variant="outline"
+              className="w-full h-10 md:h-12 rounded-xl"
+              size="lg"
+              onClick={() => handleSocialSignIn('google')}
+            >
+              <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
               Continue with Google
             </Button>
           </div>
@@ -131,20 +185,20 @@ const SignUp = () => {
           </div>
 
           {/* Sign Up Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
                 Full name
               </Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
                   id="name"
                   type="text"
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="pl-10 h-12"
+                  className="pl-10 h-10 md:h-12 rounded-xl"
                   required
                 />
               </div>
@@ -155,14 +209,14 @@ const SignUp = () => {
                 Email address
               </Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="pl-10 h-12"
+                  className="pl-10 h-10 md:h-12 rounded-xl"
                   required
                 />
               </div>
@@ -173,14 +227,14 @@ const SignUp = () => {
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Create a password"
                   value={formData.password}
                   onChange={e => setFormData({ ...formData, password: e.target.value })}
-                  className="pl-10 pr-10 h-12"
+                  className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
                   required
                 />
                 <button
@@ -188,7 +242,11 @@ const SignUp = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
+                  ) : (
+                    <Eye className="w-4 h-4 md:w-5 md:h-5" />
+                  )}
                 </button>
               </div>
               <p className="text-xs text-muted-foreground">
@@ -206,11 +264,11 @@ const SignUp = () => {
               />
               <Label htmlFor="terms" className="text-sm text-muted-foreground">
                 I agree to the{' '}
-                <Link to="/terms" className="text-primary hover:text-primary-hover">
+                <Link href="/terms" className="text-primary hover:text-primary-hover">
                   Terms of Service
                 </Link>{' '}
                 and{' '}
-                <Link to="/privacy" className="text-primary hover:text-primary-hover">
+                <Link href="/privacy" className="text-primary hover:text-primary-hover">
                   Privacy Policy
                 </Link>
               </Label>
@@ -218,22 +276,23 @@ const SignUp = () => {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full rounded-xl"
               size="lg"
               variant="hero"
-              disabled={!formData.agreeToTerms}
+              disabled={!formData.agreeToTerms || loading}
             >
-              Create Account
-              <ArrowRight className="w-5 h-5 ml-2" />
+              {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
+              {loading ? 'Creating Account...' : 'Create Account'}
+              {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
             </Button>
           </form>
 
           {/* Sign In Link */}
           <div className="text-center">
-            <p className="text-muted-foreground">
+            <p className="text-sm md:text-base text-muted-foreground">
               Already have an account?{' '}
               <Link
-                to="/signin"
+                href="/signin"
                 className="text-primary hover:text-primary-hover font-medium transition-colors"
               >
                 Sign in

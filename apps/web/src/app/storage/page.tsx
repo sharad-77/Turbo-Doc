@@ -1,5 +1,12 @@
 'use client';
+
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 import Storage from '@/views/Storage';
+
 export default function Page() {
-  return <Storage />;
+  return (
+    <ProtectedRoute>
+      <Storage />
+    </ProtectedRoute>
+  );
 }

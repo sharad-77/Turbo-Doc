@@ -22,6 +22,7 @@ export const Navigation = () => {
     { href: '/image-resolution', label: 'Image Tools' },
     { href: '/pricing', label: 'Pricing' },
     { href: '/#features', label: 'Features' },
+    { href: '/authStoreCheck', label: 'AuthStoreCheck' },
   ];
 
   const handleLinkClick = () => setIsMenuOpen(false);

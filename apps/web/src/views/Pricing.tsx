@@ -2,8 +2,7 @@ import { Badge } from '@repo/ui/components/ui/badge';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import { Separator } from '@repo/ui/components/ui/separator';
-import { ArrowLeft, Check, Crown, FileText, Headphones, Settings, Star, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Check, Crown, Headphones, Settings, Star, Zap } from 'lucide-react';
 
 const Pricing = () => {
   const plans = [
@@ -139,30 +138,6 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-card-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" asChild>
-                <Link to="/dashboard">
-                  <ArrowLeft className="w-5 h-5" />
-                </Link>
-              </Button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-space-grotesk font-semibold">Pricing Plans</span>
-              </div>
-            </div>
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/dashboard">Back to Dashboard</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Section */}
         <div className="text-center mb-16">

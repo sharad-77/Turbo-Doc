@@ -1,6 +1,5 @@
 'use client';
 
-import { PreviewModeProvider } from '@/contexts/PreviewModeContext';
 import { Toaster as Sonner } from '@repo/ui/components/ui/sonner';
 import { Toaster } from '@repo/ui/components/ui/toaster';
 import { TooltipProvider } from '@repo/ui/components/ui/tooltip';
@@ -14,13 +13,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-        <PreviewModeProvider>
-          <TooltipProvider>
-            {children}
-            <Toaster />
-            <Sonner />
-          </TooltipProvider>
-        </PreviewModeProvider>
+        <TooltipProvider>
+          {children}
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

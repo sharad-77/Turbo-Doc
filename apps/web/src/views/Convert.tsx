@@ -1,5 +1,3 @@
-import { UsageLimitBanner } from '@/components/UsageLimitBanner';
-import { usePreviewMode } from '@/contexts/PreviewModeContext';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import { Progress } from '@repo/ui/components/ui/progress';
@@ -26,8 +24,9 @@ import {
 } from 'lucide-react';
 import { useRef, useState } from 'react';
 
+// ... other imports is handled below
+
 const Convert = () => {
-  const { isAuthenticated } = usePreviewMode();
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [converting, setConverting] = useState(false);
@@ -125,8 +124,6 @@ const Convert = () => {
           <h1 className="text-3xl font-space-grotesk font-bold mb-2">Document Conversion</h1>
           <p className="text-muted-foreground">Convert documents between formats with ease</p>
         </div>
-
-        {!isAuthenticated && <UsageLimitBanner />}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Upload Area */}
@@ -310,25 +307,6 @@ const Convert = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Usage Stats */}
-            {!isAuthenticated && (
-              <Card className="modern-card">
-                <CardHeader>
-                  <CardTitle>Today&apos;s Usage</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between text-sm">
-                      <span>Conversions</span>
-                      <span>2 / 5</span>
-                    </div>
-                    <Progress value={40} />
-                    <p className="text-xs text-muted-foreground">3 conversions remaining today</p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
       </div>

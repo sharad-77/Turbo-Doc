@@ -1,8 +1,6 @@
-import { usePreviewMode } from '@/contexts/PreviewModeContext';
 import { Badge } from '@repo/ui/components/ui/badge';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
-import { Progress } from '@repo/ui/components/ui/progress';
 import {
   Select,
   SelectContent,
@@ -11,11 +9,10 @@ import {
   SelectValue,
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
-import { AlertCircle, Image as ImageIcon, Upload, Zap } from 'lucide-react';
+import { Image as ImageIcon, Upload, Zap } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 const ImageResolution = () => {
-  const { isAuthenticated } = usePreviewMode();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [resolution, setResolution] = useState([100]);
   const [outputFormat, setOutputFormat] = useState('png');
@@ -31,9 +28,6 @@ const ImageResolution = () => {
   };
 
   const handleProcess = () => {
-    if (!isAuthenticated && usageCount >= maxDaily) {
-      return;
-    }
     // Process logic here
     setUsageCount(prev => prev + 1);
   };
@@ -48,25 +42,6 @@ const ImageResolution = () => {
         </div>
 
         {/* Usage Warning for Unauthenticated */}
-        {!isAuthenticated && (
-          <Card className="modern-card border-warning/20 bg-warning/5">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-4">
-                <AlertCircle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <h3 className="font-semibold mb-2">Free Plan Limit</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    You have used {usageCount} of {maxDaily} daily image resolution changes.
-                  </p>
-                  <Progress value={(usageCount / maxDaily) * 100} className="mb-3" />
-                  <Button variant="cta" size="sm">
-                    Upgrade for unlimited access
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Upload Section */}
@@ -193,36 +168,13 @@ const ImageResolution = () => {
                   variant="hero"
                   className="w-full"
                   onClick={handleProcess}
-                  disabled={!selectedImage || (!isAuthenticated && usageCount >= maxDaily)}
+                  disabled={!selectedImage}
                 >
                   <Zap className="w-4 h-4 mr-2" />
                   Process Image
                 </Button>
               </CardContent>
             </Card>
-
-            {/* Usage Stats */}
-            {!isAuthenticated && (
-              <Card className="modern-card">
-                <CardHeader>
-                  <CardTitle>Today&apos;s Usage</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between text-sm">
-                      <span>Changes</span>
-                      <span>
-                        {usageCount} / {maxDaily}
-                      </span>
-                    </div>
-                    <Progress value={(usageCount / maxDaily) * 100} />
-                    <p className="text-xs text-muted-foreground">
-                      {maxDaily - usageCount} changes remaining today
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
       </div>
