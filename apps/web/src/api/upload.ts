@@ -29,9 +29,7 @@ export const getUploadPresignedUrl = async (
 /**
  * Get presigned URL for downloading a file from S3
  */
-export const getDownloadPresignedUrl = async (
-  objectKey: string
-): Promise<DownloadUrlResponse> => {
+export const getDownloadPresignedUrl = async (objectKey: string): Promise<DownloadUrlResponse> => {
   const response = await apiClient.post<DownloadUrlResponse>('/api/v1/get-download-url', {
     objectKey,
   });
@@ -56,14 +54,20 @@ export const uploadFileToS3 = async (presignedUrl: string, file: File): Promise<
  */
 export const downloadFileFromS3 = async (objectKey: string, fileName: string): Promise<void> => {
   try {
-    const response = await apiClient.get(`/api/v1/download?objectKey=${encodeURIComponent(objectKey)}`, {
-      responseType: 'blob',
-    });
+    const response = await apiClient.get(
+      `/api/v1/download?objectKey=${encodeURIComponent(objectKey)}`,
+      {
+        responseType: 'blob',
+      }
+    );
 
     // Axios returns blob data directly when responseType is 'blob'
-    const blob = response.data instanceof Blob
-      ? response.data
-      : new Blob([response.data], { type: response.headers['content-type'] || 'application/octet-stream' });
+    const blob =
+      response.data instanceof Blob
+        ? response.data
+        : new Blob([response.data], {
+            type: response.headers['content-type'] || 'application/octet-stream',
+          });
 
     // Create download link
     const url = window.URL.createObjectURL(blob);
@@ -83,4 +87,3 @@ export const downloadFileFromS3 = async (objectKey: string, fileName: string): P
     throw error;
   }
 };
-

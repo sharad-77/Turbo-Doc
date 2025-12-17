@@ -1,6 +1,9 @@
 'use client';
 
-import { convertDocument, downloadFileFromS3, useFileUpload, useJobStatus } from '@/api';
+import { downloadFileFromS3, useFileUpload, useJobStatus } from '@/api';
+import { convertDocument } from '@/api/documents';
+import { getUserPlan } from '@/api/plans';
+import { validateDocumentFormat } from '@/lib/format-validation';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import {
@@ -12,6 +15,7 @@ import {
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
 import { Switch } from '@repo/ui/components/ui/switch';
+import { useQuery } from '@tanstack/react-query';
 import {
   Clock,
   Download,
@@ -126,6 +130,12 @@ const Convert = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadMutation = useFileUpload();
 
+  // Fetch user plan for showing limits in toast
+  const { data: userPlan } = useQuery({
+    queryKey: ['user-plan'],
+    queryFn: getUserPlan,
+  });
+
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -154,6 +164,13 @@ const Convert = () => {
 
   const handleFiles = async (fileList: File[]) => {
     for (const file of fileList) {
+      // Validate format before uploading
+      const validation = validateDocumentFormat(file);
+      if (!validation.valid) {
+        toast.error(validation.error || 'Unsupported file format');
+        continue; // Skip this file
+      }
+
       const uploadedFile: UploadedFile = { file, status: 'uploading' };
       setFiles(prev => [...prev, uploadedFile]);
 
@@ -188,8 +205,25 @@ const Convert = () => {
 
         toast.success(`${file.name} uploaded and conversion started`);
       } catch (error) {
-        console.error('Upload error:', error);
-        toast.error(`Failed to upload ${file.name}`);
+        // Check if this is a daily limit error
+        const err = error as { message: string; isLimitError?: boolean };
+
+        if (err.isLimitError) {
+          const dailyLimit = userPlan?.dailyDocumentLimit || 5;
+          toast.error('Daily Limit Reached', {
+            description: `You've reached your daily limit of ${dailyLimit} document conversions. Create a free account to get ${dailyLimit === 1 ? '5' : '20'} conversions per day!`,
+            action: {
+              label: 'Sign Up',
+              onClick: () => (window.location.href = '/signup'),
+            },
+            duration: 10000,
+          });
+        } else {
+          // Only log non-limit errors to avoid console spam
+          console.error('Upload error:', error);
+          toast.error(`Failed to upload ${file.name}`);
+        }
+
         setFiles(prev => prev.filter(f => f.file !== file));
       }
     }

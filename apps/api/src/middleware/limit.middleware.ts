@@ -84,14 +84,28 @@ export const limitMiddleware = (resourceType: ResourceType) => {
         });
       }
 
-      const limits = {
-        FREE: { DOCUMENT: 5, IMAGE: 5, MERGE: 2 },
-        PRO: { DOCUMENT: 20, IMAGE: 20, MERGE: -1 },
-      };
+      // Fetch plan limits from database
+      const planData = await prisma.subscriptionPlan.findUnique({
+        where: { name: plan },
+        select: {
+          dailyDocumentLimit: true,
+          dailyImageLimit: true,
+          mergeFileLimit: true,
+        },
+      });
 
-      const currentLimits = limits[plan];
+      if (!planData) {
+        res.status(500).json({ error: `Plan ${plan} configuration not found` });
+        return;
+      }
 
-      if (currentLimits[resourceType] === -1) {
+      let currentLimit = 0;
+      if (resourceType === 'DOCUMENT') currentLimit = planData.dailyDocumentLimit;
+      if (resourceType === 'IMAGE') currentLimit = planData.dailyImageLimit;
+      if (resourceType === 'MERGE') currentLimit = planData.mergeFileLimit;
+
+      // -1 means unlimited
+      if (currentLimit === -1) {
         return next();
       }
 
@@ -100,11 +114,11 @@ export const limitMiddleware = (resourceType: ResourceType) => {
       if (resourceType === 'IMAGE') currentUsage = userUsage.imageCount;
       if (resourceType === 'MERGE') currentUsage = userUsage.mergeCount;
 
-      if (currentUsage >= currentLimits[resourceType]) {
+      if (currentUsage >= currentLimit) {
         res.status(403).json({
-          error: `Daily ${resourceType} limit reached for ${plan} plan.`,
+          error: `Daily ${resourceType.toLowerCase()} limit reached for ${plan} plan (${currentLimit}/day).`,
           current: currentUsage,
-          limit: currentLimits[resourceType],
+          limit: currentLimit,
         });
         return;
       }

@@ -13,4 +13,3 @@ export const useDashboardStats = () => {
     staleTime: 1000 * 60 * 2, // 2 minutes - dashboard stats don't change frequently
   });
 };
-

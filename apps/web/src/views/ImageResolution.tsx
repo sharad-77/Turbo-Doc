@@ -1,6 +1,15 @@
 'use client';
 
-import { convertImage, downloadFileFromS3, resizeImage, useFileUpload, useJobStatus } from '@/api';
+import {
+  compressImage,
+  convertImage,
+  downloadFileFromS3,
+  resizeImage,
+  useFileUpload,
+  useJobStatus,
+} from '@/api';
+import { getUserPlan } from '@/api/plans';
+import { validateImageFormat } from '@/lib/format-validation';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import {
@@ -11,7 +20,8 @@ import {
   SelectValue,
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
-import { Download, Image as ImageIcon, Upload, X, Zap } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { Download, ImageIcon, Upload, X, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -106,8 +116,16 @@ const ImageResolution = () => {
   const [outputFormat, setOutputFormat] = useState<
     'jpeg' | 'jpg' | 'webp' | 'avif' | 'png' | 'gif'
   >('png');
+  const [operationMode, setOperationMode] = useState<'convert' | 'resize' | 'compress'>('convert');
+  const [compressionQuality, setCompressionQuality] = useState([80]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadMutation = useFileUpload();
+
+  // Fetch user plan for showing limits in toast
+  const { data: userPlan } = useQuery({
+    queryKey: ['user-plan'],
+    queryFn: getUserPlan,
+  });
 
   const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -117,6 +135,13 @@ const ImageResolution = () => {
   };
 
   const handleFileUpload = async (file: File) => {
+    // Validate format before uploading
+    const validation = validateImageFormat(file);
+    if (!validation.valid) {
+      toast.error(validation.error || 'Unsupported image format');
+      return;
+    }
+
     const uploadedImage: UploadedImage = { file, status: 'uploading' };
     setSelectedImage(uploadedImage);
 
@@ -147,13 +172,22 @@ const ImageResolution = () => {
       // Get file extension
       const originalFormat = file.name.split('.').pop()?.toLowerCase() || '';
 
-      // Start conversion/resize based on resolution
+      // Start operation based on mode
       let job;
-      if (resolution[0] === 100) {
-        // Just convert format
-        job = await convertImage({
+      if (operationMode === 'compress') {
+        job = await compressImage({
           key: keyWithoutPrefix,
-          format: outputFormat,
+          quality: compressionQuality[0],
+          originalFileName: file.name,
+          originalFormat,
+          fileSize: file.size,
+          width,
+          height,
+        });
+      } else if (operationMode === 'resize') {
+        job = await resizeImage({
+          key: keyWithoutPrefix,
+          scalePercent: resolution[0],
           originalFileName: file.name,
           originalFormat,
           fileSize: file.size,
@@ -161,10 +195,10 @@ const ImageResolution = () => {
           height,
         });
       } else {
-        // Resize image
-        job = await resizeImage({
+        // Convert format
+        job = await convertImage({
           key: keyWithoutPrefix,
-          scalePercent: resolution[0],
+          format: outputFormat,
           originalFileName: file.name,
           originalFormat,
           fileSize: file.size,
@@ -185,8 +219,25 @@ const ImageResolution = () => {
 
       toast.success('Image uploaded and processing started');
     } catch (error) {
-      console.error('Upload error:', error);
-      toast.error('Failed to upload image');
+      // Check if this is a daily limit error
+      const err = error as { message: string; isLimitError?: boolean };
+
+      if (err.isLimitError) {
+        const dailyLimit = userPlan?.dailyImageLimit || 5;
+        toast.error('Daily Limit Reached', {
+          description: `You've reached your daily limit of ${dailyLimit} image conversions. Create a free account to get ${dailyLimit === 1 ? '5' : '20'} conversions per day!`,
+          action: {
+            label: 'Sign Up',
+            onClick: () => (window.location.href = '/signup'),
+          },
+          duration: 10000,
+        });
+      } else {
+        // Only log non-limit errors to avoid console spam
+        console.error('Upload error:', error);
+        toast.error('Failed to upload image');
+      }
+
       setSelectedImage(null);
     }
   };
@@ -202,10 +253,20 @@ const ImageResolution = () => {
       const originalFormat = selectedImage.file.name.split('.').pop()?.toLowerCase() || '';
 
       let job;
-      if (resolution[0] === 100) {
-        job = await convertImage({
+      if (operationMode === 'compress') {
+        job = await compressImage({
           key: keyWithoutPrefix,
-          format: outputFormat,
+          quality: compressionQuality[0],
+          originalFileName: selectedImage.file.name,
+          originalFormat,
+          fileSize: selectedImage.file.size,
+          width: selectedImage.width,
+          height: selectedImage.height,
+        });
+      } else if (operationMode === 'resize') {
+        job = await resizeImage({
+          key: keyWithoutPrefix,
+          scalePercent: resolution[0],
           originalFileName: selectedImage.file.name,
           originalFormat,
           fileSize: selectedImage.file.size,
@@ -213,9 +274,9 @@ const ImageResolution = () => {
           height: selectedImage.height,
         });
       } else {
-        job = await resizeImage({
+        job = await convertImage({
           key: keyWithoutPrefix,
-          scalePercent: resolution[0],
+          format: outputFormat,
           originalFileName: selectedImage.file.name,
           originalFormat,
           fileSize: selectedImage.file.size,
@@ -339,67 +400,121 @@ const ImageResolution = () => {
           <div className="space-y-6">
             <Card className="modern-card">
               <CardHeader>
-                <CardTitle>Resolution Settings</CardTitle>
+                <CardTitle>Image Settings</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Convert to Format</label>
+                  <label className="text-sm font-medium mb-2 block">Operation</label>
                   <Select
-                    value={outputFormat}
-                    onValueChange={value => setOutputFormat(value as typeof outputFormat)}
+                    value={operationMode}
+                    onValueChange={value => setOperationMode(value as typeof operationMode)}
                   >
                     <SelectTrigger className="h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="png">PNG</SelectItem>
-                      <SelectItem value="jpg">JPEG</SelectItem>
-                      <SelectItem value="jpeg">JPEG</SelectItem>
-                      <SelectItem value="webp">WebP</SelectItem>
-                      <SelectItem value="gif">GIF</SelectItem>
-                      <SelectItem value="avif">AVIF</SelectItem>
+                      <SelectItem value="convert">Convert Format</SelectItem>
+                      <SelectItem value="resize">Resize</SelectItem>
+                      <SelectItem value="compress">Compress</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium mb-3 block">
-                    Resolution: {resolution[0]}%
-                  </label>
-                  <Slider
-                    value={resolution}
-                    onValueChange={setResolution}
-                    max={200}
-                    min={25}
-                    step={25}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                    <span>25%</span>
-                    <span>200%</span>
+                {operationMode === 'convert' && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Convert to Format</label>
+                    <Select
+                      value={outputFormat}
+                      onValueChange={value => setOutputFormat(value as typeof outputFormat)}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="png">PNG</SelectItem>
+                        <SelectItem value="jpg">JPEG</SelectItem>
+                        <SelectItem value="jpeg">JPEG</SelectItem>
+                        <SelectItem value="webp">WebP</SelectItem>
+                        <SelectItem value="avif">AVIF</SelectItem>
+                        <SelectItem value="gif">GIF</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                </div>
+                )}
+
+                {operationMode === 'resize' && (
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">
+                      Resolution: {resolution[0]}%
+                    </label>
+                    <Slider
+                      value={resolution}
+                      onValueChange={setResolution}
+                      max={200}
+                      min={25}
+                      step={25}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                      <span>25%</span>
+                      <span>200%</span>
+                    </div>
+                  </div>
+                )}
+
+                {operationMode === 'compress' && (
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">
+                      Quality: {compressionQuality[0]}%
+                    </label>
+                    <Slider
+                      value={compressionQuality}
+                      onValueChange={setCompressionQuality}
+                      max={100}
+                      min={1}
+                      step={1}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                      <span>1%</span>
+                      <span>100%</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Lower quality = smaller file size
+                    </p>
+                  </div>
+                )}
 
                 {selectedImage && selectedImage.width && selectedImage.height && (
-                <div className="p-4 rounded-xl bg-accent space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Original</span>
+                  <div className="p-4 rounded-xl bg-accent space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Original</span>
                       <span className="font-medium">
                         {selectedImage.width}x{selectedImage.height}
                       </span>
+                    </div>
+                    {operationMode === 'resize' && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">New Size</span>
+                        <span className="font-medium">
+                          {Math.round(selectedImage.width * (resolution[0] / 100))}x
+                          {Math.round(selectedImage.height * (resolution[0] / 100))}
+                        </span>
+                      </div>
+                    )}
+                    {operationMode === 'convert' && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Target Format</span>
+                        <span className="font-medium uppercase">{outputFormat}</span>
+                      </div>
+                    )}
+                    {operationMode === 'compress' && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Quality</span>
+                        <span className="font-medium">{compressionQuality[0]}%</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">New Size</span>
-                    <span className="font-medium">
-                        {Math.round(selectedImage.width * (resolution[0] / 100))}x
-                        {Math.round(selectedImage.height * (resolution[0] / 100))}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Format</span>
-                    <span className="font-medium uppercase">{outputFormat}</span>
-                  </div>
-                </div>
                 )}
 
                 <Button

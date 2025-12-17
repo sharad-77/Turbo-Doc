@@ -45,10 +45,10 @@ const SignUp = () => {
   const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-    name: '',
-    email: '',
-    password: '',
-    agreeToTerms: false,
+      name: '',
+      email: '',
+      password: '',
+      agreeToTerms: false,
     },
   });
 
@@ -208,15 +208,15 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel className="text-sm font-medium">Full name</FormLabel>
                     <FormControl>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                <Input
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
                           {...field}
-                  type="text"
-                  placeholder="Enter your full name"
-                  className="pl-10 h-10 md:h-12 rounded-xl"
-                />
-              </div>
+                          type="text"
+                          placeholder="Enter your full name"
+                          className="pl-10 h-10 md:h-12 rounded-xl"
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -230,15 +230,15 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel className="text-sm font-medium">Email address</FormLabel>
                     <FormControl>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                <Input
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
                           {...field}
-                  type="email"
-                  placeholder="Enter your email"
-                  className="pl-10 h-10 md:h-12 rounded-xl"
-                />
-              </div>
+                          type="email"
+                          placeholder="Enter your email"
+                          className="pl-10 h-10 md:h-12 rounded-xl"
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,31 +252,31 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel className="text-sm font-medium">Password</FormLabel>
                     <FormControl>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                <Input
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
                           {...field}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Create a password"
-                  className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
-                  ) : (
-                    <Eye className="w-4 h-4 md:w-5 md:h-5" />
-                  )}
-                </button>
-              </div>
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Create a password"
+                          className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
+                          ) : (
+                            <Eye className="w-4 h-4 md:w-5 md:h-5" />
+                          )}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage />
-              <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       Password must be at least 8 characters with uppercase, lowercase, and number
-              </p>
+                    </p>
                   </FormItem>
                 )}
               />
@@ -286,41 +286,38 @@ const SignUp = () => {
                 name="agreeToTerms"
                 render={({ field }) => (
                   <FormItem>
-            <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
                       <FormControl>
-              <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>
                       <FormLabel className="text-sm text-muted-foreground !mt-0">
-                I agree to the{' '}
-                <Link href="/terms" className="text-primary hover:text-primary-hover">
-                  Terms of Service
-                </Link>{' '}
-                and{' '}
-                <Link href="/privacy" className="text-primary hover:text-primary-hover">
-                  Privacy Policy
-                </Link>
+                        I agree to the{' '}
+                        <Link href="/terms" className="text-primary hover:text-primary-hover">
+                          Terms of Service
+                        </Link>{' '}
+                        and{' '}
+                        <Link href="/privacy" className="text-primary hover:text-primary-hover">
+                          Privacy Policy
+                        </Link>
                       </FormLabel>
-            </div>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-            <Button
-              type="submit"
-              className="w-full rounded-xl"
-              size="lg"
-              variant="hero"
+              <Button
+                type="submit"
+                className="w-full rounded-xl"
+                size="lg"
+                variant="hero"
                 disabled={!form.watch('agreeToTerms') || loading}
-            >
-              {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
-              {loading ? 'Creating Account...' : 'Create Account'}
-              {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
-            </Button>
-          </form>
+              >
+                {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
+                {loading ? 'Creating Account...' : 'Create Account'}
+                {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
+              </Button>
+            </form>
           </Form>
 
           {/* Sign In Link */}

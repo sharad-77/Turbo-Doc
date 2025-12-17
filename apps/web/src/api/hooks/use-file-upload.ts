@@ -18,11 +18,7 @@ export const useFileUpload = () => {
   return useMutation<UploadResult, Error, UploadFileParams>({
     mutationFn: async ({ file, folder = 'temporary' }) => {
       // Get presigned URL
-      const { url, objectKey } = await getUploadPresignedUrl(
-        folder,
-        file.type,
-        file.name
-      );
+      const { url, objectKey } = await getUploadPresignedUrl(folder, file.type, file.name);
 
       // Upload file to S3
       await uploadFileToS3(url, file);
@@ -31,4 +27,3 @@ export const useFileUpload = () => {
     },
   });
 };
-

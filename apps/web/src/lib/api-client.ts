@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { authClient } from './auth-client';
+import { getFingerprint } from './fingerprint';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -11,7 +12,7 @@ const apiClient: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor - Add auth token to requests
+// Request interceptor - Add auth token and fingerprint to requests
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     try {
@@ -21,6 +22,10 @@ apiClient.interceptors.request.use(
       if (session?.data?.session?.token) {
         config.headers.Authorization = `Bearer ${session.data.session.token}`;
       }
+
+      // Add fingerprint for guest tracking (required by backend)
+      const fingerprint = await getFingerprint();
+      config.headers['x-fingerprint'] = fingerprint;
     } catch (error) {
       // If session fetch fails, continue without token
       console.warn('Failed to get session token:', error);
@@ -35,7 +40,7 @@ apiClient.interceptors.request.use(
 
 // Response interceptor - Handle errors globally
 apiClient.interceptors.response.use(
-  (response) => {
+  response => {
     return response;
   },
   async (error: AxiosError) => {
@@ -62,15 +67,22 @@ apiClient.interceptors.response.use(
       }
     }
 
-    // Handle other errors
+    // Handle 403 - Daily Limit Reached
+    const errorData = error.response?.data as { error?: string; message?: string };
     const errorMessage =
-      (error.response?.data as { error?: string; message?: string })?.error ||
-      (error.response?.data as { error?: string; message?: string })?.message ||
-      error.message ||
-      'An unexpected error occurred';
+      errorData?.error || errorData?.message || error.message || 'An unexpected error occurred';
 
-    // Log error for debugging
-    if (process.env.NODE_ENV === 'development') {
+    let isLimitError = false;
+    if (
+      error.response?.status === 403 &&
+      errorMessage.toLowerCase().includes('daily') &&
+      errorMessage.toLowerCase().includes('limit')
+    ) {
+      isLimitError = true;
+    }
+
+    // Log error for debugging (skip limit errors as they're handled gracefully with toasts)
+    if (process.env.NODE_ENV === 'development' && !isLimitError) {
       console.error('API Error:', {
         url: error.config?.url,
         method: error.config?.method,
@@ -84,9 +96,9 @@ apiClient.interceptors.response.use(
       message: errorMessage,
       status: error.response?.status,
       data: error.response?.data,
+      isLimitError,
     });
   }
 );
 
 export default apiClient;
-

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const imageFormats = z.enum(['jpeg', 'jpg', 'png', 'webp', 'gif']);
+export const imageFormats = z.enum(['jpeg', 'jpg', 'png', 'webp', 'gif', 'avif']);
 
 // Convert Image Schema
 export const imageConvertSchema = z.object({

@@ -9,19 +9,9 @@ import { Navigation } from '@/components/Navigation';
 
 import { useAuthStore } from '@/store/useAuthStore';
 
-import {
-  SidebarProvider,
-  SidebarInset,
-} from '@repo/ui/components/ui/sidebar';
+import { SidebarProvider, SidebarInset } from '@repo/ui/components/ui/sidebar';
 
-const PUBLIC_ROUTES = [
-  '/',
-  '/signin',
-  '/signup',
-  '/pricing',
-  '/image-resolution',
-  '/convert',
-];
+const PUBLIC_ROUTES = ['/', '/signin', '/signup', '/pricing', '/image-resolution', '/convert'];
 
 const GUEST_ONLY_ROUTES = ['/', '/signin', '/signup'];
 
@@ -54,9 +44,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen flex-col">
         <Navigation />
 
-        <main className="flex-1 pt-24">
-          {children}
-        </main>
+        <main className="flex-1 pt-24">{children}</main>
 
         <Footer />
       </div>
@@ -71,9 +59,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <SidebarInset className="flex h-full flex-col">
           <MobileHeader />
 
-          <main className="flex-1 overflow-y-auto p-4 pt-16 md:p-6 md:pt-6 lg:p-8">
-            {children}
-          </main>
+          <main className="flex-1 overflow-y-auto p-4 pt-16 md:p-6 md:pt-6 lg:p-8">{children}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>

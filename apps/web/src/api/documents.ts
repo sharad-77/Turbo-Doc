@@ -39,9 +39,7 @@ export interface JobResponse {
 /**
  * Convert document to target format
  */
-export const convertDocument = async (
-  data: ConvertDocumentRequest
-): Promise<JobResponse> => {
+export const convertDocument = async (data: ConvertDocumentRequest): Promise<JobResponse> => {
   const response = await apiClient.post<JobResponse>('/api/v1/documents/convert', data);
   return response.data;
 };
@@ -69,4 +67,3 @@ export const getJobStatus = async (jobId: string): Promise<JobResponse> => {
   const response = await apiClient.get<JobResponse>(`/api/jobs/${jobId}`);
   return response.data;
 };
-

@@ -10,17 +10,18 @@ export const storageMiddleware = async (req: AuthRequest, res: Response, next: N
       return next();
     }
 
-    const limits = {
-      FREE: 200, // MB
-      PRO: 500, // MB
-    };
+    // Fetch storage limit from database
+    const planData = await prisma.subscriptionPlan.findUnique({
+      where: { name: plan },
+      select: { storageLimitMB: true },
+    });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const limitMB = (limits as any)[plan];
-    if (!limitMB) {
+    if (!planData) {
+      // Fallback to next if plan not found
       return next();
     }
 
+    const limitMB = planData.storageLimitMB;
     const limitBytes = limitMB * 1024 * 1024;
 
     const [docUsage, imgUsage] = await Promise.all([

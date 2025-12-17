@@ -22,8 +22,15 @@ export const createOrder = async (req: OrderRequest, res: Response) => {
       return res.status(401).json({ error: 'Unauthorized: User ID is required' });
     }
 
+    // Fetch plan from database
     const plan = await prisma.subscriptionPlan.findUnique({
       where: { id: planId },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        currency: true,
+      },
     });
 
     if (!plan) return res.status(404).json({ error: 'Plan Not Found' });
@@ -31,8 +38,8 @@ export const createOrder = async (req: OrderRequest, res: Response) => {
     const TodaysDate = Date.now();
 
     const options = {
-      amount: Number(plan.price) * 100,
-      currency: 'INR',
+      amount: Number(plan.price) * 100, // Convert to paise for INR
+      currency: plan.currency,
       receipt: `rcpt_${TodaysDate}`,
       notes: { userId, planId },
     };
@@ -43,7 +50,7 @@ export const createOrder = async (req: OrderRequest, res: Response) => {
       data: {
         userId,
         amount: plan.price,
-        currency: 'INR',
+        currency: plan.currency,
         provider: 'RAZORPAY',
         providerOrderId: order.id,
         status: 'PENDING',

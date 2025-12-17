@@ -8,14 +8,15 @@ datasource db {
 }
 
 model user {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
-  email         String   @unique
-  emailVerified Boolean  @default(false)
+  email         String    @unique
+  emailVerified Boolean   @default(false)
   image         String?
   password      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  plan          String    @default("FREE") // Default to FREE for logged-in users
 
   accounts     account[]
   sessions     session[]
@@ -25,9 +26,9 @@ model user {
   usageLogs    usageLog[]
   jobs         Job[]
   userUsage    UserUsage?
-  plan         PlanType  @default(FREE)
   payments     Payment[]
 
+  @@index([email])
 }
 
 model account {
@@ -80,21 +81,30 @@ model verification {
 model subscriptionPlan {
   id    String  @id @default(cuid())
   name  String  @unique // "FREE", "PRO"
-  price Decimal @db.Decimal(10, 2)
+  displayName String @default("") // "Free Plan", "Pro Plan"
+
+  // Pricing
+  price    Decimal @db.Decimal(10, 2)
+  currency String  @default("INR")
 
   // Limits
   dailyDocumentLimit Int // FREE=5, PRO=20
   dailyImageLimit    Int // FREE=5, PRO=20
-
   mergeFileLimit Int // FREE=2, PRO=-1 (unlimited)
-
   storageLimitMB Int // FREE=200, PRO=500
   retentionDays  Int // FREE=7, PRO=30
+
+  // Metadata
+  description String?
+  features    Json?   // Array of feature strings
+  isActive    Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   subscriptions subscription[]
+
+  @@index([name])
 }
 
 model subscription {

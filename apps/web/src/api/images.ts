@@ -75,4 +75,3 @@ export const getImageJobStatus = async (jobId: string): Promise<ImageJobResponse
   const response = await apiClient.get<ImageJobResponse>(`/api/jobs/${jobId}`);
   return response.data;
 };
-

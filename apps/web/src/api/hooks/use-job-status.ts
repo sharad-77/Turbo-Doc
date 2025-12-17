@@ -21,7 +21,7 @@ export const useJobStatus = ({ jobId, type, enabled = true }: UseJobStatusParams
       return getImageJobStatus(jobId);
     },
     enabled: enabled && !!jobId,
-    refetchInterval: (query) => {
+    refetchInterval: query => {
       const data = query.state.data;
       // Poll every 2 seconds if job is still processing
       if (data?.status === 'queued' || data?.status === 'processing') {
@@ -33,4 +33,3 @@ export const useJobStatus = ({ jobId, type, enabled = true }: UseJobStatusParams
     retry: false,
   });
 };
-

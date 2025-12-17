@@ -144,15 +144,15 @@ const SignIn = () => {
                   <FormItem>
                     <FormLabel className="text-sm font-medium">Email address</FormLabel>
                     <FormControl>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                <Input
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
                           {...field}
-                  type="email"
-                  placeholder="Enter your email"
-                  className="pl-10 h-10 md:h-12 rounded-xl"
-                />
-              </div>
+                          type="email"
+                          placeholder="Enter your email"
+                          className="pl-10 h-10 md:h-12 rounded-xl"
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -164,54 +164,54 @@ const SignIn = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-              <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                       <FormLabel className="text-sm font-medium">Password</FormLabel>
-                <Link
-                  href="/forgot-password"
-                  className="text-xs md:text-sm text-primary hover:text-primary-hover transition-colors"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+                      <Link
+                        href="/forgot-password"
+                        className="text-xs md:text-sm text-primary hover:text-primary-hover transition-colors"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
                     <FormControl>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
-                <Input
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
                           {...field}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
-                  className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
-                  ) : (
-                    <Eye className="w-4 h-4 md:w-5 md:h-5" />
-                  )}
-                </button>
-              </div>
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="Enter your password"
+                          className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
+                          ) : (
+                            <Eye className="w-4 h-4 md:w-5 md:h-5" />
+                          )}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-            <Button
-              type="submit"
-              className="w-full rounded-xl"
-              size="lg"
-              variant="hero"
-              disabled={loading}
-            >
-              {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
-              {loading ? 'Signing In...' : 'Sign In'}
-              {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
-            </Button>
-          </form>
+              <Button
+                type="submit"
+                className="w-full rounded-xl"
+                size="lg"
+                variant="hero"
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
+                {loading ? 'Signing In...' : 'Sign In'}
+                {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
+              </Button>
+            </form>
           </Form>
 
           {/* Sign Up Link */}
