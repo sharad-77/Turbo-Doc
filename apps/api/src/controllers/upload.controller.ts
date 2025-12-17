@@ -1,4 +1,4 @@
-import { createPersignedUrlwithClient } from '@repo/file-upload';
+import { createDownloadPresignedUrl, createPersignedUrlwithClient } from '@repo/file-upload';
 import { Request, Response } from 'express';
 import mime from 'mime-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,4 +38,59 @@ export const getPresignedUrl = async (req: Request, res: Response) => {
   });
 
   return res.json({ url, objectKey });
+};
+
+export const getDownloadPresignedUrl = async (req: Request, res: Response) => {
+  const { objectKey } = req.body;
+
+  if (!objectKey) {
+    return res.status(400).json({ error: 'objectKey is required' });
+  }
+
+  if (!awsBucketName) {
+    return res.status(500).json({ error: 'AWS bucket name not configured' });
+  }
+
+  try {
+    const url = await createDownloadPresignedUrl({
+      bucket: awsBucketName,
+      objectKey: objectKey,
+    });
+
+    return res.json({ url, objectKey });
+  } catch (error) {
+    console.error('Error generating download presigned URL:', error);
+    return res.status(500).json({ error: 'Failed to generate download URL' });
+  }
+};
+
+export const downloadFile = async (req: Request, res: Response) => {
+  const { objectKey } = req.query;
+
+  if (!objectKey || typeof objectKey !== 'string') {
+    return res.status(400).json({ error: 'objectKey is required' });
+  }
+
+  if (!awsBucketName) {
+    return res.status(500).json({ error: 'AWS bucket name not configured' });
+  }
+
+  try {
+    const { downloadFromS3 } = await import('@repo/file-upload');
+    const buffer = await downloadFromS3(objectKey);
+
+    // Extract filename from objectKey
+    const fileName = objectKey.split('/').pop() || 'download';
+
+    // Set appropriate headers
+    res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    res.setHeader('Content-Length', buffer.length.toString());
+
+    // Send the file
+    res.send(buffer);
+  } catch (error) {
+    console.error('Error downloading file:', error);
+    return res.status(500).json({ error: 'Failed to download file' });
+  }
 };

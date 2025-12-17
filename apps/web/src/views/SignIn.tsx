@@ -1,9 +1,18 @@
 'use client';
 
 import { authClient } from '@/lib/auth-client';
+import { signInSchema, type SignInInput } from '@/lib/validations/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@repo/ui/components/ui/form';
 import { Input } from '@repo/ui/components/ui/input';
-import { Label } from '@repo/ui/components/ui/label';
 import { Separator } from '@repo/ui/components/ui/separator';
 import {
   ArrowRight,
@@ -19,23 +28,29 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 const SignIn = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<SignInInput>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data: SignInInput) => {
     setLoading(true);
     try {
       await authClient.signIn.email(
         {
-          email,
-          password,
+          email: data.email,
+          password: data.password,
           callbackURL: '/dashboard',
         },
         {
@@ -120,30 +135,37 @@ const SignIn = () => {
           </div>
 
           {/* Sign In Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
-                Email address
-              </Label>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">Email address</FormLabel>
+                    <FormControl>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
-                  id="email"
+                          {...field}
                   type="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
                   className="pl-10 h-10 md:h-12 rounded-xl"
-                  required
                 />
               </div>
-            </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div className="space-y-2">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm font-medium">
-                  Password
-                </Label>
+                      <FormLabel className="text-sm font-medium">Password</FormLabel>
                 <Link
                   href="/forgot-password"
                   className="text-xs md:text-sm text-primary hover:text-primary-hover transition-colors"
@@ -151,16 +173,14 @@ const SignIn = () => {
                   Forgot password?
                 </Link>
               </div>
+                    <FormControl>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
-                  id="password"
+                          {...field}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
                   className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
-                  required
                 />
                 <button
                   type="button"
@@ -174,7 +194,11 @@ const SignIn = () => {
                   )}
                 </button>
               </div>
-            </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
             <Button
               type="submit"
@@ -188,6 +212,7 @@ const SignIn = () => {
               {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
             </Button>
           </form>
+          </Form>
 
           {/* Sign Up Link */}
           <div className="text-center">

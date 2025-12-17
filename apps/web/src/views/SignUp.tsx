@@ -1,8 +1,18 @@
 'use client';
 
 import { authClient } from '@/lib/auth-client';
+import { signUpSchema, type SignUpInput } from '@/lib/validations/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/ui/button';
 import { Checkbox } from '@repo/ui/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@repo/ui/components/ui/form';
 import { Input } from '@repo/ui/components/ui/input';
 import { Label } from '@repo/ui/components/ui/label';
 import { Separator } from '@repo/ui/components/ui/separator';
@@ -24,28 +34,32 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 const SignUp = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const form = useForm<SignUpInput>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
     name: '',
     email: '',
     password: '',
     agreeToTerms: false,
+    },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: SignUpInput) => {
     setLoading(true);
     try {
       await authClient.signUp.email(
         {
-          email: formData.email,
-          password: formData.password,
-          name: formData.name,
+          email: data.email,
+          password: data.password,
+          name: data.name,
           callbackURL: '/dashboard',
         },
         {
@@ -185,57 +199,66 @@ const SignUp = () => {
           </div>
 
           {/* Sign Up Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-sm font-medium">
-                Full name
-              </Label>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">Full name</FormLabel>
+                    <FormControl>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
-                  id="name"
+                          {...field}
                   type="text"
                   placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={e => setFormData({ ...formData, name: e.target.value })}
                   className="pl-10 h-10 md:h-12 rounded-xl"
-                  required
                 />
               </div>
-            </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
-                Email address
-              </Label>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">Email address</FormLabel>
+                    <FormControl>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
-                  id="email"
+                          {...field}
                   type="email"
                   placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
                   className="pl-10 h-10 md:h-12 rounded-xl"
-                  required
                 />
               </div>
-            </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">
-                Password
-              </Label>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">Password</FormLabel>
+                    <FormControl>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
                 <Input
-                  id="password"
+                          {...field}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Create a password"
-                  value={formData.password}
-                  onChange={e => setFormData({ ...formData, password: e.target.value })}
                   className="pl-10 pr-10 h-10 md:h-12 rounded-xl"
-                  required
                 />
                 <button
                   type="button"
@@ -249,20 +272,28 @@ const SignUp = () => {
                   )}
                 </button>
               </div>
+                    </FormControl>
+                    <FormMessage />
               <p className="text-xs text-muted-foreground">
-                Password must be at least 8 characters long
+                      Password must be at least 8 characters with uppercase, lowercase, and number
               </p>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="terms"
-                checked={formData.agreeToTerms}
-                onCheckedChange={checked =>
-                  setFormData({ ...formData, agreeToTerms: checked as boolean })
-                }
+                  </FormItem>
+                )}
               />
-              <Label htmlFor="terms" className="text-sm text-muted-foreground">
+
+              <FormField
+                control={form.control}
+                name="agreeToTerms"
+                render={({ field }) => (
+                  <FormItem>
+            <div className="flex items-center space-x-2">
+                      <FormControl>
+              <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel className="text-sm text-muted-foreground !mt-0">
                 I agree to the{' '}
                 <Link href="/terms" className="text-primary hover:text-primary-hover">
                   Terms of Service
@@ -271,21 +302,26 @@ const SignUp = () => {
                 <Link href="/privacy" className="text-primary hover:text-primary-hover">
                   Privacy Policy
                 </Link>
-              </Label>
+                      </FormLabel>
             </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
             <Button
               type="submit"
               className="w-full rounded-xl"
               size="lg"
               variant="hero"
-              disabled={!formData.agreeToTerms || loading}
+                disabled={!form.watch('agreeToTerms') || loading}
             >
               {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
               {loading ? 'Creating Account...' : 'Create Account'}
               {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
             </Button>
           </form>
+          </Form>
 
           {/* Sign In Link */}
           <div className="text-center">

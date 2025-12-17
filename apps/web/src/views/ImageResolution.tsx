@@ -1,4 +1,6 @@
-import { Badge } from '@repo/ui/components/ui/badge';
+'use client';
+
+import { convertImage, downloadFileFromS3, resizeImage, useFileUpload, useJobStatus } from '@/api';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import {
@@ -9,27 +11,265 @@ import {
   SelectValue,
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
-import { Image as ImageIcon, Upload, Zap } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { Download, Image as ImageIcon, Upload, X, Zap } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
+
+interface UploadedImage {
+  file: File;
+  objectKey?: string;
+  jobId?: string;
+  status?: 'uploading' | 'queued' | 'processing' | 'completed' | 'failed';
+  downloadUrl?: string;
+  width?: number;
+  height?: number;
+}
+
+// Image Item Component
+const ImageItem = ({
+  imageItem,
+  onRemove,
+  onDownload,
+  onStatusUpdate,
+}: {
+  imageItem: UploadedImage;
+  onRemove: () => void;
+  onDownload: () => void;
+  onStatusUpdate: (file: File, status: UploadedImage['status'], downloadUrl?: string) => void;
+}) => {
+  const { data: jobStatus } = useJobStatus({
+    jobId: imageItem.jobId || '',
+    type: 'image',
+    enabled: !!imageItem.jobId && imageItem.status !== 'completed' && imageItem.status !== 'failed',
+  });
+
+  // Update parent when job status changes (using useEffect to avoid render-time updates)
+  useEffect(() => {
+    if (!jobStatus) return;
+
+    if (jobStatus.status === 'completed' && jobStatus.processedFileKey && !imageItem.downloadUrl) {
+      onStatusUpdate(imageItem.file, 'completed', jobStatus.processedFileKey);
+    } else if (jobStatus.status === 'failed' && imageItem.status !== 'failed') {
+      onStatusUpdate(imageItem.file, 'failed');
+    } else if (jobStatus.status === 'processing' && imageItem.status !== 'processing') {
+      onStatusUpdate(imageItem.file, 'processing');
+    }
+  }, [jobStatus, imageItem, onStatusUpdate]);
+
+  const currentStatus = jobStatus?.status || imageItem.status || 'uploading';
+  const processedFileKey = jobStatus?.processedFileKey || imageItem.downloadUrl;
+
+  return (
+    <div className="flex items-center justify-between p-4 rounded-2xl bg-accent">
+      <div className="flex items-center gap-4 flex-1">
+        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+          <ImageIcon className="w-6 h-6 text-primary" />
+        </div>
+        <div className="flex-1">
+          <h4 className="font-medium">{imageItem.file.name}</h4>
+          <p className="text-sm text-muted-foreground">
+            {(imageItem.file.size / 1024 / 1024).toFixed(2)} MB
+          </p>
+          {currentStatus === 'processing' && (
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-xs text-muted-foreground">Processing...</span>
+            </div>
+          )}
+          {currentStatus === 'queued' && (
+            <span className="text-xs text-muted-foreground">Queued for processing</span>
+          )}
+          {currentStatus === 'completed' && processedFileKey && (
+            <span className="text-xs text-green-600">Ready to download</span>
+          )}
+          {currentStatus === 'failed' && (
+            <span className="text-xs text-red-600">Processing failed</span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        {currentStatus === 'completed' && processedFileKey && (
+          <Button variant="ghost" size="icon" onClick={onDownload} title="Download">
+            <Download className="w-4 h-4" />
+          </Button>
+        )}
+        <Button variant="ghost" size="icon" onClick={onRemove} title="Remove">
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 const ImageResolution = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = useState<UploadedImage | null>(null);
   const [resolution, setResolution] = useState([100]);
-  const [outputFormat, setOutputFormat] = useState('png');
-  const [usageCount, setUsageCount] = useState(2);
+  const [outputFormat, setOutputFormat] = useState<
+    'jpeg' | 'jpg' | 'webp' | 'avif' | 'png' | 'gif'
+  >('png');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadMutation = useFileUpload();
 
-  const maxDaily = 5;
-
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setSelectedImage(e.target.files[0]);
+      const file = e.target.files[0];
+      await handleFileUpload(file);
     }
   };
 
-  const handleProcess = () => {
-    // Process logic here
-    setUsageCount(prev => prev + 1);
+  const handleFileUpload = async (file: File) => {
+    const uploadedImage: UploadedImage = { file, status: 'uploading' };
+    setSelectedImage(uploadedImage);
+
+    try {
+      // Upload file to S3
+      const { objectKey } = await uploadMutation.mutateAsync({
+        file,
+        folder: 'temporary',
+      });
+
+      // Extract key without folder prefix for API
+      const keyWithoutPrefix = objectKey.replace('temporary/', '');
+
+      // Get image dimensions
+      const img = new Image();
+      const imageUrl = URL.createObjectURL(file);
+      img.src = imageUrl;
+
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      const width = img.width;
+      const height = img.height;
+      URL.revokeObjectURL(imageUrl);
+
+      // Get file extension
+      const originalFormat = file.name.split('.').pop()?.toLowerCase() || '';
+
+      // Start conversion/resize based on resolution
+      let job;
+      if (resolution[0] === 100) {
+        // Just convert format
+        job = await convertImage({
+          key: keyWithoutPrefix,
+          format: outputFormat,
+          originalFileName: file.name,
+          originalFormat,
+          fileSize: file.size,
+          width,
+          height,
+        });
+      } else {
+        // Resize image
+        job = await resizeImage({
+          key: keyWithoutPrefix,
+          scalePercent: resolution[0],
+          originalFileName: file.name,
+          originalFormat,
+          fileSize: file.size,
+          width,
+          height,
+        });
+      }
+
+      // Update image with job info
+      setSelectedImage({
+        ...uploadedImage,
+        objectKey,
+        jobId: job.jobId,
+        status: 'queued',
+        width,
+        height,
+      });
+
+      toast.success('Image uploaded and processing started');
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Failed to upload image');
+      setSelectedImage(null);
+    }
+  };
+
+  const handleProcess = async () => {
+    if (!selectedImage || !selectedImage.objectKey) {
+      toast.error('Please upload an image first');
+      return;
+    }
+
+    try {
+      const keyWithoutPrefix = selectedImage.objectKey.replace('temporary/', '');
+      const originalFormat = selectedImage.file.name.split('.').pop()?.toLowerCase() || '';
+
+      let job;
+      if (resolution[0] === 100) {
+        job = await convertImage({
+          key: keyWithoutPrefix,
+          format: outputFormat,
+          originalFileName: selectedImage.file.name,
+          originalFormat,
+          fileSize: selectedImage.file.size,
+          width: selectedImage.width,
+          height: selectedImage.height,
+        });
+      } else {
+        job = await resizeImage({
+          key: keyWithoutPrefix,
+          scalePercent: resolution[0],
+          originalFileName: selectedImage.file.name,
+          originalFormat,
+          fileSize: selectedImage.file.size,
+          width: selectedImage.width,
+          height: selectedImage.height,
+        });
+      }
+
+      setSelectedImage({
+        ...selectedImage,
+        jobId: job.jobId,
+        status: 'queued',
+      });
+
+      toast.success('Processing started');
+    } catch (error) {
+      console.error('Process error:', error);
+      toast.error('Failed to start processing');
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!selectedImage?.downloadUrl) {
+      toast.error('Processed file not available yet');
+      return;
+    }
+
+    try {
+      // downloadUrl contains the processed file key (e.g., "processed/filename.ext")
+      const fileName = selectedImage.file.name.replace(/\.[^/.]+$/, `.${outputFormat}`);
+      await downloadFileFromS3(selectedImage.downloadUrl, fileName);
+      toast.success('File downloaded successfully');
+    } catch (error) {
+      console.error('Download error:', error);
+      toast.error('Failed to download file');
+    }
+  };
+
+  const handleStatusUpdate = (
+    file: File,
+    status: UploadedImage['status'],
+    downloadUrl?: string
+  ) => {
+    if (selectedImage && selectedImage.file === file) {
+      setSelectedImage({
+        ...selectedImage,
+        status,
+        downloadUrl: downloadUrl || selectedImage.downloadUrl,
+      });
+    }
+  };
+
+  const handleRemove = () => {
+    setSelectedImage(null);
   };
 
   return (
@@ -40,8 +280,6 @@ const ImageResolution = () => {
           <h1 className="text-3xl font-space-grotesk font-bold mb-2">Image Resolution</h1>
           <p className="text-muted-foreground">Increase or decrease image resolution and quality</p>
         </div>
-
-        {/* Usage Warning for Unauthenticated */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Upload Section */}
@@ -86,20 +324,12 @@ const ImageResolution = () => {
                   <CardTitle>Preview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between p-4 rounded-2xl bg-accent">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                        <ImageIcon className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-medium">{selectedImage.name}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {(selectedImage.size / 1024 / 1024).toFixed(2)} MB
-                        </p>
-                      </div>
-                    </div>
-                    <Badge variant="secondary">Ready</Badge>
-                  </div>
+                  <ImageItem
+                    imageItem={selectedImage}
+                    onRemove={handleRemove}
+                    onDownload={handleDownload}
+                    onStatusUpdate={handleStatusUpdate}
+                  />
                 </CardContent>
               </Card>
             )}
@@ -114,16 +344,20 @@ const ImageResolution = () => {
               <CardContent className="space-y-6">
                 <div>
                   <label className="text-sm font-medium mb-2 block">Convert to Format</label>
-                  <Select value={outputFormat} onValueChange={setOutputFormat}>
+                  <Select
+                    value={outputFormat}
+                    onValueChange={value => setOutputFormat(value as typeof outputFormat)}
+                  >
                     <SelectTrigger className="h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="png">PNG</SelectItem>
                       <SelectItem value="jpg">JPEG</SelectItem>
+                      <SelectItem value="jpeg">JPEG</SelectItem>
                       <SelectItem value="webp">WebP</SelectItem>
                       <SelectItem value="gif">GIF</SelectItem>
-                      <SelectItem value="bmp">BMP</SelectItem>
+                      <SelectItem value="avif">AVIF</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -146,16 +380,19 @@ const ImageResolution = () => {
                   </div>
                 </div>
 
+                {selectedImage && selectedImage.width && selectedImage.height && (
                 <div className="p-4 rounded-xl bg-accent space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Original</span>
-                    <span className="font-medium">1920x1080</span>
+                      <span className="font-medium">
+                        {selectedImage.width}x{selectedImage.height}
+                      </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">New Size</span>
                     <span className="font-medium">
-                      {Math.round(1920 * (resolution[0] / 100))}x
-                      {Math.round(1080 * (resolution[0] / 100))}
+                        {Math.round(selectedImage.width * (resolution[0] / 100))}x
+                        {Math.round(selectedImage.height * (resolution[0] / 100))}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -163,15 +400,16 @@ const ImageResolution = () => {
                     <span className="font-medium uppercase">{outputFormat}</span>
                   </div>
                 </div>
+                )}
 
                 <Button
                   variant="hero"
                   className="w-full"
                   onClick={handleProcess}
-                  disabled={!selectedImage}
+                  disabled={!selectedImage || selectedImage.status === 'processing'}
                 >
                   <Zap className="w-4 h-4 mr-2" />
-                  Process Image
+                  {selectedImage?.status === 'processing' ? 'Processing...' : 'Process Image'}
                 </Button>
               </CardContent>
             </Card>

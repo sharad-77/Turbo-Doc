@@ -65,7 +65,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider defaultOpen>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-screen overflow-hidden w-full">
         <AppSidebar />
 
         <SidebarInset className="flex h-full flex-col">

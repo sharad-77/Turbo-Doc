@@ -6,8 +6,8 @@ interface PresignedUrlParams {
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import fs from 'fs';
-import { Readable } from 'stream';
 import mime from 'mime-types';
+import { Readable } from 'stream';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../.env' });
@@ -31,13 +31,21 @@ const s3Client = new S3Client({
 });
 
 // Generate Presigned URL for Upload
-
 export const createPersignedUrlwithClient = ({ bucket, objectKey }: PresignedUrlParams) => {
   if (!bucket || !objectKey) {
     throw new Error('Bucket and objectKey are required');
   }
   const command = new PutObjectCommand({ Bucket: bucket, Key: objectKey });
   return getSignedUrl(s3Client, command, { expiresIn: 3600 });
+};
+
+// Generate Presigned URL for Download
+export const createDownloadPresignedUrl = ({ bucket, objectKey }: PresignedUrlParams) => {
+  if (!bucket || !objectKey) {
+    throw new Error('Bucket and objectKey are required');
+  }
+  const command = new GetObjectCommand({ Bucket: bucket, Key: objectKey });
+  return getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour expiry
 };
 
 // Convert Stream → Buffer (Correct Version)
