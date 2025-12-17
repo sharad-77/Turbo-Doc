@@ -5,29 +5,29 @@ import * as React from 'react';
 import { cn } from '../../lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer',
   {
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft hover:shadow-soft-lg',
+          'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft hover:shadow-soft-lg hover:scale-105',
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-2xl shadow-soft',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-2xl shadow-soft hover:scale-105',
         outline:
-          'border border-card-border bg-background hover:bg-secondary-hover hover:text-secondary-foreground rounded-2xl shadow-soft',
+          'border border-card-border bg-background hover:bg-secondary-hover hover:text-secondary-foreground rounded-2xl shadow-soft hover:scale-105',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-2xl shadow-soft',
-        ghost: 'hover:bg-accent hover:text-accent-foreground rounded-2xl',
-        link: 'text-primary underline-offset-4 hover:underline',
-        hero: 'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft-lg hover:shadow-xl transform hover:-translate-y-0.5',
-        cta: 'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft-lg font-semibold',
+          'bg-secondary text-secondary-foreground hover:bg-secondary-hover rounded-2xl shadow-soft hover:scale-105',
+        ghost: 'hover:bg-accent hover:text-accent-foreground rounded-2xl hover:scale-105',
+        link: 'text-primary underline-offset-4 hover:underline cursor-pointer',
+        hero: 'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft-lg hover:shadow-xl transform hover:-translate-y-0.5 hover:scale-105',
+        cta: 'bg-primary text-primary-foreground hover:bg-primary-hover rounded-2xl shadow-soft-lg font-semibold hover:scale-105',
       },
       size: {
-        default: 'h-12 px-6 py-3',
-        sm: 'h-9 rounded-xl px-4',
-        lg: 'h-14 rounded-2xl px-8 text-base',
-        xl: 'h-16 rounded-2xl px-10 text-lg',
-        icon: 'h-12 w-12 rounded-2xl',
+        default: 'h-12 px-8',
+        sm: 'h-9 px-5 text-xs',
+        lg: 'h-14 px-8 text-base',
+        xl: 'h-16 px-10 text-lg',
+        icon: 'h-12 w-12',
       },
     },
     defaultVariants: {

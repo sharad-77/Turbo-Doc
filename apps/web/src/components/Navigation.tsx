@@ -76,7 +76,7 @@ export const Navigation = () => {
             >
               <Link href="/signin">Sign In</Link>
             </Button>
-            <Button variant="default" size="sm" className="nav-cta-button" asChild>
+            <Button variant="default" size="sm" className="nav-cta-button p-4" asChild>
               <Link href="/signup">
                 Get Started
                 <span className="ml-1.5 text-xs opacity-70">— Free</span>

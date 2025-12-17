@@ -20,7 +20,7 @@ export const mergePdfService = async (
 
       targetFormat: 'pdf',
       s3Key: JSON.stringify(keys),
-      s3Bucket: process.env.AWS_BUCKET_NAME || 'default-bucket',
+      s3Bucket: process.env.AWS_BUCKET_NAME!,
 
       status: 'PENDING',
       conversionType: 'MERGE',
@@ -100,7 +100,7 @@ export const splitPdfService = async (
 
       targetFormat: 'pdf',
       s3Key: key,
-      s3Bucket: process.env.AWS_BUCKET_NAME || 'default-bucket',
+      s3Bucket: process.env.AWS_BUCKET_NAME!,
 
       status: 'PENDING',
       conversionType: 'SPLIT',
@@ -183,7 +183,7 @@ export const convertFilesService = async (
 
       targetFormat: targetFormat,
       s3Key: s3Key,
-      s3Bucket: process.env.AWS_BUCKET_NAME || 'default-bucket',
+      s3Bucket: process.env.AWS_BUCKET_NAME!,
 
       status: 'PENDING',
       conversionType: 'FORMAT_CONVERSION',

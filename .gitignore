@@ -38,4 +38,6 @@ yarn-error.log*
 *.pem
 
 # Personal File
-library_suggestions.txt
+AWS_EC2_DEPLOYMENT.txt
+ESSENTIAL_DEPLOYMENT.txt
+install.log
