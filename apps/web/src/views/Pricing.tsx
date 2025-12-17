@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Check, ArrowRight, Zap, Shield, Clock, Minus } from 'lucide-react';
 import { Badge } from '@repo/ui/components/ui/badge';
 import { Button } from '@repo/ui/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@repo/ui/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@repo/ui/components/ui/tabs';
+import { ArrowRight, Check, Clock, Minus, Shield, Zap } from 'lucide-react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const STATIC_PLANS = [
   {
@@ -262,7 +263,7 @@ const Pricing = () => {
         </div>
 
         {/* Value Props Section */}
-        <div className="mt-24 max-w-4xl mx-auto hidden md:block border-t border-border pt-24">
+        <div className="mt-24 max-w-5xl mx-auto hidden md:block border-t border-border pt-24">
           <div className="grid grid-cols-3 gap-12 text-center">
             <div className="space-y-3">
               <div className="mx-auto h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
@@ -300,15 +301,21 @@ const Pricing = () => {
             Secure payment via Razorpay. Cancel anytime. Prices include GST.
           </p>
           <div className="mt-4 flex justify-center gap-6">
-            <a href="/faq" className="hover:text-primary transition-colors">
+            <NextLink href="/pricing" className="hover:text-primary transition-colors">
               FAQ
-            </a>
-            <a href="/terms" className="hover:text-primary transition-colors">
+            </NextLink>
+            <NextLink href="/privacy-policy" className="hover:text-primary transition-colors">
               Privacy Policy
-            </a>
-            <a href="/contact" className="hover:text-primary transition-colors font-semibold">
-              Contact Sales
-            </a>
+            </NextLink>
+            <NextLink href="/refund-policy" className="hover:text-primary transition-colors">
+              Refund Policy
+            </NextLink>
+            <NextLink href="/cancellation-policy" className="hover:text-primary transition-colors">
+              Cancellation Policy
+            </NextLink>
+            <NextLink href="/contact" className="hover:text-primary transition-colors font-semibold">
+              Contact Support
+            </NextLink>
           </div>
         </div>
       </div>

@@ -113,7 +113,7 @@ const Settings = () => {
 
   return (
     <div className="min-h-screen bg-background p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
         <div>
           <h1 className="text-3xl font-space-grotesk font-bold mb-2">Settings</h1>

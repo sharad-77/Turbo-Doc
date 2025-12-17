@@ -108,7 +108,7 @@ const Profile = () => {
   if (!profile) {
     return (
       <div className="min-h-screen bg-background p-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <p className="text-center text-muted-foreground">Failed to load profile</p>
         </div>
       </div>
@@ -117,7 +117,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-background p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
         <div>
           <h1 className="text-3xl font-space-grotesk font-bold mb-2">Profile</h1>

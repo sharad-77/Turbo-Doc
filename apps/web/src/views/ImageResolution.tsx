@@ -29,7 +29,7 @@ interface UploadedImage {
   file: File;
   objectKey?: string;
   jobId?: string;
-  status?: 'uploading' | 'queued' | 'processing' | 'completed' | 'failed';
+  status?: 'pending' | 'uploading' | 'queued' | 'processing' | 'completed' | 'failed';
   downloadUrl?: string;
   width?: number;
   height?: number;
@@ -127,60 +127,76 @@ const ImageResolution = () => {
     queryFn: getUserPlan,
   });
 
-  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      await handleFileUpload(file);
-    }
-  };
 
-  const handleFileUpload = async (file: File) => {
-    // Validate format before uploading
-    const validation = validateImageFormat(file);
-    if (!validation.valid) {
-      toast.error(validation.error || 'Unsupported image format');
-      return;
-    }
+      // Validate format before staging
+      const validation = validateImageFormat(file);
+      if (!validation.valid) {
+        toast.error(validation.error || 'Unsupported image format');
+        return;
+      }
 
-    const uploadedImage: UploadedImage = { file, status: 'uploading' };
-    setSelectedImage(uploadedImage);
-
-    try {
-      // Upload file to S3
-      const { objectKey } = await uploadMutation.mutateAsync({
-        file,
-        folder: 'temporary',
-      });
-
-      // Extract key without folder prefix for API
-      const keyWithoutPrefix = objectKey.replace('temporary/', '');
-
-      // Get image dimensions
+      // Get image dimensions and stage with pending status
       const img = new Image();
       const imageUrl = URL.createObjectURL(file);
       img.src = imageUrl;
 
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-      });
+      img.onload = () => {
+        setSelectedImage({
+          file,
+          status: 'pending',
+          width: img.width,
+          height: img.height,
+        });
+        URL.revokeObjectURL(imageUrl);
+        toast.success('Image loaded - click "Process Image" to start');
+      };
 
-      const width = img.width;
-      const height = img.height;
-      URL.revokeObjectURL(imageUrl);
+      img.onerror = () => {
+        URL.revokeObjectURL(imageUrl);
+        toast.error('Failed to load image');
+      };
+    }
+  };
 
-      // Get file extension
-      const originalFormat = file.name.split('.').pop()?.toLowerCase() || '';
+  const handleProcess = async () => {
+    if (!selectedImage) {
+      toast.error('Please upload an image first');
+      return;
+    }
 
-      // Start operation based on mode
+    try {
+      let objectKey = selectedImage.objectKey;
+      let width = selectedImage.width;
+      let height = selectedImage.height;
+
+      // Step 1: Upload if not uploaded yet
+      if (!objectKey) {
+        setSelectedImage({ ...selectedImage, status: 'uploading' });
+
+        const { objectKey: uploadedKey } = await uploadMutation.mutateAsync({
+          file: selectedImage.file,
+          folder: 'temporary',
+        });
+
+        objectKey = uploadedKey;
+        setSelectedImage({ ...selectedImage, objectKey, status: 'queued' });
+      }
+
+      const keyWithoutPrefix = objectKey.replace('temporary/', '');
+      const originalFormat = selectedImage.file.name.split('.').pop()?.toLowerCase() || '';
+
+      // Step 2: Process based on operation mode
       let job;
       if (operationMode === 'compress') {
         job = await compressImage({
           key: keyWithoutPrefix,
           quality: compressionQuality[0],
-          originalFileName: file.name,
+          originalFileName: selectedImage.file.name,
           originalFormat,
-          fileSize: file.size,
+          fileSize: selectedImage.file.size,
           width,
           height,
         });
@@ -188,28 +204,26 @@ const ImageResolution = () => {
         job = await resizeImage({
           key: keyWithoutPrefix,
           scalePercent: resolution[0],
-          originalFileName: file.name,
+          originalFileName: selectedImage.file.name,
           originalFormat,
-          fileSize: file.size,
+          fileSize: selectedImage.file.size,
           width,
           height,
         });
       } else {
-        // Convert format
         job = await convertImage({
           key: keyWithoutPrefix,
           format: outputFormat,
-          originalFileName: file.name,
+          originalFileName: selectedImage.file.name,
           originalFormat,
-          fileSize: file.size,
+          fileSize: selectedImage.file.size,
           width,
           height,
         });
       }
 
-      // Update image with job info
       setSelectedImage({
-        ...uploadedImage,
+        ...selectedImage,
         objectKey,
         jobId: job.jobId,
         status: 'queued',
@@ -217,84 +231,25 @@ const ImageResolution = () => {
         height,
       });
 
-      toast.success('Image uploaded and processing started');
+      toast.success('Processing started');
     } catch (error) {
-      // Check if this is a daily limit error
       const err = error as { message: string; isLimitError?: boolean };
 
       if (err.isLimitError) {
         const dailyLimit = userPlan?.dailyImageLimit || 5;
-        toast.error('Daily Limit Reached', {
-          description: `You've reached your daily limit of ${dailyLimit} image conversions. Create a free account to get ${dailyLimit === 1 ? '5' : '20'} conversions per day!`,
+        const operationName = operationMode === 'convert' ? 'conversion' : operationMode;
+        toast.error('Daily Image Limit Reached', {
+          description: `You've reached your daily limit of ${dailyLimit} image ${operationName}s. Upgrade to PRO for more!`,
           action: {
-            label: 'Sign Up',
-            onClick: () => (window.location.href = '/signup'),
+            label: 'Upgrade',
+            onClick: () => (window.location.href = '/pricing'),
           },
           duration: 10000,
         });
       } else {
-        // Only log non-limit errors to avoid console spam
-        console.error('Upload error:', error);
-        toast.error('Failed to upload image');
+        console.error('Process error:', error);
+        toast.error(`Failed to ${operationMode} image`);
       }
-
-      setSelectedImage(null);
-    }
-  };
-
-  const handleProcess = async () => {
-    if (!selectedImage || !selectedImage.objectKey) {
-      toast.error('Please upload an image first');
-      return;
-    }
-
-    try {
-      const keyWithoutPrefix = selectedImage.objectKey.replace('temporary/', '');
-      const originalFormat = selectedImage.file.name.split('.').pop()?.toLowerCase() || '';
-
-      let job;
-      if (operationMode === 'compress') {
-        job = await compressImage({
-          key: keyWithoutPrefix,
-          quality: compressionQuality[0],
-          originalFileName: selectedImage.file.name,
-          originalFormat,
-          fileSize: selectedImage.file.size,
-          width: selectedImage.width,
-          height: selectedImage.height,
-        });
-      } else if (operationMode === 'resize') {
-        job = await resizeImage({
-          key: keyWithoutPrefix,
-          scalePercent: resolution[0],
-          originalFileName: selectedImage.file.name,
-          originalFormat,
-          fileSize: selectedImage.file.size,
-          width: selectedImage.width,
-          height: selectedImage.height,
-        });
-      } else {
-        job = await convertImage({
-          key: keyWithoutPrefix,
-          format: outputFormat,
-          originalFileName: selectedImage.file.name,
-          originalFormat,
-          fileSize: selectedImage.file.size,
-          width: selectedImage.width,
-          height: selectedImage.height,
-        });
-      }
-
-      setSelectedImage({
-        ...selectedImage,
-        jobId: job.jobId,
-        status: 'queued',
-      });
-
-      toast.success('Processing started');
-    } catch (error) {
-      console.error('Process error:', error);
-      toast.error('Failed to start processing');
     }
   };
 
@@ -335,7 +290,7 @@ const ImageResolution = () => {
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-8">
-      <div className="max-w-5xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div>
           <h1 className="text-3xl font-space-grotesk font-bold mb-2">Image Resolution</h1>

@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, Mail, Shield, CreditCard, XCircle } from 'lucide-react';
+import { CreditCard, FileText, Mail, Shield, XCircle } from 'lucide-react';
+import Link from 'next/link';
 
 const footerLinks = [
   {
@@ -64,7 +64,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/"
+                  href="/"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Home
@@ -72,7 +72,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  to="/convert"
+                  href="/convert"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Document Tools
@@ -80,7 +80,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  to="/pricing"
+                  href="/pricing"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Pricing
@@ -96,7 +96,7 @@ export function Footer() {
               {footerLinks.map(link => (
                 <li key={link.title}>
                   <Link
-                    to={link.url}
+                    href={link.url}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
                   >
                     <link.icon className="w-3.5 h-3.5" />
@@ -130,19 +130,19 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                to="/privacy-policy"
+                href="/privacy-policy"
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 Privacy
               </Link>
               <Link
-                to="/refund-policy"
+                href="/refund-policy"
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 Refunds
               </Link>
               <Link
-                to="/cancellation-policy"
+                href="/cancellation-policy"
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
                 Cancellations

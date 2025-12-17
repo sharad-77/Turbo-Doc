@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { AppSidebar, MobileHeader } from '@/components/AppSidebar';
 import { Footer } from '@/components/Footer';
@@ -9,9 +9,20 @@ import { Navigation } from '@/components/Navigation';
 
 import { useAuthStore } from '@/store/useAuthStore';
 
-import { SidebarProvider, SidebarInset } from '@repo/ui/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@repo/ui/components/ui/sidebar';
 
-const PUBLIC_ROUTES = ['/', '/signin', '/signup', '/pricing', '/image-resolution', '/convert'];
+const PUBLIC_ROUTES = [
+  '/',
+  '/signin',
+  '/signup',
+  '/pricing',
+  '/image-resolution',
+  '/convert',
+  '/privacy-policy',
+  '/refund-policy',
+  '/cancellation-policy',
+  '/contact',
+];
 
 const GUEST_ONLY_ROUTES = ['/', '/signin', '/signup'];
 
