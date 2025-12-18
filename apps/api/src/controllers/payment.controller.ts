@@ -8,10 +8,18 @@ interface OrderRequest extends Request {
   planId?: string;
 }
 
-const razorpay = new Razorpay({
-  key_id: process.env.TEST_API_KEY!,
-  key_secret: process.env.TEST_API_SECRET!,
-});
+// Lazy initialization to prevent crash before environment validation
+let razorpayInstance: Razorpay | null = null;
+const getRazorpay = () => {
+  if (!razorpayInstance) {
+    razorpayInstance = new Razorpay({
+      key_id: process.env.TEST_API_KEY!,
+      key_secret: process.env.TEST_API_SECRET!,
+    });
+  }
+  return razorpayInstance;
+};
+
 
 export const createOrder = async (req: OrderRequest, res: Response) => {
   try {
@@ -44,7 +52,7 @@ export const createOrder = async (req: OrderRequest, res: Response) => {
       notes: { userId, planId },
     };
 
-    const order = await razorpay.orders.create(options);
+    const order = await getRazorpay().orders.create(options);
 
     await prisma.payment.create({
       data: {
