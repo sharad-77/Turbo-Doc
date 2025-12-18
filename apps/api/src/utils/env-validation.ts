@@ -8,7 +8,7 @@ const requiredEnvVars = [
   'AWS_BUCKET_NAME',
   'AWS_ACCESS_KEY_ID',
   'AWS_SECRET_ACCESS_KEY',
-  'AWS_REGION',
+  'AWS_S3_REGION',
   'BETTER_AUTH_SECRET',
   'NEXT_PUBLIC_APP_URL',
 ];
