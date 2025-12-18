@@ -1,2 +1,6 @@
+# Add files to ignore here if needed
+EC2_QUICK_FIX.md
 ecosystem.config.cjs
 PM2_DEPLOYMENT_GUIDE.md
+build-prod.sh
+
