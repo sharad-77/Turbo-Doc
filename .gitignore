@@ -38,5 +38,5 @@ yarn-error.log*
 *.pem
 
 # Personal File
-# ESSENTIAL_DEPLOYMENT.txt
+ESSENTIAL_DEPLOYMENT.txt
 install.log
