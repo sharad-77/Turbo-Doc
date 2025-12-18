@@ -18,22 +18,24 @@ export const workerService = {
       createdAt: new Date(),
     };
 
-    jobStore.set(jobId, job);
+    // Initialize job in database
+    await jobStore.set(jobId, job);
 
+    // Run async processing
     (async () => {
       try {
         job.status = 'processing';
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
 
         const result = await documentPool.run(job);
 
         job.status = 'completed';
         job.result = result;
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
       } catch (err) {
         job.status = 'failed';
         job.error = (err as Error).message;
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
       }
     })();
 
@@ -53,29 +55,31 @@ export const workerService = {
       createdAt: new Date(),
     };
 
-    jobStore.set(jobId, job);
+    // Initialize job in database
+    await jobStore.set(jobId, job);
 
+    // Run async processing
     (async () => {
       try {
         job.status = 'processing';
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
 
         const result = await imagePool.run(job);
 
         job.status = 'completed';
         job.result = result;
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
       } catch (err) {
         job.status = 'failed';
         job.error = (err as Error).message;
-        jobStore.set(jobId, job);
+        await jobStore.set(jobId, job);
       }
     })();
 
     return { jobId, status: 'queued' };
   },
 
-  getJobStatus: (jobId: string) => {
-    return jobStore.get(jobId) || null;
+  getJobStatus: async (jobId: string) => {
+    return await jobStore.get(jobId);
   },
 };

@@ -5,16 +5,15 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Determine if we are running in a TypeScript environment (like tsx)
-const isTs = path.extname(__filename) === '.ts';
+// Use NODE_ENV for more reliable production detection
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const imagePool = new Piscina({
-  filename: path.resolve(__dirname, `../image.worker.${isTs ? 'ts' : 'js'}`),
-  maxThreads: 2, // Requirement: limit concurrency to 2
-  ...(isTs && {
-    execArgv: ['--loader', 'ts-node/esm', '--no-warnings'], // Use 'ts-node' loader for worker threads in dev
-    workerData: {
-      fullpath: path.resolve(__dirname, `../image.worker.ts`),
-    },
+  filename: path.resolve(__dirname, isProduction ? '../image.worker.js' : '../image.worker.ts'),
+  minThreads: 1,
+  maxThreads: 2, // Limit concurrency for t3.micro (1 vCPU)
+  maxQueue: 100, // Prevent queue overflow
+  ...(!isProduction && {
+    execArgv: ['--loader', 'ts-node/esm', '--no-warnings'],
   }),
 });

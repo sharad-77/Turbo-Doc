@@ -15,8 +15,16 @@ import paymentRoutes from './routes/payments.routes.js';
 import planRoutes from './routes/plan.routes.js';
 import settingsRoutes from './routes/settings.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
+import { validateEnvironment } from './utils/env-validation.js';
+import { cleanupTempFiles } from './utils/startup-cleanup.js';
 
 dotenv.config();
+
+// Validate environment variables
+validateEnvironment();
+
+// Clean up old temporary files from previous runs
+cleanupTempFiles();
 
 const app = express();
 const port = process.env.API_PORT || 3001;

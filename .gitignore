@@ -38,6 +38,5 @@ yarn-error.log*
 *.pem
 
 # Personal File
-AWS_EC2_DEPLOYMENT.txt
-ESSENTIAL_DEPLOYMENT.txt
+# ESSENTIAL_DEPLOYMENT.txt
 install.log

@@ -11,7 +11,7 @@ export const getJobStatusController = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Job ID is required' });
   }
 
-  const job = workerService.getJobStatus(jobId);
+  const job = await workerService.getJobStatus(jobId);
 
   if (!job) {
     return res.status(404).json({ error: 'Job not found' });
