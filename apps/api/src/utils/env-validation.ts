@@ -11,6 +11,10 @@ const requiredEnvVars = [
   'AWS_S3_REGION',
   'BETTER_AUTH_SECRET',
   'NEXT_PUBLIC_APP_URL',
+  'API_URL',
+  'TEST_API_KEY',
+  'TEST_API_SECRET',
+  'TEST_API_WEBHOOK_SECRET',
 ];
 
 /**
