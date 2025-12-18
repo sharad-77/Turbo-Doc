@@ -12,7 +12,9 @@
     "check": "pnpm format && pnpm lint && pnpm types"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.1"
+    "@prisma/client": "^7.0.1",
+    "@prisma/client-runtime-utils": "^7.2.0",
+    "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "@eslint/js": "9",
