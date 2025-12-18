@@ -52,11 +52,10 @@ const NotFound = () => {
             transition={{ delay: 0.4 }}
             className="mb-8"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">
-              Page Not Found
-            </h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Page Not Found</h2>
             <p className="text-muted-foreground text-base md:text-lg max-w-md mx-auto">
-              Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been moved, deleted, or never existed.
+              Sorry, we couldn&apos;t find the page you&apos;re looking for. It might have been
+              moved, deleted, or never existed.
             </p>
           </motion.div>
 
@@ -76,12 +75,7 @@ const NotFound = () => {
               <ArrowLeft className="w-5 h-5 mr-2" />
               Go Back
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto px-8"
-            >
+            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto px-8">
               <Link href="/">
                 <Home className="w-5 h-5 mr-2" />
                 Home Page
@@ -96,9 +90,7 @@ const NotFound = () => {
             transition={{ delay: 0.6 }}
             className="mt-12 pt-8 border-t border-border"
           >
-            <p className="text-sm text-muted-foreground mb-4">
-              Or try these helpful links:
-            </p>
+            <p className="text-sm text-muted-foreground mb-4">Or try these helpful links:</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/convert"

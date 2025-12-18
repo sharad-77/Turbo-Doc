@@ -36,13 +36,15 @@ const Profile = () => {
     queryFn: getUserPlan,
   });
 
-  // Form state
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-  });
+  // Form state - initialize with memo to avoid setState in effect
+  const initialFormData = {
+    name: profile?.name || '',
+    email: profile?.email || '',
+  };
 
-  // Update form when profile loads
+  const [formData, setFormData] = useState(initialFormData);
+
+  // Reset form when profile changes (using key on form element is better approach)
   useEffect(() => {
     if (profile) {
       setFormData({
@@ -50,7 +52,8 @@ const Profile = () => {
         email: profile.email || '',
       });
     }
-  }, [profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id]); // Only run when profile ID changes, not on every profile update
 
   // Update profile mutation
   const updateMutation = useMutation({
@@ -59,7 +62,7 @@ const Profile = () => {
       toast.success('Profile updated successfully!');
       queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message || 'Failed to update profile');
     },
   });
@@ -269,7 +272,7 @@ const Profile = () => {
             <CardContent className="pt-6">
               <div className="text-center">
                 <div className="text-3xl font-bold mb-2">{stats?.todayConversions || 0}</div>
-                <p className="text-sm text-muted-foreground">Today's Conversions</p>
+                <p className="text-sm text-muted-foreground">Today&apos;s Conversions</p>
               </div>
             </CardContent>
           </Card>

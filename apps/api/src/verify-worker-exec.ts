@@ -1,4 +1,3 @@
-
 import type { Job } from './types/worker.types.js'; // Ensure extension matches what we can use
 import { imagePool } from './workers/pools/image.pool.js';
 
@@ -8,10 +7,10 @@ const mockJob: Job = {
   task: 'resize', // Valid task to hit the switch
   data: {
     key: 'mock-key',
-    scalePercent: 50
+    scalePercent: 50,
   },
   status: 'queued',
-  createdAt: new Date()
+  createdAt: new Date(),
 };
 
 async function run() {

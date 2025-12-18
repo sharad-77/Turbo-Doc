@@ -21,8 +21,8 @@ export const getRecentFiles = async (limit?: number): Promise<FileItem[]> => {
   const files = response.data;
 
   // Sort by createdAt descending (most recent first)
-  const sortedFiles = files.sort((a, b) =>
-    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  const sortedFiles = files.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   // Return limited number if specified

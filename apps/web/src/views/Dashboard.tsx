@@ -21,7 +21,7 @@ import {
   Plus,
   TrendingDown,
   TrendingUp,
-  Upload
+  Upload,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -56,7 +56,7 @@ const Dashboard = () => {
   };
 
   // Get storage limit from user plan (convert MB to GB)
-  const storageLimitGB = userPlan ? (userPlan.storageLimitMB / 1024) : 10; // Fallback to 10GB
+  const storageLimitGB = userPlan ? userPlan.storageLimitMB / 1024 : 10; // Fallback to 10GB
   const storageUsedGB = stats ? formatStorage(stats.storageUsed) : 0;
 
   // Calculate max conversions for chart
@@ -214,7 +214,9 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Usage Chart */}
-        <Card className={`modern-card ${userPlan?.name === 'PRO' ? 'lg:col-span-3' : 'lg:col-span-2'}`}>
+        <Card
+          className={`modern-card ${userPlan?.name === 'PRO' ? 'lg:col-span-3' : 'lg:col-span-2'}`}
+        >
           <CardHeader>
             <CardTitle>Weekly Usage</CardTitle>
           </CardHeader>

@@ -169,8 +169,8 @@ const ImageResolution = () => {
 
     try {
       let objectKey = selectedImage.objectKey;
-      let width = selectedImage.width;
-      let height = selectedImage.height;
+      const width = selectedImage.width;
+      const height = selectedImage.height;
 
       // Step 1: Upload if not uploaded yet
       if (!objectKey) {

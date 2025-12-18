@@ -41,7 +41,7 @@ const Settings = () => {
       setEmailData({ newEmail: '' });
       queryClient.invalidateQueries({ queryKey: ['profile'] });
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message || 'Failed to update email');
     },
   });
@@ -53,7 +53,7 @@ const Settings = () => {
       toast.success('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message || 'Failed to change password');
     },
   });

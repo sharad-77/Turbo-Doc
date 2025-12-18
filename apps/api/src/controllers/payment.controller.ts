@@ -20,7 +20,6 @@ const getRazorpay = () => {
   return razorpayInstance;
 };
 
-
 export const createOrder = async (req: OrderRequest, res: Response) => {
   try {
     const { planId } = req.body;

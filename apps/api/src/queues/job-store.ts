@@ -12,18 +12,20 @@ export const jobStore = {
   async set(jobId: string, jobData: Job): Promise<void> {
     // The job should already exist in DB (created in service layer)
     // We just update the status, result, and error fields
-    await prisma.job.update({
-      where: { id: jobId },
-      data: {
-        status: jobData.status.toUpperCase() as 'QUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED',
-        ...(jobData.result && { result: jobData.result }),
-        ...(jobData.error && { error: jobData.error }),
-      },
-    }).catch((err) => {
-      // If job doesn't exist yet, log but don't throw
-      // This can happen in race conditions during initial job creation
-      console.warn(`Failed to update job ${jobId}:`, err.message);
-    });
+    await prisma.job
+      .update({
+        where: { id: jobId },
+        data: {
+          status: jobData.status.toUpperCase() as 'QUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED',
+          ...(jobData.result && { result: jobData.result }),
+          ...(jobData.error && { error: jobData.error }),
+        },
+      })
+      .catch(err => {
+        // If job doesn't exist yet, log but don't throw
+        // This can happen in race conditions during initial job creation
+        console.warn(`Failed to update job ${jobId}:`, err.message);
+      });
   },
 
   /**

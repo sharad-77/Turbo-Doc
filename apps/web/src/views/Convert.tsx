@@ -366,9 +366,7 @@ const Convert = () => {
             },
           ]);
 
-          toast.success(
-            `PDF split started (pages ${startPage}-${endPage})`
-          );
+          toast.success(`PDF split started (pages ${startPage}-${endPage})`);
         } catch (error) {
           const err = error as { message: string; isLimitError?: boolean };
 
@@ -535,7 +533,12 @@ const Convert = () => {
                     ) : (
                       <>
                         <Upload className="w-5 h-5 mr-2" />
-                        Start {operationMode === 'convert' ? 'Conversion' : operationMode === 'merge' ? 'Merge' : 'Split'}
+                        Start{' '}
+                        {operationMode === 'convert'
+                          ? 'Conversion'
+                          : operationMode === 'merge'
+                            ? 'Merge'
+                            : 'Split'}
                       </>
                     )}
                   </Button>
@@ -613,7 +616,9 @@ const Convert = () => {
                         min={1}
                         placeholder="1"
                         value={splitRange.startPage}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSplitRange(prev => ({ ...prev, startPage: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setSplitRange(prev => ({ ...prev, startPage: e.target.value }))
+                        }
                         className="h-12"
                       />
                     </div>
@@ -627,7 +632,9 @@ const Convert = () => {
                         min={1}
                         placeholder="1"
                         value={splitRange.endPage}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSplitRange(prev => ({ ...prev, endPage: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setSplitRange(prev => ({ ...prev, endPage: e.target.value }))
+                        }
                         className="h-12"
                       />
                     </div>

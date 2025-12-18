@@ -25,9 +25,15 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 // Declare Razorpay type
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay: new (options: Record<string, unknown>) => { open: () => void };
   }
 }
 
@@ -88,7 +94,7 @@ export default function Payments() {
         name: 'Turbo-Doc',
         description: `${plan.displayName} Subscription`,
         order_id: order.id,
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           try {
             // Verify payment
             const result = await verifyPayment({

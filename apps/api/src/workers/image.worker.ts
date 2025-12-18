@@ -1,37 +1,290 @@
-import path from 'path';
-import { Piscina } from 'piscina';
-import { fileURLToPath } from 'url';
+import { prisma } from '@repo/database';
+import { downloadFromS3, uploadToS3 } from '@repo/file-upload';
 import fs from 'fs';
+import path from 'path';
+import sharp from 'sharp';
+import { v4 as uuidv4 } from 'uuid';
+import type { Job } from '../types/worker.types.js';
+import { Paths } from '../utils/path.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Convert Image Format Service
+const convertImageFormatWorker = async (
+  s3Key: string,
+  targetFormat: 'jpeg' | 'jpg' | 'webp' | 'avif' | 'png' | 'gif'
+) => {
+  Paths.ensureFolders();
 
-const isProduction = process.env.NODE_ENV === 'production';
+  // 1. Download image from S3
+  const buffer = await downloadFromS3(`temporary/${s3Key}`);
+  const ext = path.extname(s3Key);
+  const fileName = `${uuidv4()}${ext}`;
+  const rawPath = Paths.raw(fileName);
 
-let jsWorkerPath: string;
-let tsWorkerPath: string;
+  fs.writeFileSync(rawPath, buffer);
 
-if (isProduction) {
-  jsWorkerPath = path.resolve(__dirname, '..', 'document.worker.js');
-  tsWorkerPath = path.resolve(__dirname, '..', 'document.worker.ts');
-} else {
-  jsWorkerPath = path.resolve(__dirname, '..', 'document.worker.js');
-  tsWorkerPath = path.resolve(__dirname, '..', 'document.worker.ts');
+  // 2. Convert image format
+  const outputName = `${uuidv4()}.${targetFormat === 'jpg' ? 'jpeg' : targetFormat}`;
+  const processedPath = Paths.processed(outputName);
+
+  let image = sharp(rawPath);
+
+  // Apply format conversion
+  switch (targetFormat) {
+    case 'jpeg':
+    case 'jpg':
+      image = image.jpeg({ quality: 90 });
+      break;
+    case 'png':
+      image = image.png();
+      break;
+    case 'webp':
+      image = image.webp({ quality: 90 });
+      break;
+    case 'avif':
+      image = image.avif({ quality: 80 });
+      break;
+    case 'gif':
+      image = image.gif();
+      break;
+    default:
+      throw new Error(`Unsupported format: ${targetFormat}`);
+  }
+
+  await image.toFile(processedPath);
+
+  const outputFileSize = fs.statSync(processedPath).size;
+
+  // Get metadata for dimensions
+  const metadata = await sharp(processedPath).metadata();
+
+  // 3. Upload to S3
+  const uploadedKey = `processed/${outputName}`;
+  await uploadToS3({
+    localPath: processedPath,
+    key: uploadedKey,
+    bucket: process.env.AWS_BUCKET_NAME,
+  });
+
+  // 4. Cleanup
+  if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
+  if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
+
+  return {
+    key: uploadedKey,
+    size: outputFileSize,
+    width: metadata.width || 0,
+    height: metadata.height || 0,
+  };
+};
+
+// Compress Image Service
+const compressImageWorker = async (s3Key: string, quality: number) => {
+  Paths.ensureFolders();
+
+  // 1. Download image from S3
+  const buffer = await downloadFromS3(`temporary/${s3Key}`);
+  const ext = path.extname(s3Key);
+  const fileName = `${uuidv4()}${ext}`;
+  const rawPath = Paths.raw(fileName);
+
+  fs.writeFileSync(rawPath, buffer);
+
+  // 2. Get original format
+  const metadata = await sharp(rawPath).metadata();
+  const format = metadata.format;
+
+  // 3. Compress image
+  const outputName = `${uuidv4()}.${format}`;
+  const processedPath = Paths.processed(outputName);
+
+  let image = sharp(rawPath);
+
+  // Apply compression based on format
+  switch (format) {
+    case 'jpeg':
+    case 'jpg':
+      image = image.jpeg({ quality });
+      break;
+    case 'png':
+      image = image.png({ quality });
+      break;
+    case 'webp':
+      image = image.webp({ quality });
+      break;
+    case 'avif':
+      image = image.avif({ quality });
+      break;
+    default:
+      // For formats that don't support quality, just copy
+      image = image.toFormat(format as keyof sharp.FormatEnum);
+  }
+
+  await image.toFile(processedPath);
+
+  const outputFileSize = fs.statSync(processedPath).size;
+  const processedMetadata = await sharp(processedPath).metadata();
+
+  // 4. Upload to S3
+  const uploadedKey = `processed/${outputName}`;
+  await uploadToS3({
+    localPath: processedPath,
+    key: uploadedKey,
+    bucket: process.env.AWS_BUCKET_NAME,
+  });
+
+  // 5. Cleanup
+  if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
+  if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
+
+  return {
+    key: uploadedKey,
+    size: outputFileSize,
+    width: processedMetadata.width || 0,
+    height: processedMetadata.height || 0,
+  };
+};
+
+// Resize Image Service
+const resizeImageWorker = async (s3Key: string, scalePercent: number) => {
+  Paths.ensureFolders();
+
+  // 1. Download image from S3
+  const buffer = await downloadFromS3(`temporary/${s3Key}`);
+  const ext = path.extname(s3Key);
+  const fileName = `${uuidv4()}${ext}`;
+  const rawPath = Paths.raw(fileName);
+
+  fs.writeFileSync(rawPath, buffer);
+
+  // 2. Get original dimensions
+  const metadata = await sharp(rawPath).metadata();
+  const originalWidth = metadata.width || 0;
+  const originalHeight = metadata.height || 0;
+  const format = metadata.format;
+
+  // 3. Calculate new dimensions
+  const newWidth = Math.round((originalWidth * scalePercent) / 100);
+  const newHeight = Math.round((originalHeight * scalePercent) / 100);
+
+  // 4. Resize image
+  const outputName = `${uuidv4()}.${format}`;
+  const processedPath = Paths.processed(outputName);
+
+  await sharp(rawPath)
+    .resize(newWidth, newHeight, {
+      fit: 'fill', // Preserve aspect ratio
+    })
+    .toFile(processedPath);
+
+  const outputFileSize = fs.statSync(processedPath).size;
+
+  // 5. Upload to S3
+  const uploadedKey = `processed/${outputName}`;
+  await uploadToS3({
+    localPath: processedPath,
+    key: uploadedKey,
+    bucket: process.env.AWS_BUCKET_NAME,
+  });
+
+  // 6. Cleanup
+  if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
+  if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
+
+  return {
+    key: uploadedKey,
+    size: outputFileSize,
+    width: newWidth,
+    height: newHeight,
+  };
+};
+
+// Main Worker Function
+export default async function (job: Job) {
+  console.log('[ImageWorker] Received job:', JSON.stringify(job, null, 2));
+
+  const { imageId, jobId } = job.data;
+
+  // 1. Start Processing (Update DB)
+  if (jobId && imageId) {
+    await prisma.job.update({ where: { id: jobId }, data: { status: 'PROCESSING' } });
+    await prisma.image.update({
+      where: { id: imageId },
+      data: { status: 'PROCESSING', processingStartedAt: new Date() },
+    });
+  }
+
+  try {
+    let result: { key: string; size: number; width: number; height: number };
+
+    switch (job.task) {
+      case 'convert':
+        console.log('[ImageWorker] Converting format to:', job.data.targetFormat);
+        result = await convertImageFormatWorker(job.data.key, job.data.targetFormat);
+        break;
+      case 'compress':
+        console.log('[ImageWorker] Compressing with quality:', job.data.quality);
+        result = await compressImageWorker(job.data.key, job.data.quality);
+        break;
+      case 'resize':
+        console.log('[ImageWorker] Resizing to scale:', job.data.scalePercent);
+        result = await resizeImageWorker(job.data.key, job.data.scalePercent);
+        break;
+      default:
+        throw new Error(`Unknown task: ${job.task}`);
+    }
+
+    console.log('[ImageWorker] Processing complete:', result);
+
+    // 2. Success (Update DB)
+    if (jobId && imageId) {
+      await prisma.$transaction([
+        prisma.image.update({
+          where: { id: imageId },
+          data: {
+            status: 'COMPLETED',
+            processedS3Key: result.key,
+            processedFileSize: result.size,
+            processedWidth: result.width,
+            processedHeight: result.height,
+            processingCompletedAt: new Date(),
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'COMPLETED',
+            result: { success: true, outputKey: result.key },
+          },
+        }),
+      ]);
+    }
+
+    return { s3Key: result.key };
+  } catch (err) {
+    const error = err as Error;
+    console.error('[ImageWorker] Error:', error.message);
+    console.error('[ImageWorker] Stack:', error.stack);
+
+    // 3. Failure (Update DB)
+    if (jobId && imageId) {
+      await prisma.$transaction([
+        prisma.image.update({
+          where: { id: imageId },
+          data: {
+            status: 'FAILED',
+            processingError: error.message,
+          },
+        }),
+        prisma.job.update({
+          where: { id: jobId },
+          data: {
+            status: 'FAILED',
+            error: error.message,
+          },
+        }),
+      ]);
+    }
+
+    throw new Error(error.message || 'Unknown error');
+  }
 }
-
-const isJsWorkerAvailable = fs.existsSync(jsWorkerPath);
-
-const workerFilename = isJsWorkerAvailable ? jsWorkerPath : tsWorkerPath;
-
-console.log(`[DocumentPool] Using worker: ${workerFilename}`);
-console.log(`[DocumentPool] JS worker available: ${isJsWorkerAvailable}`);
-
-export const documentPool = new Piscina({
-  filename: workerFilename,
-  minThreads: 1,
-  maxThreads: 2,
-  maxQueue: 100,
-  ...(!isJsWorkerAvailable && {
-    execArgv: ['--import', 'tsx'],
-  }),
-});

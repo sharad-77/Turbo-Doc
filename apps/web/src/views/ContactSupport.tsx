@@ -1,7 +1,13 @@
 'use client';
 
 import { Button } from '@repo/ui/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/ui/card';
 import { Input } from '@repo/ui/components/ui/input';
 import { Label } from '@repo/ui/components/ui/label';
 import { Textarea } from '@repo/ui/components/ui/textarea';
@@ -24,7 +30,7 @@ const ContactSupport = () => {
 
     // Simulate form submission
     setTimeout(() => {
-      toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
+      toast.success("Message sent successfully! We'll get back to you within 24 hours.");
       setFormData({ name: '', email: '', subject: '', message: '' });
       setIsSubmitting(false);
     }, 1000);
@@ -43,7 +49,7 @@ const ContactSupport = () => {
             Contact <span className="text-primary">Support</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Have questions or need help? We're here to assist you.
+            Have questions or need help? We&apos;re here to assist you.
           </p>
         </div>
 
@@ -58,10 +64,7 @@ const ContactSupport = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <a
-                  href="mailto:support@turbodoc.com"
-                  className="text-primary hover:underline"
-                >
+                <a href="mailto:support@turbodoc.com" className="text-primary hover:underline">
                   support@turbodoc.com
                 </a>
                 <p className="text-sm text-muted-foreground mt-2">
@@ -106,7 +109,7 @@ const ContactSupport = () => {
               <CardHeader>
                 <CardTitle>Send us a message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible
+                  Fill out the form below and we&apos;ll get back to you as soon as possible
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -162,12 +165,7 @@ const ContactSupport = () => {
                     />
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
-                    size="lg"
-                  >
+                  <Button type="submit" className="w-full" disabled={isSubmitting} size="lg">
                     {isSubmitting ? (
                       <>Sending...</>
                     ) : (
@@ -204,7 +202,8 @@ const ContactSupport = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  We support PDF, DOCX, DOC, TXT, and various image formats including JPG, PNG, WEBP.
+                  We support PDF, DOCX, DOC, TXT, and various image formats including JPG, PNG,
+                  WEBP.
                 </p>
               </CardContent>
             </Card>
@@ -215,7 +214,8 @@ const ContactSupport = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Visit the Pricing page and select your preferred plan. Payment is processed securely via Razorpay.
+                  Visit the Pricing page and select your preferred plan. Payment is processed
+                  securely via Razorpay.
                 </p>
               </CardContent>
             </Card>
@@ -226,7 +226,8 @@ const ContactSupport = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  Yes, you can cancel anytime from your account settings. Check our Cancellation Policy for details.
+                  Yes, you can cancel anytime from your account settings. Check our Cancellation
+                  Policy for details.
                 </p>
               </CardContent>
             </Card>

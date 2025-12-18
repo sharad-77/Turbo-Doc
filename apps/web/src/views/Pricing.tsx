@@ -107,7 +107,7 @@ const Pricing = () => {
               <Tabs
                 defaultValue="monthly"
                 className="relative w-[320px] bg-background/50 backdrop-blur-md border border-primary/20 p-1.5 rounded-full shadow-xl"
-                onValueChange={v => setBillingCycle(v as any)}
+                onValueChange={v => setBillingCycle(v as 'monthly' | 'yearly')}
               >
                 <TabsList className="grid w-full grid-cols-2 h-11 rounded-full bg-transparent border-none">
                   <TabsTrigger
@@ -313,7 +313,10 @@ const Pricing = () => {
             <NextLink href="/cancellation-policy" className="hover:text-primary transition-colors">
               Cancellation Policy
             </NextLink>
-            <NextLink href="/contact" className="hover:text-primary transition-colors font-semibold">
+            <NextLink
+              href="/contact"
+              className="hover:text-primary transition-colors font-semibold"
+            >
               Contact Support
             </NextLink>
           </div>

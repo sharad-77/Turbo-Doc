@@ -1,28 +1,27 @@
 import path from 'path';
 import { Piscina } from 'piscina';
-import { fileURLToPath } from 'url';
-
 import fs from 'fs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const rootDir = process.cwd();
 
-// Define potential worker paths
-const jsWorkerPath = path.resolve(__dirname, '..', 'document.worker.js');
-const tsWorkerPath = path.resolve(__dirname, '..', 'document.worker.ts');
+// 1. Look in the dist root (Production)
+// The new tsup config guarantees the file is here:
+const jsWorkerPath = path.resolve(rootDir, 'dist', 'document.worker.js');
 
-// Check if the JS worker exists (typical for production builds)
+// 2. Look in the src folder (Development fallback)
+const tsWorkerPath = path.resolve(rootDir, 'src', 'workers', 'document.worker.ts');
+
+// Check if the compiled file exists
 const isJsWorkerAvailable = fs.existsSync(jsWorkerPath);
-
 const workerFilename = isJsWorkerAvailable ? jsWorkerPath : tsWorkerPath;
+
+console.log(`[DocumentPool] JS Available: ${isJsWorkerAvailable}`);
+console.log(`[DocumentPool] Path: ${workerFilename}`);
 
 export const documentPool = new Piscina({
   filename: workerFilename,
   minThreads: 1,
-  maxThreads: 2, // Limit concurrency for t3.micro (1 vCPU)
-  maxQueue: 100, // Prevent queue overflow
-  // If we are using the TS worker (either in dev or tsx-production), we need a loader.
-  // Prefer tsx if explicitly running in that mode, or fallback to dev defaults.
+  maxThreads: 2,
   ...(!isJsWorkerAvailable && {
     execArgv: ['--import', 'tsx'],
   }),

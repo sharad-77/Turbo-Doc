@@ -39,7 +39,7 @@ export function validateDocumentFormat(file: File): ValidationResult {
   const extension = ('.' + file.name.split('.').pop()?.toLowerCase()) as string;
   const supportedExtensions = Object.values(SUPPORTED_DOCUMENT_FORMATS).flat();
 
-  if (!supportedExtensions.includes(extension as any)) {
+  if (!supportedExtensions.includes(extension as (typeof supportedExtensions)[number])) {
     return {
       valid: false,
       error: `Unsupported format "${extension}". Supported: PDF, Word (.doc, .docx), PowerPoint (.ppt, .pptx), Excel (.xls, .xlsx), Text (.txt)`,
@@ -58,7 +58,7 @@ export function validateImageFormat(file: File): ValidationResult {
   const extension = ('.' + file.name.split('.').pop()?.toLowerCase()) as string;
   const supportedExtensions = Object.values(SUPPORTED_IMAGE_FORMATS).flat();
 
-  if (!supportedExtensions.includes(extension as any)) {
+  if (!supportedExtensions.includes(extension as (typeof supportedExtensions)[number])) {
     return {
       valid: false,
       error: `Unsupported format "${extension}". Supported: JPEG (.jpg, .jpeg), PNG (.png), WebP (.webp), AVIF (.avif), GIF (.gif)`,

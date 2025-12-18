@@ -54,7 +54,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   ];
 
   // Check if current path is a known route
-  const isKnownRoute = KNOWN_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'));
+  const isKnownRoute = KNOWN_ROUTES.some(
+    route => pathname === route || pathname.startsWith(route + '/')
+  );
 
   // Treat unknown routes as public (404 pages)
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname) || !isKnownRoute;

@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from '@repo/ui/components/ui/form';
 import { Input } from '@repo/ui/components/ui/input';
-import { Label } from '@repo/ui/components/ui/label';
 import { Separator } from '@repo/ui/components/ui/separator';
 import {
   ArrowRight,
@@ -311,7 +310,7 @@ const SignUp = () => {
                 className="w-full rounded-xl"
                 size="lg"
                 variant="hero"
-                disabled={!form.watch('agreeToTerms') || loading}
+                disabled={!form.getValues('agreeToTerms') || loading}
               >
                 {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
                 {loading ? 'Creating Account...' : 'Create Account'}

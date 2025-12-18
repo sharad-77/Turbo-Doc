@@ -37,10 +37,7 @@ export const auth = betterAuth({
       maxAge: 5 * 60,
     },
   },
-  trustedOrigins: [
-    process.env.NEXT_PUBLIC_APP_URL!,
-    process.env.API_URL!,
-  ],
+  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL!, process.env.API_URL!],
 });
 
 export type Session = typeof auth.$Infer.Session;
