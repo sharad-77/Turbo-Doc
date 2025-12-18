@@ -4,7 +4,8 @@ import fs from 'fs';
 import sharp from 'sharp';
 import { v4 as uuidv4 } from 'uuid';
 import type { Job } from '../types/worker.types.js';
-import { Paths } from '../utils/path.js';
+// @ts-ignore
+import { Paths } from '../utils/path.ts';
 
 // Disable Sharp cache to prevent file locking on Windows
 sharp.cache(false);

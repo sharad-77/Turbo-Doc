@@ -7,7 +7,8 @@ import { PDFDocument } from 'pdf-lib';
 import { promisify } from 'util';
 import { v4 as uuidv4 } from 'uuid';
 import type { Job } from '../types/worker.types.js';
-import { Paths } from '../utils/path.js';
+// @ts-ignore
+import { Paths } from '../utils/path.ts';
 
 const execFileAsync = promisify(execFile);
 
