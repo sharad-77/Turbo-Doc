@@ -41,6 +41,9 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.90.12",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "axios": "^1.13.2",
     "better-auth": "^1.4.3",
     "class-variance-authority": "^0.7.1",
@@ -63,6 +66,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5",
     "vaul": "^1.1.2",
     "zod": "^4.1.13",
     "zustand": "^5.0.9"
@@ -72,14 +76,10 @@
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.0.0",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5"
+    "tailwindcss": "^4.0.0"
   }
 }
