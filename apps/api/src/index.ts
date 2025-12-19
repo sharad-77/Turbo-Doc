@@ -27,6 +27,7 @@ validateEnvironment();
 cleanupTempFiles();
 
 const app = express();
+app.set('trust proxy', true);
 const port = process.env.API_PORT || 3001;
 
 const server = http.createServer(app);
@@ -45,7 +46,7 @@ server.keepAliveTimeout = 10 * 60 * 1000;
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', process.env.NEXT_PUBLIC_APP_URL!],
+    origin: process.env.NEXT_PUBLIC_APP_URL!,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-fingerprint'],
