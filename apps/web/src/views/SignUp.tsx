@@ -1,5 +1,6 @@
 'use client';
 
+import { APP_CONFIG } from '@/lib/constants';
 import { authClient } from '@/lib/auth-client';
 import { logger } from '@/lib/logger';
 import { signUpSchema, type SignUpInput } from '@/lib/validations/auth';
@@ -62,7 +63,7 @@ const SignUp = () => {
           email: data.email,
           password: data.password,
           name: data.name,
-          callbackURL: '/dashboard',
+          callbackURL: APP_CONFIG.DASHBOARD_URL,
         },
         {
           onRequest: () => {
@@ -70,7 +71,7 @@ const SignUp = () => {
           },
           onSuccess: () => {
             toast.success('Account created successfully');
-            router.push('/dashboard');
+            router.push(APP_CONFIG.DASHBOARD_URL);
           },
           onError: ctx => {
             toast.error(ctx.error.message);
@@ -87,7 +88,7 @@ const SignUp = () => {
   const handleSocialSignIn = async (provider: 'github' | 'google') => {
     await authClient.signIn.social({
       provider,
-      callbackURL: '/dashboard',
+      callbackURL: APP_CONFIG.DASHBOARD_URL,
     });
   };
 
