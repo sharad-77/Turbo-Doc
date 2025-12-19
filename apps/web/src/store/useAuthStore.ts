@@ -1,4 +1,5 @@
 import { authClient } from '@/lib/auth-client';
+import { logger } from '@/lib/logger';
 import { create } from 'zustand';
 
 interface User {
@@ -39,7 +40,7 @@ export const useAuthStore = create<AuthState>(set => ({
         });
       }
     } catch (error) {
-      console.error(error);
+      logger.error('Auth check error:', error);
       set({ user: null, isAuthenticated: false, isLoading: false });
     }
   },

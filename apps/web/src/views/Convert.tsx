@@ -4,28 +4,29 @@ import { downloadFileFromS3, useFileUpload, useJobStatus } from '@/api';
 import { convertDocument, mergePdfs, splitPdf } from '@/api/documents';
 import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import { validateDocumentFormat } from '@/lib/format-validation';
+import { logger } from '@/lib/logger';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import { Input } from '@repo/ui/components/ui/input';
 import { Label } from '@repo/ui/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@repo/ui/components/ui/select';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Clock,
-  Download,
-  FileText,
-  Loader2,
-  Merge,
-  Scissors,
-  Settings,
-  Upload,
-  X,
+    Clock,
+    Download,
+    FileText,
+    Loader2,
+    Merge,
+    Scissors,
+    Settings,
+    Upload,
+    X,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -252,7 +253,7 @@ const Convert = () => {
             )
           );
         } catch (error) {
-          console.error('Upload error:', error);
+          logger.error('Upload error:', error);
           toast.error(`Failed to upload ${fileItem.file.name}`);
           setFiles(prev =>
             prev.map(f => (f.file === fileItem.file ? { ...f, status: 'failed' as const } : f))
@@ -285,7 +286,7 @@ const Convert = () => {
 
             toast.success(`${file.name} conversion started`);
           } catch (error) {
-            console.error('Conversion error:', error);
+            logger.error('Conversion error:', error);
             toast.error(`Failed to convert ${file.name}`);
             setFiles(prev =>
               prev.map(f => (f.file === file ? { ...f, status: 'failed' as const } : f))
@@ -331,7 +332,7 @@ const Convert = () => {
               duration: 10000,
             });
           } else {
-            console.error('Merge error:', error);
+            logger.error('Merge error:', error);
             toast.error('Failed to merge PDFs');
           }
           setFiles(prev => prev.map(f => ({ ...f, status: 'failed' as const })));
@@ -381,7 +382,7 @@ const Convert = () => {
               duration: 10000,
             });
           } else {
-            console.error('Split error:', error);
+            logger.error('Split error:', error);
             toast.error('Failed to split PDF');
           }
           setFiles(prev =>
@@ -390,7 +391,7 @@ const Convert = () => {
         }
       }
     } catch (error) {
-      console.error('Processing error:', error);
+      logger.error('Processing error:', error);
       toast.error('An error occurred during processing');
     } finally {
       setIsProcessing(false);
@@ -413,7 +414,7 @@ const Convert = () => {
       await downloadFileFromS3(file.downloadUrl, fileName);
       toast.success('File downloaded successfully');
     } catch (error) {
-      console.error('Download error:', error);
+      logger.error('Download error:', error);
       toast.error('Failed to download file');
     }
   };

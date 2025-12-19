@@ -1,6 +1,7 @@
 'use client';
 
 import { authClient } from '@/lib/auth-client';
+import { logger } from '@/lib/logger';
 import { signUpSchema, type SignUpInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/ui/button';
@@ -51,6 +52,8 @@ const SignUp = () => {
     },
   });
 
+  const agreeToTerms = form.watch('agreeToTerms');
+
   const onSubmit = async (data: SignUpInput) => {
     setLoading(true);
     try {
@@ -76,7 +79,7 @@ const SignUp = () => {
         }
       );
     } catch (error) {
-      console.error(error);
+      logger.error('Sign up error:', error);
       setLoading(false);
     }
   };
@@ -310,7 +313,7 @@ const SignUp = () => {
                 className="w-full rounded-xl"
                 size="lg"
                 variant="hero"
-                disabled={!form.getValues('agreeToTerms') || loading}
+                disabled={!agreeToTerms || loading}
               >
                 {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
                 {loading ? 'Creating Account...' : 'Create Account'}

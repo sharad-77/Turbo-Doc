@@ -6,6 +6,12 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: ".sharad.fun",
+    },
+  },
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,

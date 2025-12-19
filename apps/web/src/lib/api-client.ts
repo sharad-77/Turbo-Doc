@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { authClient } from './auth-client';
 import { getFingerprint } from './fingerprint';
+import { logger } from '@/lib/logger';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -82,8 +83,8 @@ apiClient.interceptors.response.use(
     }
 
     // Log error for debugging (skip limit errors as they're handled gracefully with toasts)
-    if (process.env.NODE_ENV === 'development' && !isLimitError) {
-      console.error('API Error:', {
+    if (!isLimitError) {
+      logger.error('API Error:', {
         url: error.config?.url,
         method: error.config?.method,
         status: error.response?.status,

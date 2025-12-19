@@ -1,30 +1,31 @@
 'use client';
 
 import {
-  createPlanOrder,
-  getPlans,
-  getUserPlan,
-  verifyPayment,
-  type SubscriptionPlan,
+    createPlanOrder,
+    getPlans,
+    getUserPlan,
+    verifyPayment,
+    type SubscriptionPlan,
 } from '@/api/plans';
+import { logger } from '@/lib/logger';
 import { Button } from '@repo/ui/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from '@repo/ui/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import {
-  AlertCircle,
-  Calendar,
-  CheckCircle,
-  Clock,
-  CreditCard,
-  DollarSign,
-  Loader2,
-  Shield,
+    AlertCircle,
+    Calendar,
+    CheckCircle,
+    Clock,
+    CreditCard,
+    DollarSign,
+    Loader2,
+    Shield,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -119,7 +120,7 @@ export default function Payments() {
               toast.error('Payment verification failed. Please contact support.');
             }
           } catch (error) {
-            console.error('Payment verification error:', error);
+            logger.error('Payment verification error:', error);
             toast.error('Payment verification failed');
           } finally {
             setIsProcessing(false);
@@ -143,7 +144,7 @@ export default function Payments() {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error('Payment initiation error:', error);
+      logger.error('Payment initiation error:', error);
       toast.error('Failed to initiate payment');
       setIsProcessing(false);
     }

@@ -1,4 +1,5 @@
 import apiClient from '@/lib/api-client';
+import { logger } from '@/lib/logger';
 
 export interface PresignedUrlResponse {
   url: string;
@@ -83,7 +84,7 @@ export const downloadFileFromS3 = async (objectKey: string, fileName: string): P
       document.body.removeChild(a);
     }, 100);
   } catch (error) {
-    console.error('Download error:', error);
+    logger.error('Download error:', error);
     throw error;
   }
 };

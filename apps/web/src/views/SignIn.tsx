@@ -1,29 +1,30 @@
 'use client';
 
 import { authClient } from '@/lib/auth-client';
+import { logger } from '@/lib/logger';
 import { signInSchema, type SignInInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/ui/button';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@repo/ui/components/ui/form';
 import { Input } from '@repo/ui/components/ui/input';
 import { Separator } from '@repo/ui/components/ui/separator';
 import {
-  ArrowRight,
-  Chrome,
-  Eye,
-  EyeOff,
-  FileText,
-  Github,
-  Loader2,
-  Lock,
-  Mail,
+    ArrowRight,
+    Chrome,
+    Eye,
+    EyeOff,
+    FileText,
+    Github,
+    Loader2,
+    Lock,
+    Mail,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -68,7 +69,7 @@ const SignIn = () => {
         }
       );
     } catch (error) {
-      console.error(error);
+      logger.error('Sign in error:', error);
       setLoading(false);
     }
   };

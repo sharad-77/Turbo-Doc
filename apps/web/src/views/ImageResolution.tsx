@@ -1,23 +1,24 @@
 'use client';
 
 import {
-  compressImage,
-  convertImage,
-  downloadFileFromS3,
-  resizeImage,
-  useFileUpload,
-  useJobStatus,
+    compressImage,
+    convertImage,
+    downloadFileFromS3,
+    resizeImage,
+    useFileUpload,
+    useJobStatus,
 } from '@/api';
 import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import { validateImageFormat } from '@/lib/format-validation';
+import { logger } from '@/lib/logger';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
 import { useQuery } from '@tanstack/react-query';
@@ -247,7 +248,7 @@ const ImageResolution = () => {
           duration: 10000,
         });
       } else {
-        console.error('Process error:', error);
+        logger.error('Process error:', error);
         toast.error(`Failed to ${operationMode} image`);
       }
     }
@@ -265,7 +266,7 @@ const ImageResolution = () => {
       await downloadFileFromS3(selectedImage.downloadUrl, fileName);
       toast.success('File downloaded successfully');
     } catch (error) {
-      console.error('Download error:', error);
+      logger.error('Download error:', error);
       toast.error('Failed to download file');
     }
   };
