@@ -310,7 +310,7 @@ export default function Payments() {
                           <Button
                             variant={selectedPlanId === plan.id ? 'cta' : 'outline'}
                             className="w-full"
-                            onClick={e => {
+                            onClick={(e: React.MouseEvent) => {
                               e.stopPropagation();
                               handleRazorpayPayment(plan.id);
                             }}
