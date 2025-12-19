@@ -11,6 +11,12 @@
     "build": "turbo run build",
     "check": "pnpm format && pnpm lint && pnpm types"
   },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.2",
+      "@types/react-dom": "19.2.2"
+    }
+  },
   "dependencies": {
     "@prisma/client": "^7.0.1",
     "@prisma/client-runtime-utils": "^7.2.0",

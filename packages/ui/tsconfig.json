@@ -3,6 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    // 1. Force bundler resolution to match Next.js 16
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "paths": {
       "@/*": ["./src/*"]
     }
