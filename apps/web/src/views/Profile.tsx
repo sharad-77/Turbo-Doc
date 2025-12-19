@@ -3,10 +3,10 @@
 import { getDashboardStats, type DashboardStats } from '@/api/dashboard';
 import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import {
-  getProfile,
-  updateProfile,
-  type UpdateProfileRequest,
-  type UserProfile,
+    getProfile,
+    updateProfile,
+    type UpdateProfileRequest,
+    type UserProfile,
 } from '@/api/profile';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar';
 import { Badge } from '@repo/ui/components/ui/badge';
@@ -168,7 +168,9 @@ const Profile = () => {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="mt-2"
                     placeholder="Enter your name"
                   />
@@ -179,7 +181,9 @@ const Profile = () => {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="mt-2"
                     placeholder="Enter your email"
                   />

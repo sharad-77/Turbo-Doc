@@ -11,14 +11,14 @@ import { Progress } from '@repo/ui/components/ui/progress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import {
-  Clock,
-  FileText,
-  Filter,
-  HardDrive,
-  Image as ImageIcon,
-  Loader2,
-  Search,
-  Trash2,
+    Clock,
+    FileText,
+    Filter,
+    HardDrive,
+    Image as ImageIcon,
+    Loader2,
+    Search,
+    Trash2,
 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -141,7 +141,9 @@ const Storage = () => {
                   <Input
                     placeholder="Search files..."
                     value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setSearchQuery(e.target.value)
+                    }
                     className="pl-10 w-64"
                   />
                 </div>

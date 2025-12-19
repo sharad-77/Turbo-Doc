@@ -1,12 +1,12 @@
 'use client';
 
 import {
-  changePassword,
-  getProfile,
-  updateEmail,
-  type ChangePasswordRequest,
-  type UpdateEmailRequest,
-  type UserProfile,
+    changePassword,
+    getProfile,
+    updateEmail,
+    type ChangePasswordRequest,
+    type UpdateEmailRequest,
+    type UserProfile,
 } from '@/api/profile';
 import { Alert, AlertDescription } from '@repo/ui/components/ui/alert';
 import { Button } from '@repo/ui/components/ui/button';
@@ -161,7 +161,9 @@ const Settings = () => {
                   id="newEmail"
                   type="email"
                   value={emailData.newEmail}
-                  onChange={e => setEmailData({ newEmail: e.target.value })}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmailData({ newEmail: e.target.value })
+                  }
                   placeholder="Enter new email"
                   className="mt-2"
                 />
@@ -213,7 +215,7 @@ const Settings = () => {
                     id="currentPassword"
                     type="password"
                     value={passwordData.currentPassword}
-                    onChange={e =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setPasswordData({ ...passwordData, currentPassword: e.target.value })
                     }
                     placeholder="Enter current password"
@@ -226,7 +228,7 @@ const Settings = () => {
                     id="newPassword"
                     type="password"
                     value={passwordData.newPassword}
-                    onChange={e =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setPasswordData({ ...passwordData, newPassword: e.target.value })
                     }
                     placeholder="Enter new password"
@@ -240,7 +242,7 @@ const Settings = () => {
                     id="confirmPassword"
                     type="password"
                     value={passwordData.confirmPassword}
-                    onChange={e =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setPasswordData({ ...passwordData, confirmPassword: e.target.value })
                     }
                     placeholder="Confirm new password"
