@@ -53,9 +53,9 @@ export const jobStore = {
       jobId: job.id,
       type: job.type.toLowerCase() as 'doc' | 'image',
       task: job.task,
-      data: job.data as any,
+      data: job.data as unknown as Job['data'],
       status: job.status.toLowerCase() as 'queued' | 'processing' | 'completed' | 'failed',
-      result: job.result as any,
+      result: job.result as unknown as Job['result'],
       error: job.error || undefined,
       createdAt: job.createdAt,
     };

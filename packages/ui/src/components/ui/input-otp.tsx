@@ -22,16 +22,22 @@ InputOTP.displayName = 'InputOTP';
 
 const InputOTPGroup = React.forwardRef<
   React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('flex items-center', className)} {...props} />
+  React.ComponentPropsWithoutRef<'div'> & { children?: React.ReactNode; className?: string }
+>(({ className, children, ...props }, ref) => (
+  <div ref={ref} className={cn('flex items-center', className)} {...props}>
+    {children}
+  </div>
 ));
 InputOTPGroup.displayName = 'InputOTPGroup';
 
 const InputOTPSlot = React.forwardRef<
   React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'> & { index: number }
->(({ index, className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<'div'> & {
+    index: number;
+    children?: React.ReactNode;
+    className?: string;
+  }
+>(({ index, className, children, ...props }, ref) => {
   const inputOTPContext = React.useContext(OTPInputContext);
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]!;
 
@@ -51,6 +57,7 @@ const InputOTPSlot = React.forwardRef<
           <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
         </div>
       )}
+      {children}
     </div>
   );
 });
@@ -58,10 +65,11 @@ InputOTPSlot.displayName = 'InputOTPSlot';
 
 const InputOTPSeparator = React.forwardRef<
   React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ ...props }, ref) => (
+  React.ComponentPropsWithoutRef<'div'> & { children?: React.ReactNode }
+>(({ children, ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
     <Dot />
+    {children}
   </div>
 ));
 InputOTPSeparator.displayName = 'InputOTPSeparator';

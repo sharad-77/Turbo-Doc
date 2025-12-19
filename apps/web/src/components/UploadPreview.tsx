@@ -1,5 +1,13 @@
 import { Button } from '@repo/ui/components/ui/button';
-import { ArrowRight, CheckCircle, Download, FileText, Image, Settings, Upload } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle,
+  Download,
+  FileText,
+  Image as ImageIcon,
+  Settings,
+  Upload,
+} from 'lucide-react';
 import { useState } from 'react';
 
 export const UploadPreview = () => {
@@ -79,7 +87,7 @@ export const UploadPreview = () => {
               <div className="feature-card !p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
-                    <Image className="w-4 h-4 text-success" />
+                    <ImageIcon className="w-4 h-4 text-success" />
                   </div>
                   <span className="font-semibold">To Images</span>
                 </div>

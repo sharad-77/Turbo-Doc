@@ -1,8 +1,8 @@
-﻿import * as React from 'react';
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
+﻿import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
+import * as React from 'react';
 
-import { cn } from '../../lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+import { cn } from '../../lib/utils';
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -58,13 +58,18 @@ AlertDialogFooter.displayName = 'AlertDialogFooter';
 
 const AlertDialogTitle = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title> & {
+    children?: React.ReactNode;
+    className?: string;
+  }
+>(({ className, children, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
     className={cn('text-lg font-semibold', className)}
     {...props}
-  />
+  >
+    {children}
+  </AlertDialogPrimitive.Title>
 ));
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
@@ -102,14 +107,14 @@ AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
 export {
   AlertDialog,
-  AlertDialogPortal,
-  AlertDialogOverlay,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 };

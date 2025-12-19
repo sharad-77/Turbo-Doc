@@ -1,6 +1,6 @@
 'use client';
 
-import { getPlans } from '@/api/plans';
+import { getPlans, type SubscriptionPlan } from '@/api/plans';
 import { Button } from '@repo/ui/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Check, Loader2, Star, Zap } from 'lucide-react';
@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 export const PricingSection = () => {
   const router = useRouter();
 
-  const { data: plans = [], isLoading } = useQuery({
+  const { data: plans = [], isLoading } = useQuery<SubscriptionPlan[], Error>({
     queryKey: ['subscription-plans'],
     queryFn: getPlans,
   });

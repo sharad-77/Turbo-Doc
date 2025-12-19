@@ -1,6 +1,13 @@
 'use client';
 
-import { changePassword, getProfile, updateEmail } from '@/api/profile';
+import {
+  changePassword,
+  getProfile,
+  updateEmail,
+  type ChangePasswordRequest,
+  type UpdateEmailRequest,
+  type UserProfile,
+} from '@/api/profile';
 import { Alert, AlertDescription } from '@repo/ui/components/ui/alert';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
@@ -15,7 +22,7 @@ const Settings = () => {
   const queryClient = useQueryClient();
 
   // Fetch profile to check OAuth status
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile, isLoading } = useQuery<UserProfile, Error>({
     queryKey: ['profile'],
     queryFn: getProfile,
   });
@@ -34,7 +41,11 @@ const Settings = () => {
   const oauthProvider = profile?.accounts?.find(acc => acc.providerId !== 'credential')?.providerId;
 
   // Email update mutation
-  const emailMutation = useMutation({
+  const emailMutation = useMutation<
+    { id: string; email: string; emailVerified: boolean },
+    Error,
+    UpdateEmailRequest
+  >({
     mutationFn: updateEmail,
     onSuccess: () => {
       toast.success('Email updated successfully! Please verify your new email.');
@@ -47,7 +58,11 @@ const Settings = () => {
   });
 
   // Password change mutation
-  const passwordMutation = useMutation({
+  const passwordMutation = useMutation<
+    { success: boolean; message: string },
+    Error,
+    ChangePasswordRequest
+  >({
     mutationFn: changePassword,
     onSuccess: () => {
       toast.success('Password changed successfully!');

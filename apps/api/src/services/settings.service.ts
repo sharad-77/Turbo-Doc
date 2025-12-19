@@ -47,7 +47,7 @@ export const changePasswordService = async (
         password: currentPassword,
       },
     });
-  } catch (error) {
+  } catch {
     throw new Error('Current password is incorrect');
   }
 

@@ -1,8 +1,13 @@
 'use client';
 
-import { getDashboardStats } from '@/api/dashboard';
-import { getUserPlan } from '@/api/plans';
-import { getProfile, updateProfile } from '@/api/profile';
+import { getDashboardStats, type DashboardStats } from '@/api/dashboard';
+import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
+import {
+  getProfile,
+  updateProfile,
+  type UpdateProfileRequest,
+  type UserProfile,
+} from '@/api/profile';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar';
 import { Badge } from '@repo/ui/components/ui/badge';
 import { Button } from '@repo/ui/components/ui/button';
@@ -19,19 +24,19 @@ const Profile = () => {
   const queryClient = useQueryClient();
 
   // Fetch profile
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile, isLoading } = useQuery<UserProfile, Error>({
     queryKey: ['profile'],
     queryFn: getProfile,
   });
 
   // Fetch stats
-  const { data: stats } = useQuery({
+  const { data: stats } = useQuery<DashboardStats, Error>({
     queryKey: ['dashboard-stats'],
     queryFn: getDashboardStats,
   });
 
   // Fetch user plan details
-  const { data: userPlan } = useQuery({
+  const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
@@ -56,7 +61,7 @@ const Profile = () => {
   }, [profile?.id]); // Only run when profile ID changes, not on every profile update
 
   // Update profile mutation
-  const updateMutation = useMutation({
+  const updateMutation = useMutation<UserProfile, Error, UpdateProfileRequest>({
     mutationFn: updateProfile,
     onSuccess: () => {
       toast.success('Profile updated successfully!');

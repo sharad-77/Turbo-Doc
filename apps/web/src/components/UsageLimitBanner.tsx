@@ -1,6 +1,6 @@
 import { Button } from '@repo/ui/components/ui/button';
 import { motion } from 'framer-motion';
-import { Crown, FileText, Image, Sparkles } from 'lucide-react';
+import { Crown, FileText, Image as ImageIcon, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const UsageLimitBanner = () => {
@@ -29,7 +29,7 @@ export const UsageLimitBanner = () => {
               <span>5 conversions/day</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Image className="w-4 h-4 text-chart-3" />
+              <ImageIcon className="w-4 h-4 text-chart-3" />
               <span>5 image edits/day</span>
             </div>
           </div>

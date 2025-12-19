@@ -76,7 +76,7 @@ export const DeviceShowcase = () => {
                     { label: 'PPT', color: 'bg-chart-1' },
                     { label: 'Images', color: 'bg-chart-5' },
                     { label: 'Merge', color: 'bg-primary' },
-                  ].map((item, _i) => (
+                  ].map(item => (
                     <motion.div
                       key={item.label}
                       className="showcase-tool-card p-4 rounded-xl text-center group cursor-pointer"

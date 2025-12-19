@@ -1,7 +1,7 @@
-﻿import * as React from 'react';
-import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
+﻿import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import { cva } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
+import * as React from 'react';
 
 import { cn } from '../../lib/utils';
 
@@ -22,13 +22,18 @@ NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
 
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List> & {
+    children?: React.ReactNode;
+    className?: string;
+  }
+>(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.List
     ref={ref}
     className={cn('group flex flex-1 list-none items-center justify-center space-x-1', className)}
     {...props}
-  />
+  >
+    {children}
+  </NavigationMenuPrimitive.List>
 ));
 NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 
@@ -108,13 +113,13 @@ const NavigationMenuIndicator = React.forwardRef<
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName;
 
 export {
-  navigationMenuTriggerStyle,
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
   NavigationMenuContent,
-  NavigationMenuTrigger,
-  NavigationMenuLink,
   NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
   NavigationMenuViewport,
 };

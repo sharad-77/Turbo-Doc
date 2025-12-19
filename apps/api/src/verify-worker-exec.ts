@@ -19,11 +19,12 @@ async function run() {
     // This should trigger the worker thread startup
     await imagePool.run(mockJob);
     console.log('Worker finished (unexpected success if testing for crash)');
-  } catch (err: any) {
+  } catch (err) {
     console.error('Captured Error:', err);
     // Print full details if available
-    if (err.message) console.error('Message:', err.message);
-    if (err.code) console.error('Code:', err.code);
+    const error = err as { message?: string; code?: string };
+    if (error.message) console.error('Message:', error.message);
+    if (error.code) console.error('Code:', error.code);
   }
 }
 

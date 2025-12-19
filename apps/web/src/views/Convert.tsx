@@ -2,7 +2,7 @@
 
 import { downloadFileFromS3, useFileUpload, useJobStatus } from '@/api';
 import { convertDocument, mergePdfs, splitPdf } from '@/api/documents';
-import { getUserPlan } from '@/api/plans';
+import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import { validateDocumentFormat } from '@/lib/format-validation';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
@@ -135,7 +135,7 @@ const Convert = () => {
   const uploadMutation = useFileUpload();
 
   // Fetch user plan for showing limits in toast
-  const { data: userPlan } = useQuery({
+  const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });

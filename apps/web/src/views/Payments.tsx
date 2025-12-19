@@ -1,6 +1,12 @@
 'use client';
 
-import { createPlanOrder, getPlans, getUserPlan, verifyPayment } from '@/api/plans';
+import {
+  createPlanOrder,
+  getPlans,
+  getUserPlan,
+  verifyPayment,
+  type SubscriptionPlan,
+} from '@/api/plans';
 import { Button } from '@repo/ui/components/ui/button';
 import {
   Card,
@@ -43,13 +49,13 @@ export default function Payments() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Fetch all plans from backend
-  const { data: plans = [], isLoading: plansLoading } = useQuery({
+  const { data: plans = [], isLoading: plansLoading } = useQuery<SubscriptionPlan[], Error>({
     queryKey: ['subscription-plans'],
     queryFn: getPlans,
   });
 
   // Fetch user's current plan
-  const { data: userPlan } = useQuery({
+  const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });

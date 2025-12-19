@@ -1,7 +1,7 @@
 'use client';
 
-import { getDashboardStats } from '@/api/dashboard';
-import { getUserPlan } from '@/api/plans';
+import { getDashboardStats, type DashboardStats } from '@/api/dashboard';
+import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import { deleteFile, getFiles, type UserFile } from '@/api/profile';
 import { Badge } from '@repo/ui/components/ui/badge';
 import { Button } from '@repo/ui/components/ui/button';
@@ -28,25 +28,29 @@ const Storage = () => {
   const queryClient = useQueryClient();
 
   // Fetch files
-  const { data: files = [], isLoading: filesLoading } = useQuery({
+  const { data: files = [], isLoading: filesLoading } = useQuery<UserFile[], Error>({
     queryKey: ['user-files'],
     queryFn: getFiles,
   });
 
   // Fetch dashboard stats for storage
-  const { data: stats } = useQuery({
+  const { data: stats } = useQuery<DashboardStats, Error>({
     queryKey: ['dashboard-stats'],
     queryFn: getDashboardStats,
   });
 
   // Fetch user plan for storage limit
-  const { data: userPlan } = useQuery({
+  const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
 
   // Delete file mutation
-  const deleteMutation = useMutation({
+  const deleteMutation = useMutation<
+    void,
+    Error,
+    { fileId: string; fileType: 'document' | 'image' }
+  >({
     mutationFn: ({ fileId, fileType }: { fileId: string; fileType: 'document' | 'image' }) =>
       deleteFile(fileId, fileType),
     onSuccess: () => {

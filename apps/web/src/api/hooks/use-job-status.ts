@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getJobStatus } from '../documents';
-import { getImageJobStatus } from '../images';
+import { getJobStatus, type JobResponse } from '../documents';
+import { getImageJobStatus, type ImageJobResponse } from '../images';
 
 interface UseJobStatusParams {
   jobId: string;
@@ -12,7 +12,7 @@ interface UseJobStatusParams {
  * Hook to poll job status
  */
 export const useJobStatus = ({ jobId, type, enabled = true }: UseJobStatusParams) => {
-  return useQuery({
+  return useQuery<JobResponse | ImageJobResponse, Error>({
     queryKey: ['job-status', type, jobId],
     queryFn: () => {
       if (type === 'document') {

@@ -11,17 +11,17 @@ import { Progress } from '@repo/ui/components/ui/progress';
 import { Skeleton } from '@repo/ui/components/ui/skeleton';
 import { useQuery } from '@tanstack/react-query';
 import {
-    Calendar,
-    Clock,
-    Crown,
-    Download,
-    FileImage,
-    FileText,
-    Inbox,
-    Plus,
-    TrendingDown,
-    TrendingUp,
-    Upload,
+  Calendar,
+  Clock,
+  Crown,
+  Download,
+  FileImage,
+  FileText,
+  Inbox,
+  Plus,
+  TrendingDown,
+  TrendingUp,
+  Upload,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -359,7 +359,10 @@ const Dashboard = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="text-right">
-                      <Badge variant={conversion.status === 'completed' ? 'default' : 'secondary'} className="mb-1">
+                      <Badge
+                        variant={conversion.status === 'completed' ? 'default' : 'secondary'}
+                        className="mb-1"
+                      >
                         {conversion.status}
                       </Badge>
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
