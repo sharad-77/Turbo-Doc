@@ -16,8 +16,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Lovable Frontend',
-  description: 'Converted from React',
+  title: 'Turbo Doc',
+  description: 'Well Come to Turbo-Doc',
 };
 
 export default function RootLayout({
