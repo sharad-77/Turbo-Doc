@@ -10,23 +10,23 @@ import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui
 import { Input } from '@repo/ui/components/ui/input';
 import { Label } from '@repo/ui/components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@repo/ui/components/ui/select';
 import { useQuery } from '@tanstack/react-query';
 import {
-    Clock,
-    Download,
-    FileText,
-    Loader2,
-    Merge,
-    Scissors,
-    Settings,
-    Upload,
-    X,
+  Clock,
+  Download,
+  FileText,
+  Loader2,
+  Merge,
+  Scissors,
+  Settings,
+  Upload,
+  X,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -41,7 +41,6 @@ interface UploadedFile {
   downloadUrl?: string;
 }
 
-// File Item Component
 const FileItem = ({
   fileItem,
   onRemove,

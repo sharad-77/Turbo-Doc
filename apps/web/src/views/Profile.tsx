@@ -3,10 +3,10 @@
 import { getDashboardStats, type DashboardStats } from '@/api/dashboard';
 import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import {
-    getProfile,
-    updateProfile,
-    type UpdateProfileRequest,
-    type UserProfile,
+  getProfile,
+  updateProfile,
+  type UpdateProfileRequest,
+  type UserProfile,
 } from '@/api/profile';
 import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar';
 import { Badge } from '@repo/ui/components/ui/badge';
@@ -23,25 +23,21 @@ import { toast } from 'sonner';
 const Profile = () => {
   const queryClient = useQueryClient();
 
-  // Fetch profile
   const { data: profile, isLoading } = useQuery<UserProfile, Error>({
     queryKey: ['profile'],
     queryFn: getProfile,
   });
 
-  // Fetch stats
   const { data: stats } = useQuery<DashboardStats, Error>({
     queryKey: ['dashboard-stats'],
     queryFn: getDashboardStats,
   });
 
-  // Fetch user plan details
   const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
 
-  // Form state - initialize with memo to avoid setState in effect
   const initialFormData = {
     name: profile?.name || '',
     email: profile?.email || '',
@@ -49,7 +45,6 @@ const Profile = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  // Reset form when profile changes (using key on form element is better approach)
   useEffect(() => {
     if (profile) {
       setFormData({
@@ -58,9 +53,8 @@ const Profile = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.id]); // Only run when profile ID changes, not on every profile update
+  }, [profile?.id]);
 
-  // Update profile mutation
   const updateMutation = useMutation<UserProfile, Error, UpdateProfileRequest>({
     mutationFn: updateProfile,
     onSuccess: () => {
@@ -91,7 +85,6 @@ const Profile = () => {
     });
   };
 
-  // Get initials for avatar
   const getInitials = (name: string) => {
     const parts = name.split(' ');
     if (parts.length >= 2) {
@@ -100,7 +93,6 @@ const Profile = () => {
     return name.substring(0, 2);
   };
 
-  // Format storage
   const formatStorage = (bytes: number) => {
     return (bytes / 1024 ** 3).toFixed(2);
   };

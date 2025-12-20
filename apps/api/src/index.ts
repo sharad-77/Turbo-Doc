@@ -20,10 +20,7 @@ import { cleanupTempFiles } from './utils/startup-cleanup.js';
 
 dotenv.config();
 
-// Validate environment variables
 validateEnvironment();
-
-// Clean up old temporary files from previous runs
 cleanupTempFiles();
 
 const app = express();
@@ -32,14 +29,12 @@ const port = process.env.API_PORT || 3001;
 
 const server = http.createServer(app);
 
-// Express-level
 app.use((req, res, next) => {
   req.setTimeout(10 * 60 * 1000);
   res.setTimeout(10 * 60 * 1000);
   next();
 });
 
-// Node server-level
 server.timeout = 10 * 60 * 1000;
 server.headersTimeout = 10 * 60 * 1000;
 server.keepAliveTimeout = 10 * 60 * 1000;

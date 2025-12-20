@@ -1,37 +1,36 @@
 'use client';
 
 import {
-    createPlanOrder,
-    getPlans,
-    getUserPlan,
-    verifyPayment,
-    type SubscriptionPlan,
+  createPlanOrder,
+  getPlans,
+  getUserPlan,
+  verifyPayment,
+  type SubscriptionPlan,
 } from '@/api/plans';
 import { logger } from '@/lib/logger';
 import { Button } from '@repo/ui/components/ui/button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@repo/ui/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import {
-    AlertCircle,
-    Calendar,
-    CheckCircle,
-    Clock,
-    CreditCard,
-    DollarSign,
-    Loader2,
-    Shield,
+  AlertCircle,
+  Calendar,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  DollarSign,
+  Loader2,
+  Shield,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-// Declare Razorpay type
 interface RazorpayResponse {
   razorpay_order_id: string;
   razorpay_payment_id: string;
@@ -49,19 +48,16 @@ export default function Payments() {
   const [selectedPlanId, setSelectedPlanId] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Fetch all plans from backend
   const { data: plans = [], isLoading: plansLoading } = useQuery<SubscriptionPlan[], Error>({
     queryKey: ['subscription-plans'],
     queryFn: getPlans,
   });
 
-  // Fetch user's current plan
   const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
 
-  // Load Razorpay script
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -75,12 +71,10 @@ export default function Payments() {
     };
   }, []);
 
-  // Handle payment for selected plan
   const handleRazorpayPayment = async (planId: string) => {
     const plan = plans.find(p => p.id === planId);
     if (!plan) return;
 
-    // Don't allow payment for FREE plan
     if (plan.name === 'FREE') {
       toast.error('Free plan does not require payment');
       router.push('/signup');
@@ -90,10 +84,8 @@ export default function Payments() {
     setIsProcessing(true);
 
     try {
-      // Create order from backend
       const order = await createPlanOrder(planId);
 
-      // Razorpay options
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '',
         amount: order.amount,
@@ -103,7 +95,6 @@ export default function Payments() {
         order_id: order.id,
         handler: async function (response: RazorpayResponse) {
           try {
-            // Verify payment
             const result = await verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -114,7 +105,6 @@ export default function Payments() {
               toast.success('Payment successful! Your subscription is now active.', {
                 duration: 5000,
               });
-              // Refresh to show updated plan
               window.location.reload();
             } else {
               toast.error('Payment verification failed. Please contact support.');
@@ -221,7 +211,6 @@ export default function Payments() {
                               const proPlan = plans.find(p => p.name === 'PRO');
                               if (proPlan) {
                                 setSelectedPlanId(proPlan.id);
-                                // Scroll to plans section
                                 document
                                   .getElementById('upgrade-plans')
                                   ?.scrollIntoView({ behavior: 'smooth' });

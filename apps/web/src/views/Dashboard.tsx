@@ -29,42 +29,35 @@ const Dashboard = () => {
   const { data: stats, isLoading, error } = useDashboardStats();
   const { user } = useAuthStore();
 
-  // Fetch user plan to get storage limit
   const { data: userPlan } = useQuery<SubscriptionPlan>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
 
-  // Fetch PRO plan features for upgrade CTA
   const { data: proPlan } = useQuery<SubscriptionPlan>({
     queryKey: ['pro-plan'],
     queryFn: () => getPlanByName('PRO'),
-    enabled: userPlan?.name !== 'PRO', // Only fetch if user is not PRO
+    enabled: userPlan?.name !== 'PRO',
   });
 
-  // Fetch recent files
   const { data: recentFiles = [] } = useQuery<FileItem[]>({
     queryKey: ['recent-files'],
-    queryFn: () => getRecentFiles(10), // Get last 10 files
-    staleTime: 10000, // Cache for 10 seconds (shorter for better UX)
+    queryFn: () => getRecentFiles(10),
+    staleTime: 10000,
     refetchOnWindowFocus: true,
   });
 
-  // Convert bytes to GB
   const formatStorage = (bytes: number): number => {
     return Number((bytes / (1024 * 1024 * 1024)).toFixed(2));
   };
 
-  // Get storage limit from user plan (convert MB to GB)
-  const storageLimitGB = userPlan ? userPlan.storageLimitMB / 1024 : 10; // Fallback to 10GB
+  const storageLimitGB = userPlan ? userPlan.storageLimitMB / 1024 : 10;
   const storageUsedGB = stats ? formatStorage(stats.storageUsed) : 0;
 
-  // Calculate max conversions for chart
   const maxConversions = stats?.weeklyGraph
     ? Math.max(...stats.weeklyGraph.map(d => d.conversions), 1)
     : 1;
 
-  // Recent conversions - Fetched from API
   const recentConversions = recentFiles.map(file => ({
     id: file.id,
     filename: file.name, // Backend returns "name"
@@ -75,7 +68,6 @@ const Dashboard = () => {
     fileType: file.type,
   }));
 
-  // Format time ago
   function formatTimeAgo(dateString: string): string {
     const now = new Date();
     const date = new Date(dateString);
@@ -87,7 +79,6 @@ const Dashboard = () => {
     return `${Math.floor(seconds / 86400)}d ago`;
   }
 
-  // Format file size
   function formatFileSize(bytes: number): string {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -131,7 +122,6 @@ const Dashboard = () => {
     return null;
   }
 
-  // Use actual name if available, fallback to email prefix
   const userName = user?.name || user?.email?.split('@')[0] || 'User';
 
   return (

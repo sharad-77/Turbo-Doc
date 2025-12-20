@@ -1,31 +1,31 @@
 'use client';
 
-import { APP_CONFIG } from '@/lib/constants';
 import { authClient } from '@/lib/auth-client';
+import { APP_CONFIG } from '@/lib/constants';
 import { logger } from '@/lib/logger';
 import { signInSchema, type SignInInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/ui/button';
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@repo/ui/components/ui/form';
 import { Input } from '@repo/ui/components/ui/input';
 import { Separator } from '@repo/ui/components/ui/separator';
 import {
-    ArrowRight,
-    Chrome,
-    Eye,
-    EyeOff,
-    FileText,
-    Github,
-    Loader2,
-    Lock,
-    Mail,
+  ArrowRight,
+  Chrome,
+  Eye,
+  EyeOff,
+  FileText,
+  Github,
+  Loader2,
+  Lock,
+  Mail,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -37,6 +37,7 @@ const SignIn = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<'google' | 'github' | null>(null);
 
   const form = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
@@ -76,10 +77,17 @@ const SignIn = () => {
   };
 
   const handleSocialSignIn = async (provider: 'github' | 'google') => {
-    await authClient.signIn.social({
-      provider,
-      callbackURL: APP_CONFIG.DASHBOARD_URL,
-    });
+    try {
+      setSocialLoading(provider);
+      await authClient.signIn.social({
+        provider,
+        callbackURL: APP_CONFIG.DASHBOARD_URL,
+      });
+    } catch (error) {
+      logger.error(`${provider} sign in error:`, error);
+      toast.error(`Failed to sign in with ${provider}. Please try again.`);
+      setSocialLoading(null);
+    }
   };
 
   return (
@@ -106,22 +114,34 @@ const SignIn = () => {
           {/* Social Sign In */}
           <div className="space-y-3 md:space-y-4">
             <Button
+              type="button"
               variant="outline"
-              className="w-full h-10 md:h-12 rounded-xl"
+              className="w-full h-10 md:h-12 rounded-xl touch-manipulation"
               size="lg"
               onClick={() => handleSocialSignIn('github')}
+              disabled={socialLoading !== null || loading}
             >
-              <Github className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-              Continue with GitHub
+              {socialLoading === 'github' ? (
+                <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-3 animate-spin" />
+              ) : (
+                <Github className="w-4 h-4 md:w-5 md:h-5 mr-3" />
+              )}
+              {socialLoading === 'github' ? 'Connecting...' : 'Continue with GitHub'}
             </Button>
             <Button
+              type="button"
               variant="outline"
-              className="w-full h-10 md:h-12 rounded-xl"
+              className="w-full h-10 md:h-12 rounded-xl touch-manipulation"
               size="lg"
               onClick={() => handleSocialSignIn('google')}
+              disabled={socialLoading !== null || loading}
             >
-              <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-              Continue with Google
+              {socialLoading === 'google' ? (
+                <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-3 animate-spin" />
+              ) : (
+                <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
+              )}
+              {socialLoading === 'google' ? 'Connecting...' : 'Continue with Google'}
             </Button>
           </div>
 
@@ -204,10 +224,10 @@ const SignIn = () => {
 
               <Button
                 type="submit"
-                className="w-full rounded-xl"
+                className="w-full rounded-xl touch-manipulation"
                 size="lg"
                 variant="hero"
-                disabled={loading}
+                disabled={loading || socialLoading !== null}
               >
                 {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
                 {loading ? 'Signing In...' : 'Sign In'}

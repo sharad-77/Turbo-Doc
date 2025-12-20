@@ -1,7 +1,7 @@
 'use client';
 
-import { APP_CONFIG } from '@/lib/constants';
 import { authClient } from '@/lib/auth-client';
+import { APP_CONFIG } from '@/lib/constants';
 import { logger } from '@/lib/logger';
 import { signUpSchema, type SignUpInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,6 +42,7 @@ const SignUp = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<'google' | 'github' | null>(null);
 
   const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
@@ -86,10 +87,17 @@ const SignUp = () => {
   };
 
   const handleSocialSignIn = async (provider: 'github' | 'google') => {
-    await authClient.signIn.social({
-      provider,
-      callbackURL: APP_CONFIG.DASHBOARD_URL,
-    });
+    try {
+      setSocialLoading(provider);
+      await authClient.signIn.social({
+        provider,
+        callbackURL: APP_CONFIG.DASHBOARD_URL,
+      });
+    } catch (error) {
+      logger.error(`${provider} sign in error:`, error);
+      toast.error(`Failed to sign in with ${provider}. Please try again.`);
+      setSocialLoading(null);
+    }
   };
 
   const features = [
@@ -171,22 +179,34 @@ const SignUp = () => {
           {/* Social Sign Up */}
           <div className="space-y-3 md:space-y-4">
             <Button
+              type="button"
               variant="outline"
-              className="w-full h-10 md:h-12 rounded-xl"
+              className="w-full h-10 md:h-12 rounded-xl touch-manipulation"
               size="lg"
               onClick={() => handleSocialSignIn('github')}
+              disabled={socialLoading !== null || loading}
             >
-              <Github className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-              Continue with GitHub
+              {socialLoading === 'github' ? (
+                <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-3 animate-spin" />
+              ) : (
+                <Github className="w-4 h-4 md:w-5 md:h-5 mr-3" />
+              )}
+              {socialLoading === 'github' ? 'Connecting...' : 'Continue with GitHub'}
             </Button>
             <Button
+              type="button"
               variant="outline"
-              className="w-full h-10 md:h-12 rounded-xl"
+              className="w-full h-10 md:h-12 rounded-xl touch-manipulation"
               size="lg"
               onClick={() => handleSocialSignIn('google')}
+              disabled={socialLoading !== null || loading}
             >
-              <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-              Continue with Google
+              {socialLoading === 'google' ? (
+                <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-3 animate-spin" />
+              ) : (
+                <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
+              )}
+              {socialLoading === 'google' ? 'Connecting...' : 'Continue with Google'}
             </Button>
           </div>
 
@@ -311,10 +331,10 @@ const SignUp = () => {
 
               <Button
                 type="submit"
-                className="w-full rounded-xl"
+                className="w-full rounded-xl touch-manipulation"
                 size="lg"
                 variant="hero"
-                disabled={!agreeToTerms || loading}
+                disabled={!agreeToTerms || loading || socialLoading !== null}
               >
                 {loading ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
                 {loading ? 'Creating Account...' : 'Create Account'}

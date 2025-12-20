@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 import { Pool } from 'pg';
 
-// Load from root .env file (two levels up from packages/database)
 if (!process.env.DATABASE_URL) {
   config({ path: resolve(process.cwd(), '../../.env') });
 }

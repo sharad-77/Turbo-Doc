@@ -1,7 +1,7 @@
 import { Button } from '@repo/ui/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, FileText, Upload, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const DeviceShowcase = () => {
   return (
@@ -136,15 +136,15 @@ export const DeviceShowcase = () => {
           className="text-center mt-16"
         >
           <div className="inline-flex flex-col sm:flex-row gap-4">
-            <Button variant="default" size="lg" className="group" asChild>
-              <Link to="/convert">
+            <Button variant="default" size="lg" className="group touch-manipulation" asChild>
+              <Link href="/convert">
                 <Zap className="w-5 h-5 mr-2" />
                 Try It Now
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link to="/signup">Create Account</Link>
+            <Button variant="outline" size="lg" className="touch-manipulation" asChild>
+              <Link href="/signup">Create Account</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">

@@ -6,11 +6,10 @@ import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import type { Metadata } from 'next';
-import { Space_Grotesk } from 'next/font/google'; // Import fonts
+import { Space_Grotesk } from 'next/font/google';
 import React from 'react';
 import './globals.css';
 
-// Configure fonts
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',

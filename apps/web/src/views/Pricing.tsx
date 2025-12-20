@@ -44,7 +44,6 @@ const STATIC_PLANS = [
   },
 ];
 
-// Feature Comparison Data
 const COMPARISON_DATA = [
   {
     category: 'Usage Limits',
@@ -326,7 +325,6 @@ const Pricing = () => {
   );
 };
 
-// Simple import fix for React.Fragment if not globally available
 import React from 'react';
 
 export default Pricing;

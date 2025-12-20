@@ -21,7 +21,6 @@ if (!accessKeyId || !secretAccessKey) {
   throw new Error('AWS credentials must be set in the .env file.');
 }
 
-// Initialize S3 Client
 const s3Client = new S3Client({
   region: region,
   credentials: {
@@ -30,7 +29,6 @@ const s3Client = new S3Client({
   },
 });
 
-// Generate Presigned URL for Upload
 export const createPersignedUrlwithClient = ({ bucket, objectKey }: PresignedUrlParams) => {
   if (!bucket || !objectKey) {
     throw new Error('Bucket and objectKey are required');
@@ -39,16 +37,13 @@ export const createPersignedUrlwithClient = ({ bucket, objectKey }: PresignedUrl
   return getSignedUrl(s3Client, command, { expiresIn: 3600 });
 };
 
-// Generate Presigned URL for Download
 export const createDownloadPresignedUrl = ({ bucket, objectKey }: PresignedUrlParams) => {
   if (!bucket || !objectKey) {
     throw new Error('Bucket and objectKey are required');
   }
   const command = new GetObjectCommand({ Bucket: bucket, Key: objectKey });
-  return getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour expiry
+  return getSignedUrl(s3Client, command, { expiresIn: 3600 });
 };
-
-// Convert Stream → Buffer (Correct Version)
 
 async function streamToBuffer(stream: Readable): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -58,8 +53,6 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
     stream.on('end', () => resolve(Buffer.concat(chunks)));
   });
 }
-
-// Download file from S3 as buffer
 
 export async function downloadFromS3(key: string) {
   if (!awsBucketName) throw new Error('AWS bucket name missing');
@@ -74,7 +67,6 @@ export async function downloadFromS3(key: string) {
   return buffer;
 }
 
-// Upload Processed File To S3
 export const uploadToS3 = async ({
   localPath,
   key,

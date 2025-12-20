@@ -6,7 +6,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function useNavigate() {
   const router = useRouter();
-  // Shim for navigate function
   return (path: string | number) => {
     if (typeof path === 'number') {
       if (path === -1) router.back();

@@ -1,15 +1,16 @@
+import { motion } from 'framer-motion';
 import {
+  Download,
   FileText,
   Image,
+  Maximize,
   Merge,
   RotateCcw,
-  Maximize,
-  Stamp,
   Shield,
+  Stamp,
   Zap,
-  Download,
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const features = [
   {
@@ -128,10 +129,13 @@ export const FeaturesSection = () => {
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                 {feature.description}
               </p>
-              <button className="text-sm font-medium text-primary hover:text-chart-2 transition-colors inline-flex items-center gap-1 group/link">
+              <Link
+                href="/convert"
+                className="text-sm font-medium text-primary hover:text-chart-2 transition-colors inline-flex items-center gap-1 group/link touch-manipulation"
+              >
                 Learn more
                 <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-              </button>
+              </Link>
             </motion.div>
           ))}
         </motion.div>

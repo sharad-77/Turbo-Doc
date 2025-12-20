@@ -16,11 +16,10 @@ interface File {
  * Get all files (documents + images) for a user
  */
 export const getFilesService = async (userId: string): Promise<File[]> => {
-  // Fetch documents
   const documents = await prisma.document.findMany({
     where: {
       userId,
-      status: 'COMPLETED', // Only show completed files
+      status: 'COMPLETED',
     },
     orderBy: {
       createdAt: 'desc',
@@ -36,11 +35,10 @@ export const getFilesService = async (userId: string): Promise<File[]> => {
     },
   });
 
-  // Fetch images
   const images = await prisma.image.findMany({
     where: {
       userId,
-      status: 'COMPLETED', // Only show completed files
+      status: 'COMPLETED',
     },
     orderBy: {
       createdAt: 'desc',
@@ -56,7 +54,6 @@ export const getFilesService = async (userId: string): Promise<File[]> => {
     },
   });
 
-  // Combine and format
   const files: File[] = [
     ...documents.map(doc => ({
       id: doc.id,
@@ -80,7 +77,6 @@ export const getFilesService = async (userId: string): Promise<File[]> => {
     })),
   ];
 
-  // Sort by date descending
   files.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   return files;
@@ -140,7 +136,7 @@ export const updateProfileService = async (
     where: { id: userId },
     data: {
       ...(data.name && { name: data.name }),
-      ...(data.email && { email: data.email, emailVerified: false }), // Require re-verification if email changes
+      ...(data.email && { email: data.email, emailVerified: false }),
     },
     select: {
       id: true,

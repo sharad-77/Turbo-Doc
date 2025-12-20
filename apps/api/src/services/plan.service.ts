@@ -61,7 +61,6 @@ export const getPlanByNameService = async (name: string) => {
  * For authenticated users, returns their plan (FREE or PRO)
  */
 export const getUserPlanService = async (userId: string | null, userPlan: string) => {
-  // Guest user (not logged in)
   if (!userId) {
     return {
       name: 'GUEST',
@@ -84,12 +83,10 @@ export const getUserPlanService = async (userId: string | null, userPlan: string
     };
   }
 
-  // Logged-in user without a plan or with GUEST plan -> default to FREE
   if (!userPlan || userPlan === 'GUEST') {
     userPlan = 'FREE';
   }
 
-  // Authenticated user - fetch their plan from DB
   const plan = await prisma.subscriptionPlan.findUnique({
     where: { name: userPlan },
     select: {
@@ -109,7 +106,6 @@ export const getUserPlanService = async (userId: string | null, userPlan: string
   });
 
   if (!plan) {
-    // Fallback to FREE if plan not found
     return getPlanByNameService('FREE');
   }
 
@@ -120,7 +116,6 @@ export const getUserPlanService = async (userId: string | null, userPlan: string
  * Get plan limits by plan name (used by middleware)
  */
 export const getPlanLimitsService = async (planName: string) => {
-  // Handle guest
   if (planName === 'GUEST') {
     return {
       dailyDocumentLimit: 1,

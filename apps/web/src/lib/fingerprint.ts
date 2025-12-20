@@ -3,7 +3,6 @@ import { logger } from './logger';
 
 let fingerprintPromise: Promise<string> | null = null;
 
-
 export async function getFingerprint(): Promise<string> {
   if (!fingerprintPromise) {
     fingerprintPromise = (async () => {

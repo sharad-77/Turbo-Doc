@@ -11,13 +11,11 @@ import { Paths } from '../utils/path.js';
 
 const execFileAsync = promisify(execFile);
 
-// MergePDF Service Logic
 const mergePdfService = async (keys: string[]) => {
   Paths.ensureFolders();
 
   const rawFiles: string[] = [];
 
-  // 1. Download PDFs into temp/raw
   for (const key of keys) {
     const buffer = await downloadFromS3(`temporary/${key}`);
     const fileName = key.split('/').pop() || `file-${Date.now()}.pdf`;
@@ -27,7 +25,6 @@ const mergePdfService = async (keys: string[]) => {
     rawFiles.push(rawPath);
   }
 
-  // 2. Merge PDFs
   const mergedPdf = await PDFDocument.create();
 
   for (const file of rawFiles) {
@@ -40,7 +37,6 @@ const mergePdfService = async (keys: string[]) => {
 
   const finalPdfBytes = await mergedPdf.save();
 
-  // 3. Save merged result to temp/processed
   const outputName = `${uuidv4()}.pdf`;
   const processedPath = Paths.processed(outputName);
 
@@ -48,7 +44,6 @@ const mergePdfService = async (keys: string[]) => {
 
   const fileSize = finalPdfBytes.length;
 
-  // 4. Upload result to S3
   const s3Key = `processed/${outputName}`;
 
   await uploadToS3({
@@ -57,24 +52,20 @@ const mergePdfService = async (keys: string[]) => {
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 5. Cleanup
   rawFiles.forEach(f => fs.existsSync(f) && fs.unlinkSync(f));
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
   return { key: s3Key, size: fileSize };
 };
 
-// SplitPDF Service Logic
 const splitPdfService = async (key: string, startPage: number, endPage: number) => {
   Paths.ensureFolders();
 
-  // 1. Download original PDF
   const buffer = await downloadFromS3(`temporary/${key}`);
   const fileName = key.split('/').pop() || `file-${Date.now()}.pdf`;
   const rawPath = Paths.raw(fileName);
   fs.writeFileSync(rawPath, buffer);
 
-  // 2. Load and validate
   const originalPdf = await PDFDocument.load(fs.readFileSync(rawPath));
   const totalPages = originalPdf.getPageCount();
 
@@ -89,7 +80,6 @@ const splitPdfService = async (key: string, startPage: number, endPage: number) 
   const startIndex = safeStart - 1;
   const endIndex = safeEnd - 1;
 
-  // 3. Extract pages
   const splitDoc = await PDFDocument.create();
   const pageIndices = Array.from({ length: endIndex - startIndex + 1 }, (_, i) => startIndex + i);
 
@@ -98,14 +88,12 @@ const splitPdfService = async (key: string, startPage: number, endPage: number) 
 
   const splitBytes = await splitDoc.save();
 
-  // 4. Save output
   const outputName = `${uuidv4()}.pdf`;
   const processedPath = Paths.processed(outputName);
   fs.writeFileSync(processedPath, splitBytes);
 
   const fileSize = splitBytes.length;
 
-  // 5. Upload to S3
   const s3Key = `processed/${outputName}`;
   await uploadToS3({
     localPath: processedPath,
@@ -113,14 +101,12 @@ const splitPdfService = async (key: string, startPage: number, endPage: number) 
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 6. Cleanup
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
   return { key: s3Key, size: fileSize };
 };
 
-// Generic LibraOffice Conversion
 const convertWithLibreOffice = async (
   inputPath: string,
   outputDir: string,
@@ -160,7 +146,6 @@ const convertWithLibreOffice = async (
     const stdout = error.stdout ? ` Stdout: ${error.stdout}` : '';
     throw new Error(`LibreOffice conversion Failed: ${error.message}${stderr}${stdout}`);
   } finally {
-    // Cleanup profile directory
     try {
       if (fs.existsSync(profileDir)) {
         fs.rmSync(profileDir, { recursive: true, force: true });
@@ -171,13 +156,7 @@ const convertWithLibreOffice = async (
   }
 };
 
-// Main Dynamic conversion service
-const convertFilesService = async (
-  s3Key: string,
-  targetFormat: 'pdf' | 'docx' | 'txt' | 'doc'
-  // documentId?: string,
-  // jobId?: string
-) => {
+const convertFilesService = async (s3Key: string, targetFormat: 'pdf' | 'docx' | 'txt' | 'doc') => {
   Paths.ensureFolders();
 
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
@@ -211,7 +190,6 @@ const convertFilesService = async (
 export default async function (job: Job) {
   const { documentId, jobId } = job.data;
 
-  // 1. Start Processing (Update DB)
   if (jobId && documentId) {
     await prisma.job.update({ where: { id: jobId }, data: { status: 'PROCESSING' } });
     await prisma.document.update({
@@ -229,7 +207,6 @@ export default async function (job: Job) {
     switch (job.task) {
       case 'merge':
         result = await mergePdfService(job.data.keys);
-        // You might need to fetch size for merge/split separately if needed
         break;
       case 'split':
         result = await splitPdfService(job.data.key, job.data.startPage, job.data.endPage);
@@ -245,7 +222,6 @@ export default async function (job: Job) {
     resultS3Key = result.key;
     outputFileSize = result.size;
 
-    // 2. Success (Update DB)
     if (jobId && documentId) {
       await prisma.$transaction([
         prisma.document.update({
@@ -271,7 +247,6 @@ export default async function (job: Job) {
   } catch (err) {
     const error = err as Error;
 
-    // 3. Failure (Update DB)
     if (jobId && documentId) {
       await prisma.$transaction([
         prisma.document.update({

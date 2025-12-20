@@ -14,9 +14,7 @@ export default function ForgotPasswordPage() {
           <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-2xl md:text-3xl font-space-grotesk font-bold">
-            Reset Password
-          </h1>
+          <h1 className="text-2xl md:text-3xl font-space-grotesk font-bold">Reset Password</h1>
           <p className="text-muted-foreground">
             This feature is coming soon. Please contact support if you need to reset your password.
           </p>
@@ -39,12 +37,7 @@ export default function ForgotPasswordPage() {
             </div>
           </div>
 
-          <Button
-            className="w-full rounded-xl"
-            size="lg"
-            variant="hero"
-            disabled
-          >
+          <Button className="w-full rounded-xl" size="lg" variant="hero" disabled>
             <Send className="w-5 h-5 mr-2" />
             Send Reset Link (Coming Soon)
           </Button>

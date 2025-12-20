@@ -2,9 +2,8 @@
 const nextConfig = {
   transpilePackages: ["@repo/ui"],
 
-  experimental: {
-    reactCompiler: true,
-  },
+  reactCompiler: true,
+
   typescript: {
     ignoreBuildErrors: true, // Set to true to force deployment despite TS errors
   },

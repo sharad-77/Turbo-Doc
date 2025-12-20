@@ -11,6 +11,7 @@ import {
   Upload,
   Zap,
 } from 'lucide-react';
+import Link from 'next/link';
 
 const fadeUpVariant: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -117,18 +118,24 @@ export const HeroSection = () => {
               <Button
                 variant="default"
                 size="lg"
-                className="min-w-[180px] h-13 text-base font-medium hero-button-primary group"
+                className="min-w-[180px] h-13 text-base font-medium hero-button-primary group touch-manipulation"
+                asChild
               >
-                Start Converting
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                <Link href="/convert">
+                  Start Converting
+                  <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="min-w-[180px] h-13 text-base font-medium hero-button-secondary group"
+                className="min-w-[180px] h-13 text-base font-medium hero-button-secondary group touch-manipulation"
+                asChild
               >
-                <Play className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
-                Watch Demo
+                <Link href="/pricing">
+                  <Play className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
+                  View Pricing
+                </Link>
               </Button>
             </motion.div>
 
@@ -241,9 +248,10 @@ export const HeroSection = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="font-inter text-xs hero-browse-button h-8"
+                        className="font-inter text-xs hero-browse-button h-8 touch-manipulation"
+                        asChild
                       >
-                        Browse Files
+                        <Link href="/convert">Browse Files</Link>
                       </Button>
                     </motion.div>
 

@@ -5,16 +5,12 @@ import { Paths } from '../utils/path.js';
 export const downloadToTemp = async (s3Key: string) => {
   Paths.ensureFolders();
 
-  // download buffer from s3
   const buffer = await s3Download(s3Key);
 
-  // extract file name
   const fileName = s3Key.split('/').pop() || `file-${Date.now()}`;
 
-  // local path for Raw file
   const localPath = Paths.raw(fileName);
 
-  // save buffer to temp/raw
   fs.writeFileSync(localPath, buffer);
 
   return localPath;

@@ -18,10 +18,8 @@ export const workerService = {
       createdAt: new Date(),
     };
 
-    // Initialize job in database
     await jobStore.set(jobId, job);
 
-    // Run async processing
     (async () => {
       try {
         job.status = 'processing';
@@ -55,10 +53,8 @@ export const workerService = {
       createdAt: new Date(),
     };
 
-    // Initialize job in database
     await jobStore.set(jobId, job);
 
-    // Run async processing
     (async () => {
       try {
         job.status = 'processing';

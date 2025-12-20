@@ -11,14 +11,14 @@ import { Progress } from '@repo/ui/components/ui/progress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import {
-    Clock,
-    FileText,
-    Filter,
-    HardDrive,
-    Image as ImageIcon,
-    Loader2,
-    Search,
-    Trash2,
+  Clock,
+  FileText,
+  Filter,
+  HardDrive,
+  Image as ImageIcon,
+  Loader2,
+  Search,
+  Trash2,
 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -27,25 +27,21 @@ const Storage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const queryClient = useQueryClient();
 
-  // Fetch files
   const { data: files = [], isLoading: filesLoading } = useQuery<UserFile[], Error>({
     queryKey: ['user-files'],
     queryFn: getFiles,
   });
 
-  // Fetch dashboard stats for storage
   const { data: stats } = useQuery<DashboardStats, Error>({
     queryKey: ['dashboard-stats'],
     queryFn: getDashboardStats,
   });
 
-  // Fetch user plan for storage limit
   const { data: userPlan } = useQuery<SubscriptionPlan, Error>({
     queryKey: ['user-plan'],
     queryFn: getUserPlan,
   });
 
-  // Delete file mutation
   const deleteMutation = useMutation<
     void,
     Error,
@@ -63,20 +59,17 @@ const Storage = () => {
     },
   });
 
-  // Filter files based on search
   const filteredFiles = files.filter(file =>
     file.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Calculate storage stats
   const totalStorageBytes = stats?.storageUsed || 0;
   const totalStorageGB = (totalStorageBytes / 1024 ** 3).toFixed(2);
   const totalFileCount = files.length;
-  const maxStorageMB = userPlan?.storageLimitMB || 200; // Default to FREE plan
+  const maxStorageMB = userPlan?.storageLimitMB || 200;
   const maxStorageGBNum = maxStorageMB / 1024;
   const maxStorageGB = maxStorageGBNum.toFixed(2);
 
-  // Format file size
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 B';
     const k = 1024;
@@ -85,7 +78,6 @@ const Storage = () => {
     return parseFloat((bytes / k ** i).toFixed(2)) + ' ' + sizes[i];
   };
 
-  // Handle delete
   const handleDelete = (file: UserFile) => {
     if (confirm(`Are you sure you want to delete ${file.name}?`)) {
       deleteMutation.mutate({ fileId: file.id, fileType: file.type });

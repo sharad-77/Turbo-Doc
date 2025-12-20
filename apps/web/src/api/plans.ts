@@ -1,6 +1,5 @@
 import apiClient from '@/lib/api-client';
 
-// Types
 export interface SubscriptionPlan {
   id: string;
   name: string;

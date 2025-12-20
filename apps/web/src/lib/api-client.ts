@@ -1,9 +1,8 @@
+import { logger } from '@/lib/logger';
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { authClient } from './auth-client';
 import { getFingerprint } from './fingerprint';
-import { logger } from '@/lib/logger';
 
-// Create axios instance
 const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL!,
   timeout: 600000, // 10 minutes for file operations
@@ -13,7 +12,6 @@ const apiClient: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor - Add auth token and fingerprint to requests
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     try {
@@ -39,7 +37,6 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor - Handle errors globally
 apiClient.interceptors.response.use(
   response => {
     return response;

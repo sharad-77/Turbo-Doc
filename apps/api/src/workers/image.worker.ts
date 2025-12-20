@@ -7,14 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Job } from '../types/worker.types.js';
 import { Paths } from '../utils/path.js';
 
-// Convert Image Format Service
 const convertImageFormatWorker = async (
   s3Key: string,
   targetFormat: 'jpeg' | 'jpg' | 'webp' | 'avif' | 'png' | 'gif'
 ) => {
   Paths.ensureFolders();
 
-  // 1. Download image from S3
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
   const ext = path.extname(s3Key);
   const fileName = `${uuidv4()}${ext}`;
@@ -22,13 +20,11 @@ const convertImageFormatWorker = async (
 
   fs.writeFileSync(rawPath, buffer);
 
-  // 2. Convert image format
   const outputName = `${uuidv4()}.${targetFormat === 'jpg' ? 'jpeg' : targetFormat}`;
   const processedPath = Paths.processed(outputName);
 
   let image = sharp(rawPath);
 
-  // Apply format conversion
   switch (targetFormat) {
     case 'jpeg':
     case 'jpg':
@@ -54,10 +50,8 @@ const convertImageFormatWorker = async (
 
   const outputFileSize = fs.statSync(processedPath).size;
 
-  // Get metadata for dimensions
   const metadata = await sharp(processedPath).metadata();
 
-  // 3. Upload to S3
   const uploadedKey = `processed/${outputName}`;
   await uploadToS3({
     localPath: processedPath,
@@ -65,7 +59,6 @@ const convertImageFormatWorker = async (
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 4. Cleanup
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
@@ -77,11 +70,9 @@ const convertImageFormatWorker = async (
   };
 };
 
-// Compress Image Service
 const compressImageWorker = async (s3Key: string, quality: number) => {
   Paths.ensureFolders();
 
-  // 1. Download image from S3
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
   const ext = path.extname(s3Key);
   const fileName = `${uuidv4()}${ext}`;
@@ -89,17 +80,14 @@ const compressImageWorker = async (s3Key: string, quality: number) => {
 
   fs.writeFileSync(rawPath, buffer);
 
-  // 2. Get original format
   const metadata = await sharp(rawPath).metadata();
   const format = metadata.format;
 
-  // 3. Compress image
   const outputName = `${uuidv4()}.${format}`;
   const processedPath = Paths.processed(outputName);
 
   let image = sharp(rawPath);
 
-  // Apply compression based on format
   switch (format) {
     case 'jpeg':
     case 'jpg':
@@ -115,7 +103,6 @@ const compressImageWorker = async (s3Key: string, quality: number) => {
       image = image.avif({ quality });
       break;
     default:
-      // For formats that don't support quality, just copy
       image = image.toFormat(format as keyof sharp.FormatEnum);
   }
 
@@ -124,7 +111,6 @@ const compressImageWorker = async (s3Key: string, quality: number) => {
   const outputFileSize = fs.statSync(processedPath).size;
   const processedMetadata = await sharp(processedPath).metadata();
 
-  // 4. Upload to S3
   const uploadedKey = `processed/${outputName}`;
   await uploadToS3({
     localPath: processedPath,
@@ -132,7 +118,6 @@ const compressImageWorker = async (s3Key: string, quality: number) => {
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 5. Cleanup
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
@@ -144,11 +129,9 @@ const compressImageWorker = async (s3Key: string, quality: number) => {
   };
 };
 
-// Resize Image Service
 const resizeImageWorker = async (s3Key: string, scalePercent: number) => {
   Paths.ensureFolders();
 
-  // 1. Download image from S3
   const buffer = await downloadFromS3(`temporary/${s3Key}`);
   const ext = path.extname(s3Key);
   const fileName = `${uuidv4()}${ext}`;
@@ -156,29 +139,25 @@ const resizeImageWorker = async (s3Key: string, scalePercent: number) => {
 
   fs.writeFileSync(rawPath, buffer);
 
-  // 2. Get original dimensions
   const metadata = await sharp(rawPath).metadata();
   const originalWidth = metadata.width || 0;
   const originalHeight = metadata.height || 0;
   const format = metadata.format;
 
-  // 3. Calculate new dimensions
   const newWidth = Math.round((originalWidth * scalePercent) / 100);
   const newHeight = Math.round((originalHeight * scalePercent) / 100);
 
-  // 4. Resize image
   const outputName = `${uuidv4()}.${format}`;
   const processedPath = Paths.processed(outputName);
 
   await sharp(rawPath)
     .resize(newWidth, newHeight, {
-      fit: 'fill', // Preserve aspect ratio
+      fit: 'fill',
     })
     .toFile(processedPath);
 
   const outputFileSize = fs.statSync(processedPath).size;
 
-  // 5. Upload to S3
   const uploadedKey = `processed/${outputName}`;
   await uploadToS3({
     localPath: processedPath,
@@ -186,7 +165,6 @@ const resizeImageWorker = async (s3Key: string, scalePercent: number) => {
     bucket: process.env.AWS_BUCKET_NAME,
   });
 
-  // 6. Cleanup
   if (fs.existsSync(rawPath)) fs.unlinkSync(rawPath);
   if (fs.existsSync(processedPath)) fs.unlinkSync(processedPath);
 
@@ -198,13 +176,11 @@ const resizeImageWorker = async (s3Key: string, scalePercent: number) => {
   };
 };
 
-// Main Worker Function
 export default async function (job: Job) {
   console.log('[ImageWorker] Received job:', JSON.stringify(job, null, 2));
 
   const { imageId, jobId } = job.data;
 
-  // 1. Start Processing (Update DB)
   if (jobId && imageId) {
     await prisma.job.update({ where: { id: jobId }, data: { status: 'PROCESSING' } });
     await prisma.image.update({
@@ -235,7 +211,6 @@ export default async function (job: Job) {
 
     console.log('[ImageWorker] Processing complete:', result);
 
-    // 2. Success (Update DB)
     if (jobId && imageId) {
       await prisma.$transaction([
         prisma.image.update({
@@ -265,7 +240,6 @@ export default async function (job: Job) {
     console.error('[ImageWorker] Error:', error.message);
     console.error('[ImageWorker] Stack:', error.stack);
 
-    // 3. Failure (Update DB)
     if (jobId && imageId) {
       await prisma.$transaction([
         prisma.image.update({

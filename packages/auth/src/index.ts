@@ -3,14 +3,17 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 
 export const auth = betterAuth({
+  baseURL: process.env.API_URL!,
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  secret: process.env.BETTER_AUTH_SECRET!,
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: ".sharad.fun",
+      domain: '.sharad.fun',
     },
+    useSecureCookies: true,
   },
   emailAndPassword: {
     enabled: true,
@@ -43,7 +46,7 @@ export const auth = betterAuth({
       maxAge: 5 * 60,
     },
   },
-  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL!, process.env.API_URL!],
+  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL!],
 });
 
 export type Session = typeof auth.$Infer.Session;

@@ -4,7 +4,6 @@
  * and provide immediate user feedback
  */
 
-// Document format validation
 export const SUPPORTED_DOCUMENT_FORMATS = {
   'application/pdf': ['.pdf'],
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
@@ -16,7 +15,6 @@ export const SUPPORTED_DOCUMENT_FORMATS = {
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
 } as const;
 
-// Image format validation (matching backend zod schema)
 export const SUPPORTED_IMAGE_FORMATS = {
   'image/jpeg': ['.jpg', '.jpeg'],
   'image/png': ['.png'],

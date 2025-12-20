@@ -1,7 +1,7 @@
 import { Button } from '@repo/ui/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const CTASection = () => {
   return (
@@ -80,10 +80,10 @@ export const CTASection = () => {
               <Button
                 variant="default"
                 size="lg"
-                className="min-w-[200px] cta-primary-button group"
+                className="min-w-[200px] cta-primary-button group touch-manipulation"
                 asChild
               >
-                <Link to="/signup">
+                <Link href="/signup">
                   <Zap className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
                   Get Started Free
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -92,10 +92,10 @@ export const CTASection = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="min-w-[200px] cta-secondary-button"
+                className="min-w-[200px] cta-secondary-button touch-manipulation"
                 asChild
               >
-                <Link to="/pricing">View Pricing</Link>
+                <Link href="/pricing">View Pricing</Link>
               </Button>
             </motion.div>
 

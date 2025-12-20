@@ -1,12 +1,12 @@
 'use client';
 
 import {
-    compressImage,
-    convertImage,
-    downloadFileFromS3,
-    resizeImage,
-    useFileUpload,
-    useJobStatus,
+  compressImage,
+  convertImage,
+  downloadFileFromS3,
+  resizeImage,
+  useFileUpload,
+  useJobStatus,
 } from '@/api';
 import { getUserPlan, type SubscriptionPlan } from '@/api/plans';
 import { validateImageFormat } from '@/lib/format-validation';
@@ -14,11 +14,11 @@ import { logger } from '@/lib/logger';
 import { Button } from '@repo/ui/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@repo/ui/components/ui/select';
 import { Slider } from '@repo/ui/components/ui/slider';
 import { useQuery } from '@tanstack/react-query';
@@ -36,7 +36,6 @@ interface UploadedImage {
   height?: number;
 }
 
-// Image Item Component
 const ImageItem = ({
   imageItem,
   onRemove,

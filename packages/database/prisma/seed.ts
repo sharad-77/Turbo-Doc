@@ -2,7 +2,6 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
 import { Pool } from 'pg';
 
-// Get DATABASE_URL from environment
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
@@ -10,17 +9,14 @@ if (!connectionString) {
   process.exit(1);
 }
 
-// Create pool and adapter
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 
-// Create Prisma client with adapter
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log('🌱 Starting database seed...');
 
-  // Seed Subscription Plans
   console.log('📋 Seeding subscription plans...');
 
   const freePlan = await prisma.subscriptionPlan.upsert({

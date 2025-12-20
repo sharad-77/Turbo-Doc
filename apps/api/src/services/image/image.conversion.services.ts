@@ -4,12 +4,12 @@ import { workerService } from '../worker.service.js';
 export const convertImageFormatService = async (
   s3Key: string,
   targetFormat: 'jpeg' | 'jpg' | 'webp' | 'avif' | 'png' | 'gif',
-  userId: string | undefined, // Make explicit type
+  userId: string | undefined,
   guestUsageId: string | undefined,
   originalFileName: string,
   originalFormat: string,
   fileSize: number,
-  width: number = 0, // Keep default 0 if not provided by Zod optional
+  width: number = 0,
   height: number = 0
 ) => {
   const newImage = await prisma.image.create({
@@ -85,7 +85,7 @@ export const convertImageFormatService = async (
 
 export const compressImageService = async (
   s3Key: string,
-  quality: number, // 1–100
+  quality: number,
   userId: string | undefined,
   guestUsageId: string | undefined,
   originalFileName: string,
@@ -167,7 +167,7 @@ export const compressImageService = async (
 
 export const resizeImageService = async (
   s3Key: string,
-  scalePercent: number, // 25–200
+  scalePercent: number,
   userId: string | undefined,
   guestUsageId: string | undefined,
   originalFileName: string,

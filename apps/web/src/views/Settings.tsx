@@ -1,12 +1,12 @@
 'use client';
 
 import {
-    changePassword,
-    getProfile,
-    updateEmail,
-    type ChangePasswordRequest,
-    type UpdateEmailRequest,
-    type UserProfile,
+  changePassword,
+  getProfile,
+  updateEmail,
+  type ChangePasswordRequest,
+  type UpdateEmailRequest,
+  type UserProfile,
 } from '@/api/profile';
 import { Alert, AlertDescription } from '@repo/ui/components/ui/alert';
 import { Button } from '@repo/ui/components/ui/button';
@@ -21,13 +21,11 @@ import { toast } from 'sonner';
 const Settings = () => {
   const queryClient = useQueryClient();
 
-  // Fetch profile to check OAuth status
   const { data: profile, isLoading } = useQuery<UserProfile, Error>({
     queryKey: ['profile'],
     queryFn: getProfile,
   });
 
-  // Form states
   const [emailData, setEmailData] = useState({ newEmail: '' });
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
@@ -35,12 +33,10 @@ const Settings = () => {
     confirmPassword: '',
   });
 
-  // Check if user has credential account or only OAuth
   const hasCredentialAccount = profile?.accounts?.some(acc => acc.providerId === 'credential');
   const isOAuthOnly = !hasCredentialAccount && (profile?.accounts?.length || 0) > 0;
   const oauthProvider = profile?.accounts?.find(acc => acc.providerId !== 'credential')?.providerId;
 
-  // Email update mutation
   const emailMutation = useMutation<
     { id: string; email: string; emailVerified: boolean },
     Error,
@@ -57,7 +53,6 @@ const Settings = () => {
     },
   });
 
-  // Password change mutation
   const passwordMutation = useMutation<
     { success: boolean; message: string },
     Error,

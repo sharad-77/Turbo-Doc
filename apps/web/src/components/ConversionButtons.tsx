@@ -13,7 +13,7 @@ import {
   Stamp,
   Zap,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const conversions = [
   {
@@ -130,8 +130,8 @@ export const ConversionButtons = () => {
           {conversions.map((conversion, index) => (
             <motion.div key={index} variants={itemVariants}>
               <Link
-                to="/convert"
-                className="conversion-card group block p-5 rounded-2xl text-center h-full"
+                href="/convert"
+                className="conversion-card group block p-5 rounded-2xl text-center h-full touch-manipulation"
               >
                 <div className="conversion-icon-wrapper w-12 h-12 mx-auto mb-3 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
                   <conversion.icon className="w-6 h-6 text-primary" />
@@ -154,15 +154,20 @@ export const ConversionButtons = () => {
           className="text-center"
         >
           <div className="inline-flex flex-col sm:flex-row gap-4">
-            <Button variant="default" size="lg" className="conversion-cta-button group" asChild>
-              <Link to="/convert">
+            <Button
+              variant="default"
+              size="lg"
+              className="conversion-cta-button group touch-manipulation"
+              asChild
+            >
+              <Link href="/convert">
                 <Zap className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
                 Start Converting Now
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link to="/dashboard">View Dashboard</Link>
+            <Button variant="outline" size="lg" className="touch-manipulation" asChild>
+              <Link href="/dashboard">View Dashboard</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">

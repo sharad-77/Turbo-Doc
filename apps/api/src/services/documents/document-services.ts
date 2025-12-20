@@ -3,7 +3,6 @@ import { workerService } from '../worker.service.js';
 
 type ConvertTypes = 'pdf' | 'docx' | 'txt' | 'doc';
 
-// MergePDF Service Logic
 export const mergePdfService = async (
   keys: string[],
   originalFileName: string,
@@ -82,7 +81,6 @@ export const mergePdfService = async (
   });
 };
 
-// SplitPDF Service Logic
 export const splitPdfService = async (
   key: string,
   startPage: number,
@@ -165,7 +163,6 @@ export const splitPdfService = async (
   });
 };
 
-// Main Dynamic conversion service
 export const convertFilesService = async (
   s3Key: string,
   targetFormat: ConvertTypes,
@@ -224,8 +221,8 @@ export const convertFilesService = async (
 
   const newJob = await prisma.job.create({
     data: {
-      type: 'DOCUMENT', // or "IMAGE"
-      task: 'convert', // or "merge", "split", "resize"
+      type: 'DOCUMENT',
+      task: 'convert',
       status: 'QUEUED',
       data: {
         documentId: newDoc.id,

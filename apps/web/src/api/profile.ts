@@ -1,6 +1,5 @@
 import apiClient from '@/lib/api-client';
 
-// Types
 export interface UserFile {
   id: string;
   name: string;
@@ -39,8 +38,6 @@ export interface ChangePasswordRequest {
 export interface UpdateEmailRequest {
   email: string;
 }
-
-// API Functions
 
 /**
  * Get all user files (documents + images)
