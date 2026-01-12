@@ -2,6 +2,8 @@ import { prisma } from '@repo/database';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const auth = betterAuth({
   baseURL: process.env.API_URL!,
   database: prismaAdapter(prisma, {
@@ -11,9 +13,15 @@ export const auth = betterAuth({
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: '.sharad.fun',
+      domain: isProduction ? '.sharad.fun' : undefined,
     },
     useSecureCookies: true,
+
+    cookieOptions: {
+      sameSite: 'lax',
+      secure: isProduction,
+      httpOnly: true,
+    },
   },
   emailAndPassword: {
     enabled: true,

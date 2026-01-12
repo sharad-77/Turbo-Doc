@@ -12,7 +12,6 @@ interface AuthRequest extends Request {
 
 export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    // check if user is logged in
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers),
     });
@@ -22,22 +21,27 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
       req.user = session.user;
       req.session = session.session;
 
-      // Ensure UserUsage exists
-      await prisma.userUsage.upsert({
-        where: { userId: session.user.id },
-        update: {},
-        create: { userId: session.user.id },
-      });
+      try {
+        await prisma.userUsage.upsert({
+          where: { userId: session.user.id },
+          update: {},
+          create: { userId: session.user.id },
+        });
+
+        // eslint-disable-next-line
+      } catch (error: any) {
+        if (error.code !== 'P2002') {
+          throw error;
+        }
+      }
 
       return next();
     }
 
-    // handle guest user
     const ip = req.ip || '127.0.0.1';
     const fingerprint = req.headers['x-fingerprint'];
     const userAgent = req.headers['user-agent'] || 'unknown';
 
-    // make sure fingerprint exists
     if (!fingerprint || typeof fingerprint !== 'string') {
       return res.status(400).json({
         error: 'Missing Fingerprint',
@@ -45,7 +49,6 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
       });
     }
 
-    // find or create the guest
     const guestUser = await prisma.guestUsage.upsert({
       where: {
         ipAddress_fingerprint: {

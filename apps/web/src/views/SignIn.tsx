@@ -18,7 +18,7 @@ import { Input } from '@repo/ui/components/ui/input';
 import { Separator } from '@repo/ui/components/ui/separator';
 import {
   ArrowRight,
-  Chrome,
+  Chromium,
   Eye,
   EyeOff,
   FileText,
@@ -66,6 +66,7 @@ const SignIn = () => {
           },
           onError: ctx => {
             toast.error(ctx.error.message);
+            console.log(ctx.error);
             setLoading(false);
           },
         }
@@ -139,7 +140,7 @@ const SignIn = () => {
               {socialLoading === 'google' ? (
                 <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-3 animate-spin" />
               ) : (
-                <Chrome className="w-4 h-4 md:w-5 md:h-5 mr-3" />
+                <Chromium className="w-4 h-4 md:w-5 md:h-5 mr-3" />
               )}
               {socialLoading === 'google' ? 'Connecting...' : 'Continue with Google'}
             </Button>

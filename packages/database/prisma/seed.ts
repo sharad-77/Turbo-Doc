@@ -1,6 +1,18 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
 import { Pool } from 'pg';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+const envPath = path.resolve(process.cwd(), '../../.env');
+
+const result = dotenv.config({ path: envPath });
+
+if (result.error) {
+  console.log(`⚠️  Could not find .env at: ${envPath}`);
+} else {
+  console.log(`✅ Loaded .env from: ${envPath}`);
+}
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -11,13 +23,10 @@ if (!connectionString) {
 
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
-
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log('🌱 Starting database seed...');
-
-  console.log('📋 Seeding subscription plans...');
 
   const freePlan = await prisma.subscriptionPlan.upsert({
     where: { name: 'FREE' },
@@ -50,11 +59,11 @@ async function main() {
     create: {
       name: 'PRO',
       displayName: 'Pro Plan',
-      price: 249, // Monthly price
+      price: 249,
       currency: 'INR',
       dailyDocumentLimit: 20,
       dailyImageLimit: 20,
-      mergeFileLimit: -1, // -1 means unlimited
+      mergeFileLimit: -1,
       storageLimitMB: 500,
       retentionDays: 30,
       description: 'For professionals who need more power and speed.',
@@ -71,9 +80,7 @@ async function main() {
     },
   });
 
-  console.log('✅ Created FREE plan:', freePlan.name);
-  console.log('✅ Created PRO plan:', proPlan.name);
-
+  console.log('✅ Created plans:', freePlan.name, proPlan.name);
   console.log('🎉 Database seeding completed successfully!');
 }
 
