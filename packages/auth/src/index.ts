@@ -15,7 +15,7 @@ export const auth = betterAuth({
       enabled: true,
       domain: isProduction ? '.sharad.fun' : undefined,
     },
-    useSecureCookies: true,
+    useSecureCookies: isProduction,
 
     cookieOptions: {
       sameSite: 'lax',

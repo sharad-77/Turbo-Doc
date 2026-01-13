@@ -2,10 +2,21 @@
 const nextConfig = {
   transpilePackages: ["@repo/ui"],
 
-  reactCompiler: true,
+  experimental: {
+    reactCompiler: true,
+  },
 
   typescript: {
-    ignoreBuildErrors: true, // Set to true to force deployment despite TS errors
+    ignoreBuildErrors: true,
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/auth/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL || "https://turbodoc.api.sharad.fun"}/api/auth/:path*`,
+      },
+    ];
   },
 };
 
