@@ -18,9 +18,10 @@ export const auth = betterAuth({
     useSecureCookies: isProduction,
 
     cookieOptions: {
-      sameSite: 'lax',
+      sameSite: isProduction ? 'none' : 'lax',
       secure: isProduction,
       httpOnly: true,
+      partitioned: isProduction,
     },
   },
   emailAndPassword: {
