@@ -12,16 +12,14 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET!,
   advanced: {
     crossSubDomainCookies: {
-      enabled: true,
-      domain: isProduction ? '.sharad.fun' : undefined,
+      enabled: false,
     },
     useSecureCookies: isProduction,
-
     cookieOptions: {
-      sameSite: isProduction ? 'none' : 'lax',
+      sameSite: isProduction ? 'lax' : 'lax',
       secure: isProduction,
       httpOnly: true,
-      // partitioned: isProduction,
+     
     },
   },
   emailAndPassword: {
