@@ -4,7 +4,7 @@ import { authClient } from './auth-client';
 import { getFingerprint } from './fingerprint';
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  baseURL: process.env.NEXT_PUBLIC_APP_URL!, // ✅ Changed from NEXT_PUBLIC_API_URL
   timeout: 600000,
   headers: {
     'Content-Type': 'application/json',
