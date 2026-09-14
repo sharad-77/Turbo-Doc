@@ -11,6 +11,8 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
+.env.production
 
 # Testing
 coverage
@@ -40,3 +42,6 @@ yarn-error.log*
 # Personal File
 ESSENTIAL_DEPLOYMENT.txt
 install.log
+
+# Local V2 architecture and prompt notes (intentionally not committed)
+/prompts/
