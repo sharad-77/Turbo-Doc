@@ -25,6 +25,7 @@ export default [
     },
     rules: {
       ...tseslint.configs.recommended.rules,
+      'no-undef': 'off',
       'prettier/prettier': 'error',
     },
   },

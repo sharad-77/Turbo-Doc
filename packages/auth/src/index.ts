@@ -19,7 +19,6 @@ export const auth = betterAuth({
       sameSite: isProduction ? 'lax' : 'lax',
       secure: isProduction,
       httpOnly: true,
-     
     },
   },
   emailAndPassword: {
