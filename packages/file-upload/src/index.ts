@@ -9,32 +9,40 @@ import fs from 'fs';
 import mime from 'mime-types';
 import { Readable } from 'stream';
 
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../.env' });
+// Lazy-initialized S3 client — created on first use, not at import time.
+// The consuming app (e.g. apps/api) must load .env before importing this package.
+let _s3Client: S3Client | null = null;
 
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-const awsBucketName = process.env.AWS_BUCKET_NAME;
-const region = process.env.AWS_S3_REGION;
+function getS3Client(): S3Client {
+  if (_s3Client) return _s3Client;
 
-if (!accessKeyId || !secretAccessKey) {
-  throw new Error('AWS credentials must be set in the .env file.');
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+  const region = process.env.AWS_S3_REGION;
+
+  if (!accessKeyId || !secretAccessKey) {
+    throw new Error(
+      'AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be set. Make sure your app loads .env before importing @repo/file-upload.'
+    );
+  }
+
+  _s3Client = new S3Client({
+    region: region,
+    credentials: {
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+    },
+  });
+
+  return _s3Client;
 }
-
-const s3Client = new S3Client({
-  region: region,
-  credentials: {
-    accessKeyId: accessKeyId,
-    secretAccessKey: secretAccessKey,
-  },
-});
 
 export const createPersignedUrlwithClient = ({ bucket, objectKey }: PresignedUrlParams) => {
   if (!bucket || !objectKey) {
     throw new Error('Bucket and objectKey are required');
   }
   const command = new PutObjectCommand({ Bucket: bucket, Key: objectKey });
-  return getSignedUrl(s3Client, command, { expiresIn: 3600 });
+  return getSignedUrl(getS3Client(), command, { expiresIn: 3600 });
 };
 
 export const createDownloadPresignedUrl = ({ bucket, objectKey }: PresignedUrlParams) => {
@@ -42,7 +50,7 @@ export const createDownloadPresignedUrl = ({ bucket, objectKey }: PresignedUrlPa
     throw new Error('Bucket and objectKey are required');
   }
   const command = new GetObjectCommand({ Bucket: bucket, Key: objectKey });
-  return getSignedUrl(s3Client, command, { expiresIn: 3600 });
+  return getSignedUrl(getS3Client(), command, { expiresIn: 3600 });
 };
 
 async function streamToBuffer(stream: Readable): Promise<Buffer> {
@@ -55,12 +63,13 @@ async function streamToBuffer(stream: Readable): Promise<Buffer> {
 }
 
 export async function downloadFromS3(key: string) {
-  if (!awsBucketName) throw new Error('AWS bucket name missing');
+  const awsBucketName = process.env.AWS_BUCKET_NAME;
+  if (!awsBucketName) throw new Error('AWS_BUCKET_NAME environment variable is not set.');
   const command = new GetObjectCommand({
     Bucket: awsBucketName,
     Key: key,
   });
-  const response = await s3Client.send(command);
+  const response = await getS3Client().send(command);
   const stream = response.Body as Readable;
   const buffer = await streamToBuffer(stream);
 
@@ -77,7 +86,7 @@ export const uploadToS3 = async ({
   bucket?: string;
 }) => {
   if (!fs.existsSync(localPath)) {
-    throw new Error(`Local file dose not exist: ${localPath}`);
+    throw new Error(`Local file does not exist: ${localPath}`);
   }
 
   const fileBuffer = fs.readFileSync(localPath);
@@ -91,7 +100,7 @@ export const uploadToS3 = async ({
     ContentType: contentType,
   });
 
-  await s3Client.send(command);
+  await getS3Client().send(command);
 
   return {
     message: 'Upload to s3',
@@ -99,3 +108,4 @@ export const uploadToS3 = async ({
     ContentType: contentType,
   };
 };
+

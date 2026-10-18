@@ -5,9 +5,10 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "node --env-file=.env.staging --import=tsx/esm --watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node --env-file=.env.production dist/index.js",
+    "prod": "node --env-file=.env.production dist/index.js",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -15,6 +16,9 @@
     "check": "pnpm format:check && pnpm lint && pnpm check-types"
   },
   "dependencies": {
+    "@repo/auth-v2": "workspace:*",
+    "@repo/database-v2": "workspace:*",
+    "@repo/redis": "workspace:*",
     "body-parser": "^2.3.0",
     "bullmq": "^6.3.6",
     "cors": "^2.8.5",
@@ -22,7 +26,6 @@
     "finalhandler": "^2.1.1",
     "helmet": "^8.3.0",
     "ioredis": "^6.0.0",
-    "pg": "^8.16.3",
     "pino": "^10.3.1",
     "pino-http": "^11.0.0",
     "router": "^2.2.0",
@@ -33,7 +36,6 @@
     "@types/cors": "^2.8.19",
     "@types/finalhandler": "^1.2.4",
     "@types/node": "^22.15.3",
-    "@types/pg": "^8.15.6",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",
