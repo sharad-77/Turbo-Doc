@@ -41,6 +41,7 @@ const Profile = () => {
   const initialFormData = {
     name: profile?.name || '',
     email: profile?.email || '',
+    phoneNumber: profile?.phoneNumber || '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -50,6 +51,7 @@ const Profile = () => {
       setFormData({
         name: profile.name || '',
         email: profile.email || '',
+        phoneNumber: profile.phoneNumber || '',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,6 +84,7 @@ const Profile = () => {
     updateMutation.mutate({
       name: formData.name,
       email: formData.email,
+      phoneNumber: formData.phoneNumber.trim() || undefined,
     });
   };
 
@@ -165,6 +168,19 @@ const Profile = () => {
                     }
                     className="mt-2"
                     placeholder="Enter your name"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <Input
+                    id="phoneNumber"
+                    type="tel"
+                    value={formData.phoneNumber}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData({ ...formData, phoneNumber: e.target.value })
+                    }
+                    className="mt-2"
+                    placeholder="Enter your phone number"
                   />
                 </div>
                 <div className="md:col-span-2">

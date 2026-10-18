@@ -31,6 +31,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuthStore } from '@/store/useAuthStore';
 import { toast } from 'sonner';
 
 const SignIn = () => {
@@ -60,7 +61,8 @@ const SignIn = () => {
           onRequest: () => {
             setLoading(true);
           },
-          onSuccess: () => {
+          onSuccess: async () => {
+            await useAuthStore.getState().checkAuth();
             toast.success('Signed in successfully');
             router.push(APP_CONFIG.DASHBOARD_URL);
           },

@@ -28,6 +28,7 @@ import {
   Loader2,
   Lock,
   Mail,
+  Phone,
   Shield,
   User,
   Zap,
@@ -49,6 +50,7 @@ const SignUp = () => {
     defaultValues: {
       name: '',
       email: '',
+      phoneNumber: '',
       password: '',
       agreeToTerms: false,
     },
@@ -64,6 +66,7 @@ const SignUp = () => {
           email: data.email,
           password: data.password,
           name: data.name,
+          phoneNumber: data.phoneNumber?.trim() ? data.phoneNumber.trim() : undefined,
           callbackURL: APP_CONFIG.DASHBOARD_URL,
         },
         {
@@ -71,8 +74,8 @@ const SignUp = () => {
             setLoading(true);
           },
           onSuccess: () => {
-            toast.success('Account created successfully');
-            router.push(APP_CONFIG.DASHBOARD_URL);
+            toast.success('Account created! Please check your email to verify your account.');
+            router.push('/signin');
           },
           onError: ctx => {
             toast.error(ctx.error.message);
@@ -259,6 +262,28 @@ const SignUp = () => {
                           {...field}
                           type="email"
                           placeholder="Enter your email"
+                          className="pl-10 h-10 md:h-12 rounded-xl"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">Phone number (optional)</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
+                        <Input
+                          {...field}
+                          type="tel"
+                          placeholder="Enter your phone number (e.g. +1 555-019-2834)"
                           className="pl-10 h-10 md:h-12 rounded-xl"
                         />
                       </div>

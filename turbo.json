@@ -1,28 +1,7 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
-  "globalEnv": [
-    "NODE_ENV",
-    "DATABASE_URL",
-    "JWT_SECRET",
-    "API_PORT",
-    "BETTER_AUTH_SECRET",
-    "BETTER_AUTH_URL",
-    "NEXT_PUBLIC_APP_URL",
-    "API_URL",
-    "GOOGLE_CLIENT_ID",
-    "GOOGLE_CLIENT_SECRET",
-    "GITHUB_CLIENT_ID",
-    "GITHUB_CLIENT_SECRET",
-    "AWS_ACCESS_KEY_ID",
-    "AWS_SECRET_ACCESS_KEY",
-    "AWS_S3_REGION",
-    "AWS_BUCKET_NAME",
-    "AWS_CLOUDFRONT_URL",
-    "TEST_API_KEY",
-    "TEST_API_SECRET",
-    "TEST_API_WEBHOOK_SECRET"
-  ],
+  "globalEnv": [],
   "tasks": {
     "db:generate": {
       "cache": false
@@ -32,8 +11,9 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
+    "lint": {},
+    "check-types": {
+      "dependsOn": ["^build"]
     },
     "format": {
       "outputs": [],
@@ -41,9 +21,6 @@
     },
     "format:check": {
       "outputs": []
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,

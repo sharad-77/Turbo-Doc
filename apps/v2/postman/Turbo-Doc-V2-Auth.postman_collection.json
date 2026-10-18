@@ -1,0 +1,285 @@
+{
+  "info": {
+    "_postman_id": "a9b8c7d6-e5f4-4321-ba98-76543210fedc",
+    "name": "Turbo-Doc V2 - Authentication APIs",
+    "description": "Complete collection of authentication and user session management APIs for Turbo-Doc V2 using Better Auth, Redis, and PostgreSQL.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001/api/v2/auth",
+      "type": "string"
+    },
+    {
+      "key": "origin",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "testuser@example.com",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "Password123!",
+      "type": "string"
+    },
+    {
+      "key": "name",
+      "value": "Test User",
+      "type": "string"
+    },
+    {
+      "key": "verificationToken",
+      "value": "paste_email_verification_token_here",
+      "type": "string"
+    },
+    {
+      "key": "resetToken",
+      "value": "paste_password_reset_token_here",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Sign Up (Email & Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sign-up/email",
+          "host": ["{{baseUrl}}"],
+          "path": ["sign-up", "email"]
+        },
+        "description": "Register a new user account with name, email, password, and optional phone number. Sends a verification email via Resend."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Verify Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/verify-email?token={{verificationToken}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["verify-email"],
+          "query": [
+            {
+              "key": "token",
+              "value": "{{verificationToken}}",
+              "description": "Verification token received in the verification email"
+            }
+          ]
+        },
+        "description": "Verifies the email address using the token received in the verification email. Omit callbackURL in Postman to receive direct JSON response."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Resend Verification Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/send-verification-email",
+          "host": ["{{baseUrl}}"],
+          "path": ["send-verification-email"]
+        },
+        "description": "Resends the verification email if the previous token expired or was not received."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Sign In (Email & Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sign-in/email",
+          "host": ["{{baseUrl}}"],
+          "path": ["sign-in", "email"]
+        },
+        "description": "Authenticates the verified user and sets the session cookie in Postman automatically."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get Session (Better Auth)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/get-session",
+          "host": ["{{baseUrl}}"],
+          "path": ["get-session"]
+        },
+        "description": "Returns current session data and user object from Better Auth session storage."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Safe Profile (/me - requireAuth)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["me"]
+        },
+        "description": "Protected endpoint using requireAuth middleware. Returns safe sanitized profile and session lifetime info."
+      },
+      "response": []
+    },
+    {
+      "name": "7. Forget Password (Request Reset)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/forget-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["forget-password"]
+        },
+        "description": "Triggers a password reset email containing a reset link with token."
+      },
+      "response": []
+    },
+    {
+      "name": "8. Reset Password",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"NewPassword123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/reset-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["reset-password"]
+        },
+        "description": "Resets the user's password using the token received in the reset email."
+      },
+      "response": []
+    },
+    {
+      "name": "9. Change Password (Logged In)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"currentPassword\": \"Password123!\",\n  \"newPassword\": \"UpdatedPassword123!\",\n  \"revokeOtherSessions\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/change-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["change-password"]
+        },
+        "description": "Allows an authenticated user to change their password and optionally revoke other active sessions."
+      },
+      "response": []
+    },
+    {
+      "name": "10. Sign Out",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Origin",
+            "value": "{{origin}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sign-out",
+          "host": ["{{baseUrl}}"],
+          "path": ["sign-out"]
+        },
+        "description": "Destroys the session in Redis & Postgres and clears session cookies."
+      },
+      "response": []
+    }
+  ]
+}

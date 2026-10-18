@@ -2,5 +2,6 @@
   "css.lint.unknownAtRules": "ignore",
   "files.exclude": {
     "**/dist": false
-  }
+  },
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }
