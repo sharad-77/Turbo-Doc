@@ -7,6 +7,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { useState } from 'react';
 import { queryClient } from '@/lib/react-query';
+import { GlobalLoadingBar } from '@/components/common/GlobalLoadingBar';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = useState(() => queryClient);
@@ -15,6 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={client}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
         <TooltipProvider>
+          <GlobalLoadingBar />
           {children}
           <Toaster />
           <Sonner />

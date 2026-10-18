@@ -1,5 +1,11 @@
-'use client';
-import PrivacyPolicy from '@/views/PrivacyPolicy';
+import type { Metadata } from 'next';
+import { PrivacyPolicyView } from '@/features/legal';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy - Turbo-Doc',
+  description: 'Understand how we protect, store, and process your personal and document data.',
+};
+
 export default function Page() {
-  return <PrivacyPolicy />;
+  return <PrivacyPolicyView />;
 }
