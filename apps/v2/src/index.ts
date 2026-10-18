@@ -7,7 +7,8 @@ import Router from 'router';
 import finalhandler from 'finalhandler';
 
 import { env } from './config/env.js';
-import { pool } from './db/client.js';
+import { pool } from '@repo/database-v2';
+import { closeRedis } from '@repo/redis';
 import { apiRouter } from './routes/index.js';
 import { logger, httpLogger } from './middlewares/logger.js';
 import { sendErrorResponse, sendSuccessResponse } from './utils/index.js';
@@ -26,8 +27,37 @@ const baseRouter = Router();
 // security headers
 baseRouter.use(helmet());
 
+const cookieDomain =
+  env.COOKIE_DOMAIN || (env.NODE_ENV === 'production' ? 'sharad.fun' : undefined);
+const allowedOrigins = [
+  env.NEXT_PUBLIC_APP_URL,
+  env.API_URL,
+  ...(cookieDomain
+    ? [
+        `https://${cookieDomain.replace(/^\./, '')}`,
+        `https://turbodoc.${cookieDomain.replace(/^\./, '')}`,
+      ]
+    : []),
+].filter(Boolean) as string[];
+
 // enable cors
-baseRouter.use(cors());
+baseRouter.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        (cookieDomain &&
+          (origin.endsWith(`.${cookieDomain.replace(/^\./, '')}`) ||
+            origin === `https://${cookieDomain.replace(/^\./, '')}`))
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+  })
+);
 
 // parse request body
 baseRouter.use(bodyParser.json({ limit: '10kb' }));
@@ -146,10 +176,22 @@ const shutdown = (signal: string, exitCode = 0) => {
   forceTimer.unref();
 
   server.close(() => {
-    void pool
-      .end()
-      .then(() => {
-        logger.info('Database pool closed');
+    void Promise.allSettled([pool.end(), closeRedis()])
+      .then(results => {
+        const [poolResult, redisResult] = results;
+
+        if (poolResult.status === 'fulfilled') {
+          logger.info('Database pool closed');
+        } else {
+          logger.error({ err: poolResult.reason }, 'Error closing database pool');
+        }
+
+        if (redisResult.status === 'fulfilled') {
+          logger.info('Redis connection closed');
+        } else {
+          logger.error({ err: redisResult.reason }, 'Error closing Redis connection');
+        }
+
         process.exit(exitCode);
       })
       .catch(err => {

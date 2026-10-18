@@ -15,6 +15,8 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
+  phoneNumber?: string | null;
+  phoneNumberVerified?: boolean;
   image?: string | null;
   emailVerified: boolean;
   plan: string;
@@ -28,6 +30,7 @@ export interface UserProfile {
 export interface UpdateProfileRequest {
   name?: string;
   email?: string;
+  phoneNumber?: string;
 }
 
 export interface ChangePasswordRequest {

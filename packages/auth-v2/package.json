@@ -1,0 +1,25 @@
+{
+  "name": "@repo/auth-v2",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@better-auth/redis-storage": "^1.7.10",
+    "@repo/database-v2": "workspace:*",
+    "@repo/email": "workspace:*",
+    "@repo/redis": "workspace:*",
+    "better-auth": "^1.4.3"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "typescript": "^5.9.3"
+  }
+}

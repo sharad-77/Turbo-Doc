@@ -17,6 +17,8 @@ export interface ExtendedRequest<Body = unknown> extends IncomingMessage {
   user?: Record<string, unknown>;
   skip?: boolean;
   platform?: number;
+  baseUrl?: string;
+  originalUrl?: string;
 }
 
 export interface ExtendedResponse extends ServerResponse {

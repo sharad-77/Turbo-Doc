@@ -5,7 +5,13 @@ import { create } from 'zustand';
 interface User {
   id: string;
   email: string;
-  name?: string; // Optional name field
+  name?: string;
+  phoneNumber?: string | null;
+  phoneNumberVerified?: boolean | null;
+  emailVerified?: boolean;
+  image?: string | null;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 }
 
 interface AuthState {
